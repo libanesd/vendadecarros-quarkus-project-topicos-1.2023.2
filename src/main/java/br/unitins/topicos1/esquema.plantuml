@@ -1,0 +1,69 @@
+@startuml carros esquema uml
+
+class Usuario{
+     -nome: String
+     -login: String
+     -senha: String
+}
+
+class Carro{
+     - descricao: String
+     - preco: Double
+     - observacoes: String
+     - TipoCombustivel: enum
+     - TipoCambio:  enum
+
+}
+enum TipoCombustivel{
+     - FLEX: int
+     - GASOLINA: int
+     - DIESEL: int
+}
+enum TipoCambio{
+     - AUTOMATICA: int
+     - AUTOMATICASEQUENCIAL: int
+     - AUTOMATIZADA: int
+     - AUTOMATIZADADCT: int
+     - CVT: int
+     - MANUAL: int
+     - SEMIAUTOMATICA: int
+}
+enum TipoCarroceria{
+     - BUGGY: int
+     - CONVERSIVEL: int
+     - CUPE: int
+     - HATCHBACK: int
+     - MINIVAN: int
+     - PERUASW: int
+     - PICAPE: int
+     - SEDA: int
+     - UTILITARIOESPORTIVO: int
+     - VANUTILITARIO: int
+}
+
+class Venda{
+     - idVenda: int
+     - data: LocalDateTime
+     - formaPagamento: TipoFormaPagamento
+
+}
+
+enum TipoFormaPagamento
+     - DINHEIRO: int
+     - CARTAO: int
+     - PIX: int
+
+class ItemVenda{
+     - preco: Double
+     - quantidade: InterfaceBackgroundcolor
+}
+
+Carro "a" --> "1" TipoCombustivel
+Carro "a" --> "1" TipoCambio
+Carro "a" --> "1" TipoCarroceria
+Venda "1" *--> "a" ItemVenda
+Venda "a" --> "a" Usuario
+ItemVenda "a"--> "1" Carro
+
+
+@enduml
