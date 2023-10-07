@@ -14,8 +14,8 @@ public record ClienteDTO(
     String email,
     String senha,
     TipoDeUsuario tipodeusuario,
-    List<OfertaResponseDTO> ofertas,
-    List<VendaResponseDTO> vendas
+    List<OfertaClienteDTO> ofertas,
+    List<VendaClienteDTO> vendas
 ) {
     public static ClienteDTO valueOf(Cliente cliente){
         return new ClienteDTO(
@@ -29,10 +29,10 @@ public record ClienteDTO(
             cliente.getTipodeusuario(),
             cliente.getOfertas()
                 .stream()
-                .map(t -> OfertaResponseDTO.valueOf(t)).toList(),
+                .map(t -> OfertaClienteDTO.valueOf(t)).toList(),
             cliente.getVendas()
                 .stream()
-                .map(t -> VendaResponseDTO.valueOf(t)).toList()  
+                .map(t -> VendaClienteDTO.valueOf(t)).toList()  
         );
     }
 }

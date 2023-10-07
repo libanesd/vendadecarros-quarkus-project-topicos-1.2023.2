@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 
 import br.unitins.topicos1.dto.MarcaDTO;
+import br.unitins.topicos1.dto.MarcaInsertDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
 import br.unitins.topicos1.service.MarcaService;
 import jakarta.inject.Inject;
@@ -25,7 +26,7 @@ public class MarcaResource {
     MarcaService service;
     
     @POST
-    public MarcaResponseDTO insert(MarcaDTO dto) {
+    public MarcaResponseDTO insert(MarcaInsertDTO dto) {
         return service.insert(dto);
     }
 
@@ -33,7 +34,7 @@ public class MarcaResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public MarcaResponseDTO update(MarcaDTO dto, @PathParam("id") Long id) {
+    public MarcaResponseDTO update(MarcaInsertDTO dto, @PathParam("id") Long id) {
         return service.update(dto, id);
     }
 

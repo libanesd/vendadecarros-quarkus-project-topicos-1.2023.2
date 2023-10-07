@@ -2,7 +2,9 @@ package br.unitins.topicos1.model;
 
 import java.util.Date;
 
+import br.unitins.topicos1.dto.VendaClienteDTO;
 import br.unitins.topicos1.dto.VendaDTO;
+import br.unitins.topicos1.dto.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaResponseDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,7 +49,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(venda.carro());
+        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setCliente(venda.cliente());
@@ -59,10 +61,34 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(venda.carro());
+        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setCliente(venda.cliente());
+        return vendaCast;
+    }
+
+    public static Venda valueOfVendaClienteDTO(VendaClienteDTO venda){
+        Venda vendaCast = new Venda();
+        vendaCast.setId(venda.id());
+        vendaCast.setDataDeCompra(venda.dataDeCompra());
+        vendaCast.setPrecoDaCompra(venda.precoDaCompra());
+        vendaCast.setDescricao(venda.descricao());
+        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
+        vendaCast.setTipoDePagamento(venda.tipoDePagamento());
+        vendaCast.setStatusVenda(venda.statusVenda());
+        return vendaCast;
+    }
+
+    public static Venda valueOfVendaInsertDTO(VendaInsertDTO venda){
+        Venda vendaCast = new Venda();
+        vendaCast.setDataDeCompra(venda.dataDeCompra());
+        vendaCast.setPrecoDaCompra(venda.precoDaCompra());
+        vendaCast.setDescricao(venda.descricao());
+        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
+        vendaCast.setTipoDePagamento(venda.tipoDePagamento());
+        vendaCast.setStatusVenda(venda.statusVenda());
+        vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
         return vendaCast;
     }
 

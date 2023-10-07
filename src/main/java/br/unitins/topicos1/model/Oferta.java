@@ -5,7 +5,9 @@ import java.util.List;
 import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.dto.CategoriaResponseDTO;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
+import br.unitins.topicos1.dto.OfertaClienteDTO;
 import br.unitins.topicos1.dto.OfertaDTO;
+import br.unitins.topicos1.dto.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,6 +59,34 @@ public class Oferta extends DefaultEntity{
         ofertaCast.setCategorias(oferta.categorias()
                 .stream()
                 .map(t -> Categoria.valueOfCategoriaResponseDTO(t)).toList());
+        return ofertaCast;
+    }
+
+    public static Oferta valueOfOfertaClienteDTO(OfertaClienteDTO oferta){
+        Oferta ofertaCast = new Oferta();
+        ofertaCast.setId(oferta.id());
+        ofertaCast.setNome(oferta.nome());
+        ofertaCast.setCarros(oferta.carros()
+                .stream()
+                .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
+        ofertaCast.setCategorias(oferta.categorias()
+                .stream()
+                .map(t -> Categoria.valueOfCategoriaResponseDTO(t)).toList());
+        return ofertaCast;
+    }
+
+    public static Oferta valueOfOfertaInsertDTO(OfertaInsertDTO oferta){
+        Oferta ofertaCast = new Oferta();
+        ofertaCast.setNome(oferta.nome());
+        ofertaCast.setCarros(oferta.carros()
+                .stream()
+                .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
+        ofertaCast.setCategorias(oferta.categorias()
+                .stream()
+                .map(t -> Categoria.valueOfCategoriaIdDTO(t)).toList());
+        ofertaCast.setClientes(oferta.clientes()
+                .stream()
+                .map(t -> Cliente.valueOfClienteIdDTO(t)).toList());
         return ofertaCast;
     }
 

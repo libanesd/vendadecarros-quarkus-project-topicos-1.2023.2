@@ -3,11 +3,12 @@ package br.unitins.topicos1.service;
 import java.util.List;
 
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.ClienteInsertDTO;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
 
 public interface ClienteService {
 
-    public ClienteResponseDTO insert(ClienteDTO dto);
+    public ClienteResponseDTO insert(ClienteInsertDTO dto);
 
     public ClienteResponseDTO update(ClienteDTO dto, Long id);
 

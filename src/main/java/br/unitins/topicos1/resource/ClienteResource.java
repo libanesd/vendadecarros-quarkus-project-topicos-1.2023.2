@@ -1,6 +1,7 @@
 package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.ClienteInsertDTO;
 import br.unitins.topicos1.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -25,7 +26,7 @@ public class ClienteResource {
     ClienteService service;
     
     @POST
-    public Response insert(ClienteDTO dto) {
+    public Response insert(ClienteInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 

@@ -3,6 +3,8 @@ package br.unitins.topicos1.model;
 import java.util.List;
 
 import br.unitins.topicos1.dto.CategoriaDTO;
+import br.unitins.topicos1.dto.CategoriaIdDTO;
+import br.unitins.topicos1.dto.CategoriaInsertDTO;
 import br.unitins.topicos1.dto.CategoriaResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -60,6 +62,19 @@ public class Categoria extends DefaultEntity {
         categoriaCast.setCarros(categoria.carros()
                 .stream()
                 .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
+        return categoriaCast;
+    }
+    public static Categoria valueOfCategoriaInsertDTO(CategoriaInsertDTO categoria){
+        Categoria categoriaCast = new Categoria();
+        categoriaCast.setNome(categoria.nome());
+        categoriaCast.setCarros(categoria.carros()
+                .stream()
+                .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
+        return categoriaCast;
+    }
+    public static Categoria valueOfCategoriaIdDTO(CategoriaIdDTO categoria){
+        Categoria categoriaCast = new Categoria();
+        categoriaCast.setId(categoria.id());
         return categoriaCast;
     }
 }

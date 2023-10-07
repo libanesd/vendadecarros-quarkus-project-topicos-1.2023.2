@@ -3,6 +3,7 @@ package br.unitins.topicos1.model;
 import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTO;
+import br.unitins.topicos1.dto.CarroIdDTO;
 import br.unitins.topicos1.dto.CarroResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,6 +72,22 @@ public class Carro extends DefaultEntity{
     private TipoCarroceria tipoCarroceria;
 
 
+    public void copiarCampos(Carro outroObjeto) {
+        this.nomeCarro = outroObjeto.nomeCarro;
+        this.carroSpec = outroObjeto.carroSpec;
+        this.versao = outroObjeto.versao;
+        this.ano = outroObjeto.ano;
+        this.cor = outroObjeto.cor;
+        this.caracteristicas = outroObjeto.caracteristicas;
+        this.cidade = outroObjeto.cidade;
+        this.preco = outroObjeto.preco;
+        this.kilometragem = outroObjeto.kilometragem;
+        this.marca = outroObjeto.marca;
+        this.tipoCombustivel = outroObjeto.tipoCombustivel;
+        this.tipoCambio = outroObjeto.tipoCambio;
+        this.tipoCarroceria = outroObjeto.tipoCarroceria;
+    }
+
     public static Carro valueOfCarroResponseDTO(CarroResponseDTO carro){
         Carro carroCast = new Carro();
         carroCast.setId(carro.id());
@@ -83,7 +100,7 @@ public class Carro extends DefaultEntity{
         carroCast.setCidade(carro.cidade());
         carroCast.setPreco(carro.preco());
         carroCast.setKilometragem(carro.kilometragem());
-        carroCast.setMarca(carro.marca());
+        carroCast.setMarca(Marca.valueOfMarcaCarroDTO(carro.marca()));
         carroCast.setTipoCambio(carro.tipoCambio());
         carroCast.setTipoCarroceria(carro.tipoCarroceria());
         carroCast.setTipoCombustivel(carro.tipoCombustivel());
@@ -101,10 +118,16 @@ public class Carro extends DefaultEntity{
         carroCast.setCidade(carro.cidade());
         carroCast.setPreco(carro.preco());
         carroCast.setKilometragem(carro.kilometragem());
-        carroCast.setMarca(carro.marca());
+        carroCast.setMarca(Marca.valueOfMarcaCarroDTO(carro.marca()));
         carroCast.setTipoCambio(carro.tipoCambio());
         carroCast.setTipoCarroceria(carro.tipoCarroceria());
         carroCast.setTipoCombustivel(carro.tipoCombustivel());
+        return carroCast;
+    }
+
+    public static Carro valueOfCarroIdDTO(CarroIdDTO carro){
+        Carro carroCast = new Carro();
+        carroCast.setId(carro.id());
         return carroCast;
     }
 

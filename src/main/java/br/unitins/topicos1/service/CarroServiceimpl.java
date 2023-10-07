@@ -25,31 +25,36 @@ public class CarroServiceimpl implements CarroService{
     }
 
     @Override
+    @Transactional
     public CarroResponseDTO update(CarroDTO dto, Long id) {
         Carro novoCarro = repository.findById(id);
-        novoCarro = Carro.valueOfCarroDTO(dto);
+        novoCarro.copiarCampos(Carro.valueOfCarroDTO(dto));
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public CarroResponseDTO findById(Long id) {
         Carro carro = repository.findById(id);
         return CarroResponseDTO.valueOf(carro);
     }
 
     @Override
+    @Transactional
     public List<CarroResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> CarroResponseDTO.valueOf(e)).toList();
     }
 
     @Override
+    @Transactional
     public List<CarroResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> CarroResponseDTO.valueOf(e)).toList();

@@ -3,6 +3,8 @@ package br.unitins.topicos1.model;
 import java.util.List;
 
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.ClienteIdDTO;
+import br.unitins.topicos1.dto.ClienteInsertDTO;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,10 +46,10 @@ public class Cliente extends Usuario{
         clienteCast.setEmail(cliente.email());
         clienteCast.setVendas(cliente.vendas()
                 .stream()
-                .map(t -> Venda.valueOfVendaResponseDTO(t)).toList());
+                .map(t -> Venda.valueOfVendaClienteDTO(t)).toList());
         clienteCast.setOfertas(cliente.ofertas()
                 .stream()
-                .map(t -> Oferta.valueOfOfertaResponseDTO(t)).toList());
+                .map(t -> Oferta.valueOfOfertaClienteDTO(t)).toList());
         return clienteCast;
     }
 
@@ -61,13 +63,31 @@ public class Cliente extends Usuario{
         clienteCast.setEmail(cliente.email());
         clienteCast.setVendas(cliente.vendas()
                 .stream()
-                .map(t -> Venda.valueOfVendaResponseDTO(t)).toList());
+                .map(t -> Venda.valueOfVendaClienteDTO(t)).toList());
         clienteCast.setOfertas(cliente.ofertas()
                 .stream()
-                .map(t -> Oferta.valueOfOfertaResponseDTO(t)).toList());
+                .map(t -> Oferta.valueOfOfertaClienteDTO(t)).toList());
         return clienteCast;
     }
 
+    public static Cliente valueOfClienteInsertDTO(ClienteInsertDTO cliente){
+        Cliente clienteCast = new Cliente();
+        clienteCast.setTipodeusuario(cliente.tipodeusuario());
+        clienteCast.setEndereco(cliente.endereco());
+        clienteCast.setNome(cliente.nome());
+        clienteCast.setCpf(cliente.cpf());
+        clienteCast.setTelefone(cliente.telefone());
+        clienteCast.setEmail(cliente.email());
+        clienteCast.setSenha(cliente.senha());
+        clienteCast.setLogin(cliente.login());
+        return clienteCast;
+    }
+    
+    public static Cliente valueOfClienteIdDTO(ClienteIdDTO cliente){
+        Cliente clienteCast = new Cliente();
+        clienteCast.setId(cliente.id());
+        return clienteCast;
+    }
     
     public List<Venda> getVendas() {
         return vendas;

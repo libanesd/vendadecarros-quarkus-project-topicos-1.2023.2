@@ -17,7 +17,7 @@ public record CarroResponseDTO (
     String cidade,
     Float preco,
     Float kilometragem,
-    Marca marca,
+    MarcaCarroDTO marca,
     TipoCombustivel tipoCombustivel,
     TipoCambio tipoCambio,
     TipoCarroceria tipoCarroceria
@@ -34,7 +34,7 @@ public record CarroResponseDTO (
             carro.getCidade(),
             carro.getPreco(),
             carro.getKilometragem(),
-            carro.getMarca(),
+            MarcaCarroDTO.valueOf(carro.getMarca()),
             carro.getTipoCombustivel(),
             carro.getTipoCambio(),
             carro.getTipoCarroceria()

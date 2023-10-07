@@ -3,40 +3,67 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroResponseDTO;
-import br.unitins.topicos1.dto.CategoriaDTO;
+import br.unitins.topicos1.dto.CarroIdDTO;
+import br.unitins.topicos1.dto.CategoriaInsertDTO;
 import br.unitins.topicos1.dto.CategoriaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Categoria;
+import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.CategoriaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class CategoriaServiceimpl implements CategoriaService{
     
     @Inject
     CategoriaRepository repository;
+    @Inject
+    CarroRepository carroRepository;
 
     @Override
-    public CategoriaResponseDTO insert(CategoriaDTO dto) {
-        Categoria novaCategoria = Categoria.valueOfCategoriaDTO(dto);
+    @Transactional
+    public CategoriaResponseDTO insert(CategoriaInsertDTO dto) {
+        Categoria novaCategoria = Categoria.valueOfCategoriaInsertDTO(dto);
+        if(novaCategoria.getCarros()!= null && !novaCategoria.getCarros().isEmpty()){
+            List<Carro> carroList = new ArrayList<Carro>();
+            for (Carro car : novaCategoria.getCarros()) {
+                Carro carroDb = carroRepository.findById(car.getId());
+                carroDb.getCategoria().add(novaCategoria);
+                carroRepository.persist(carroDb);
+                carroList.add(carroDb);
+            }
+            novaCategoria.setCarros(carroList);
+        }else{
+            List<Carro> carroList = new ArrayList<Carro>();
+            novaCategoria.setCarros(carroList);
+        }
+        
         repository.persist(novaCategoria);
         return CategoriaResponseDTO.valueOf(novaCategoria);
     }
 
     @Override
-    public CategoriaResponseDTO update(CategoriaDTO dto, Long id) {
+    @Transactional
+    public CategoriaResponseDTO update(CategoriaInsertDTO dto, Long id) {
         Categoria categoria = repository.findById(id);
         if(dto.nome() != null){
              categoria.setNome(dto.nome());
         }
-        if (dto.carros() != null && 
-                    !dto.carros().isEmpty()){
+        if (dto.carros() != null && !dto.carros().isEmpty()){
+
             categoria.setCarros(new ArrayList<Carro>());
-            for (CarroResponseDTO car : dto.carros()) {
-                Carro carro = Carro.valueOfCarroResponseDTO(car);
-                categoria.getCarros().add(carro);
+
+            for (Carro carr : categoria.getCarros()) {
+                for (CarroIdDTO car : dto.carros()) {
+                    if(carr.getId() != car.id()){
+                        Carro carroDb = carroRepository.findById(car.id());
+                        carroDb.getCategoria().add(categoria);
+                        carroRepository.persist(carroDb);
+                        categoria.getCarros().add(carroDb);
+                    }
+                }
             }
         }
         repository.persist(categoria);
@@ -44,23 +71,27 @@ public class CategoriaServiceimpl implements CategoriaService{
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public CategoriaResponseDTO findById(Long id) {
         Categoria categoria = repository.findById(id);
         return CategoriaResponseDTO.valueOf(categoria);
     }
 
     @Override
+    @Transactional
     public List<CategoriaResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> CategoriaResponseDTO.valueOf(e)).toList();
     }
 
     @Override
+    @Transactional
     public List<CategoriaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> CategoriaResponseDTO.valueOf(e)).toList();

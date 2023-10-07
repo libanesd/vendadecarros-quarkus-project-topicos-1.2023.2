@@ -1,7 +1,6 @@
 package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Carro;
-import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.model.TipoCambio;
 import br.unitins.topicos1.model.TipoCarroceria;
 import br.unitins.topicos1.model.TipoCombustivel;
@@ -16,7 +15,7 @@ public record CarroDTO (
     String cidade,
     Float preco,
     Float kilometragem,
-    Marca marca,
+    MarcaCarroDTO marca,
     TipoCombustivel tipoCombustivel,
     TipoCambio tipoCambio,
     TipoCarroceria tipoCarroceria
@@ -32,7 +31,7 @@ public record CarroDTO (
             carro.getCidade(),
             carro.getPreco(),
             carro.getKilometragem(),
-            carro.getMarca(),
+            MarcaCarroDTO.valueOf(carro.getMarca()),
             carro.getTipoCombustivel(),
             carro.getTipoCambio(),
             carro.getTipoCarroceria()

@@ -1,8 +1,8 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.CategoriaDTO;
-import br.unitins.topicos1.dto.CategoriaInsertDTO;
-import br.unitins.topicos1.service.CategoriaService;
+import br.unitins.topicos1.dto.VendaDTO;
+import br.unitins.topicos1.dto.VendaInsertDTO;
+import br.unitins.topicos1.service.VendaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -17,16 +17,16 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/categorias")
+@Path("/vendas")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CategoriaResource {
-    
-    @Inject
-    CategoriaService service;
+public class VendaResource {
 
+    @Inject
+    VendaService service;
+    
     @POST
-    public Response insert(CategoriaInsertDTO dto) {
+    public Response insert(VendaInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -34,7 +34,7 @@ public class CategoriaResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(CategoriaInsertDTO dto, @PathParam("id") Long id) {
+    public Response update(VendaDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
         return Response.noContent().build();
     }

@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 
 import br.unitins.topicos1.dto.OfertaDTO;
+import br.unitins.topicos1.dto.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import br.unitins.topicos1.service.OfertaService;
 import jakarta.inject.Inject;
@@ -17,7 +18,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/oferta")
+@Path("/ofertas")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class OfertaResource {
@@ -26,7 +27,7 @@ public class OfertaResource {
     OfertaService service;
 
      @POST
-    public OfertaResponseDTO insert(OfertaDTO dto) {
+    public OfertaResponseDTO insert(OfertaInsertDTO dto) {
         return service.insert(dto);
     }
 
