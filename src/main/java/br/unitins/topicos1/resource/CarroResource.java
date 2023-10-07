@@ -1,9 +1,6 @@
 package br.unitins.topicos1.resource;
 
-import java.util.List;
-
 import br.unitins.topicos1.dto.CarroDTO;
-import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.service.CarroService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -16,6 +13,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/carros")
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,40 +25,42 @@ public class CarroResource {
     CarroService service;
 
     @POST
-    public CarroResponseDTO insert(CarroDTO dto) {
-        return service.insert(dto);
+    public Response insert(CarroDTO dto) {
+        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
 
     @PUT
     @Transactional
     @Path("/{id}")
-    public CarroResponseDTO update(CarroDTO dto, @PathParam("id") Long id) {
-        return service.update(dto, id);
+    public Response update(CarroDTO dto, @PathParam("id") Long id) {
+        service.update(dto, id);
+        return Response.noContent().build();
     }
 
     @DELETE
     @Transactional
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         service.delete(id);
+        return Response.noContent().build();
     }
 
     @GET
-    public List<CarroResponseDTO> findAll() {
-        return service.findByAll();
+    public Response findAll() {
+        return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
-    public CarroResponseDTO findById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
     
     @GET
     @Path("/search/nome/{nome}")
-    public List<CarroResponseDTO> findByNome(@PathParam("nome") String nome) {
-        return service.findByNome(nome);
+    public Response findByNome(@PathParam("nome") String nome) {
+        return Response.ok(service.findByNome(nome)).build();
     }
     
 }

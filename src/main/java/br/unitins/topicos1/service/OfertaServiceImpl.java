@@ -3,7 +3,7 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTO;
+import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.dto.OfertaDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import br.unitins.topicos1.model.Carro;
@@ -22,51 +22,44 @@ public class OfertaServiceImpl implements  OfertaService{
     @Override
     @Transactional
     public OfertaResponseDTO insert(OfertaDTO dto) {
-        Oferta novaOferta = new Oferta();
-        novaOferta.setNome(dto.nome());
-        if (dto.carros() != null && 
-                    !dto.carros().isEmpty()){
-            novaOferta.setCarros(new ArrayList<Carro>());
-            for (CarroDTO car : dto.carros()) {
-                Carro carro = new Carro();
-                carro.setNomeCarro(car.nomeCarro());
-                carro.setCarroSpec(car.carroSpec());
-                carro.setVersao(car.versao());
-                carro.setAno(car.ano());
-                carro.setKilometragem(car.kilometragem());
-                carro.setTipoCombustivel(car.tipoCombustivel());
-                carro.setTipoCambio(car.tipoCambio());
-                carro.setCor(car.cor());
-                carro.setCaracteristicas(car.caracteristicas());
-                carro.setPreco(car.preco());
-                carro.setCidade(car.cidade());
-                carro.setTipoCarroceria(car.tipoCarroceria());
-
-                novaOferta.getCarros().add(carro);
-            }
-        }
+        Oferta novaOferta = Oferta.valueOfOfertaDTO(dto);
         repository.persist(novaOferta);
         return OfertaResponseDTO.valueOf(novaOferta);
     }
 
     @Override
     public OfertaResponseDTO update(OfertaDTO dto, Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Oferta oferta = repository.findById(id);
+        if(dto.nome() != null){
+             oferta.setNome(dto.nome());
+        }
+        if (dto.carros() != null && 
+                    !dto.carros().isEmpty()){
+            oferta.setCarros(new ArrayList<Carro>());
+            for (CarroResponseDTO car : dto.carros()) {
+                Carro carro = Carro.valueOfCarroResponseDTO(car);
+                oferta.getCarros().add(carro);
+            }
+        }
+        repository.persist(oferta);
+        return OfertaResponseDTO.valueOf(oferta);
     }
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        repository.deleteById(id);
     }
 
     @Override
     public OfertaResponseDTO findById(Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Oferta oferta = repository.findById(id);
+        return OfertaResponseDTO.valueOf(oferta);
     }
 
     @Override
     public List<OfertaResponseDTO> findByNome(String nome) {
-        throw new UnsupportedOperationException("Unimplemented method 'findByNome'");
+        return repository.findByNome(nome).stream()
+            .map(e -> OfertaResponseDTO.valueOf(e)).toList();
     }
 
     @Override

@@ -2,6 +2,8 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
+import br.unitins.topicos1.dto.CarroDTO;
+import br.unitins.topicos1.dto.CarroResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -53,6 +56,11 @@ public class Carro extends DefaultEntity{
                inverseJoinColumns = @JoinColumn(name = "oferta_id"))
     private  List<Oferta> ofertas;
     
+    @OneToOne
+    @JoinColumn(name = "vendaId")
+    private Venda venda;
+    
+   
     @Enumerated(EnumType.STRING)
     private TipoCombustivel tipoCombustivel;
 
@@ -63,9 +71,48 @@ public class Carro extends DefaultEntity{
     private TipoCarroceria tipoCarroceria;
 
 
+    public static Carro valueOfCarroResponseDTO(CarroResponseDTO carro){
+        Carro carroCast = new Carro();
+        carroCast.setId(carro.id());
+        carroCast.setNomeCarro(carro.nomeCarro());
+        carroCast.setCarroSpec(carro.carroSpec());
+        carroCast.setVersao(carro.versao());
+        carroCast.setAno(carro.ano());
+        carroCast.setCor(carro.cor());
+        carroCast.setCaracteristicas(carro.caracteristicas());
+        carroCast.setCidade(carro.cidade());
+        carroCast.setPreco(carro.preco());
+        carroCast.setKilometragem(carro.kilometragem());
+        carroCast.setMarca(carro.marca());
+        carroCast.setTipoCambio(carro.tipoCambio());
+        carroCast.setTipoCarroceria(carro.tipoCarroceria());
+        carroCast.setTipoCombustivel(carro.tipoCombustivel());
+        return carroCast;
+    }
 
-    
-    public Carro() {
+    public static Carro valueOfCarroDTO(CarroDTO carro){
+        Carro carroCast = new Carro();
+        carroCast.setNomeCarro(carro.nomeCarro());
+        carroCast.setCarroSpec(carro.carroSpec());
+        carroCast.setVersao(carro.versao());
+        carroCast.setAno(carro.ano());
+        carroCast.setCor(carro.cor());
+        carroCast.setCaracteristicas(carro.caracteristicas());
+        carroCast.setCidade(carro.cidade());
+        carroCast.setPreco(carro.preco());
+        carroCast.setKilometragem(carro.kilometragem());
+        carroCast.setMarca(carro.marca());
+        carroCast.setTipoCambio(carro.tipoCambio());
+        carroCast.setTipoCarroceria(carro.tipoCarroceria());
+        carroCast.setTipoCombustivel(carro.tipoCombustivel());
+        return carroCast;
+    }
+
+     public Venda getVenda() {
+        return venda;
+    }
+    public void setVenda(Venda venda) {
+        this.venda = venda;
     }
     public String getNomeCarro() {
         return nomeCarro;

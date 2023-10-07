@@ -3,7 +3,7 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTO;
+import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.dto.CategoriaDTO;
 import br.unitins.topicos1.dto.CategoriaResponseDTO;
 import br.unitins.topicos1.model.Carro;
@@ -20,52 +20,44 @@ public class CategoriaServiceimpl implements CategoriaService{
 
     @Override
     public CategoriaResponseDTO insert(CategoriaDTO dto) {
-        Categoria novaCategoria = new Categoria();
-        novaCategoria.setNome(dto.nome());
-        if (dto.carros() != null && 
-                    !dto.carros().isEmpty()){
-            novaCategoria.setCarros(new ArrayList<Carro>());
-            for (CarroDTO car : dto.carros()) {
-                Carro carro = new Carro();
-                carro.setNomeCarro(car.nomeCarro());
-                carro.setCarroSpec(car.carroSpec());
-                carro.setVersao(car.versao());
-                carro.setAno(car.ano());
-                carro.setKilometragem(car.kilometragem());
-                carro.setTipoCombustivel(car.tipoCombustivel());
-                carro.setTipoCambio(car.tipoCambio());
-                carro.setCor(car.cor());
-                carro.setCaracteristicas(car.caracteristicas());
-                carro.setPreco(car.preco());
-                carro.setCidade(car.cidade());
-                carro.setTipoCarroceria(car.tipoCarroceria());
-
-                novaCategoria.getCarros().add(carro);
-            }
-        }
+        Categoria novaCategoria = Categoria.valueOfCategoriaDTO(dto);
         repository.persist(novaCategoria);
         return CategoriaResponseDTO.valueOf(novaCategoria);
     }
 
     @Override
     public CategoriaResponseDTO update(CategoriaDTO dto, Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Categoria categoria = repository.findById(id);
+        if(dto.nome() != null){
+             categoria.setNome(dto.nome());
+        }
+        if (dto.carros() != null && 
+                    !dto.carros().isEmpty()){
+            categoria.setCarros(new ArrayList<Carro>());
+            for (CarroResponseDTO car : dto.carros()) {
+                Carro carro = Carro.valueOfCarroResponseDTO(car);
+                categoria.getCarros().add(carro);
+            }
+        }
+        repository.persist(categoria);
+        return CategoriaResponseDTO.valueOf(categoria);
     }
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        repository.deleteById(id);
     }
 
     @Override
     public CategoriaResponseDTO findById(Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Categoria categoria = repository.findById(id);
+        return CategoriaResponseDTO.valueOf(categoria);
     }
 
     @Override
     public List<CategoriaResponseDTO> findByNome(String nome) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByNome'");
+        return repository.findByNome(nome).stream()
+            .map(e -> CategoriaResponseDTO.valueOf(e)).toList();
     }
 
     @Override

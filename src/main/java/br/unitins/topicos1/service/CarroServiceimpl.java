@@ -1,6 +1,5 @@
 package br.unitins.topicos1.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTO;
@@ -20,20 +19,7 @@ public class CarroServiceimpl implements CarroService{
     @Override    
     @Transactional
     public CarroResponseDTO insert(CarroDTO dto) {
-        Carro novoCarro = new Carro();
-        novoCarro.setNomeCarro(dto.nomeCarro());
-        novoCarro.setCarroSpec(dto.carroSpec());
-        novoCarro.setVersao(dto.versao());
-        novoCarro.setAno(dto.ano());
-        novoCarro.setKilometragem(dto.kilometragem());
-        novoCarro.setCaracteristicas(dto.caracteristicas());
-        novoCarro.setTipoCombustivel(dto.tipoCombustivel());
-        novoCarro.setTipoCambio(dto.tipoCambio());
-        novoCarro.setCor(dto.cor());
-        novoCarro.setPreco(dto.preco());
-        novoCarro.setCidade(dto.cidade());
-        novoCarro.setTipoCarroceria(dto.tipoCarroceria());
-        
+        Carro novoCarro = Carro.valueOfCarroDTO(dto);
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);
     }
@@ -41,18 +27,7 @@ public class CarroServiceimpl implements CarroService{
     @Override
     public CarroResponseDTO update(CarroDTO dto, Long id) {
         Carro novoCarro = repository.findById(id);
-        novoCarro.setNomeCarro(dto.nomeCarro());
-        novoCarro.setCarroSpec(dto.carroSpec());
-        novoCarro.setVersao(dto.versao());
-        novoCarro.setAno(dto.ano());
-        novoCarro.setKilometragem(dto.kilometragem());
-        novoCarro.setCaracteristicas(dto.caracteristicas());
-        novoCarro.setTipoCombustivel(dto.tipoCombustivel());
-        novoCarro.setTipoCambio(dto.tipoCambio());
-        novoCarro.setCor(dto.cor());
-        novoCarro.setPreco(dto.preco());
-        novoCarro.setCidade(dto.cidade());
-        novoCarro.setTipoCarroceria(dto.tipoCarroceria());
+        novoCarro = Carro.valueOfCarroDTO(dto);
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);
     }
@@ -70,13 +45,8 @@ public class CarroServiceimpl implements CarroService{
 
     @Override
     public List<CarroResponseDTO> findByNome(String nome) {
-        List<Carro> carros = repository.findByNome(nome);
-        List<CarroResponseDTO> carroDTO = new ArrayList<CarroResponseDTO>();
-
-        for (Carro carro : carros) {
-            carroDTO.add(CarroResponseDTO.valueOf(carro));
-        }
-        return carroDTO;
+        return repository.findByNome(nome).stream()
+            .map(e -> CarroResponseDTO.valueOf(e)).toList();
     }
 
     @Override

@@ -2,6 +2,9 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
+import br.unitins.topicos1.dto.CarroResponseDTO;
+import br.unitins.topicos1.dto.MarcaDTO;
+import br.unitins.topicos1.dto.MarcaResponseDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +20,26 @@ public class Marca extends DefaultEntity{
     @OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
     private List<Carro> carros;
 
-    Marca(){}
+
+    public static Marca valueOfMarcaDTO(MarcaDTO marca){
+        Marca marcaCast = new Marca();
+        marcaCast.setNomeMarca(marca.nome());
+        marcaCast.setCarros(marca.carros()
+                .stream()
+                .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
+        return marcaCast;
+    }
+
+    public static Marca valueOfMarcaResponseDTO(MarcaResponseDTO marca){
+        Marca marcaCast = new Marca();
+        marcaCast.setId(marca.id());
+        marcaCast.setNomeMarca(marca.nome());
+        marcaCast.setCarros(marca.carros()
+                .stream()
+                .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
+        return marcaCast;
+    }
+
     public String getNomeMarca() {
         return nomeMarca;
     }

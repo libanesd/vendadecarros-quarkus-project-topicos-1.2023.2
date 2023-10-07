@@ -6,6 +6,11 @@ class Usuario{
      -senha: String
 }
 
+Class Marca{
+     -nomeMarca: String
+
+}
+
 class Carro{
      - descricao: String
      - preco: Double
@@ -42,28 +47,34 @@ enum TipoCarroceria{
 }
 
 class Venda{
-     - idVenda: int
      - data: LocalDateTime
      - formaPagamento: TipoFormaPagamento
 
 }
 
-enum TipoFormaPagamento
+enum TipoFormaPagamento{
      - DINHEIRO: int
      - CARTAO: int
      - PIX: int
+}
 
 class ItemVenda{
      - preco: Double
      - quantidade: InterfaceBackgroundcolor
 }
 
+class Oferta{
+     - nome: String
+}
+
 Carro "a" --> "1" TipoCombustivel
 Carro "a" --> "1" TipoCambio
 Carro "a" --> "1" TipoCarroceria
 Venda "1" *--> "a" ItemVenda
+Venda "1" *--> "1" TipoFormaPagamento
 Venda "a" --> "a" Usuario
 ItemVenda "a"--> "1" Carro
-
+Marca "1" --> "a" Carro
+Marca "1" --> "1" Oferta
 
 @enduml

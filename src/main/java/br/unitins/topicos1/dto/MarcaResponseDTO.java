@@ -2,20 +2,20 @@ package br.unitins.topicos1.dto;
 
 import java.util.List;
 
-import br.unitins.topicos1.model.Oferta;
+import br.unitins.topicos1.model.Marca;
 
 public record MarcaResponseDTO(
     Long id,
     String nome,
-    List<CarroDTO> carros
+    List<CarroResponseDTO> carros
 ) {
-    public static MarcaResponseDTO valueOf(Oferta oferta){
+    public static MarcaResponseDTO valueOf(Marca marca){
         return new MarcaResponseDTO(
-            oferta.getId(), 
-            oferta.getNome(),
-            oferta.getCarros()
+            marca.getId(), 
+            marca.getNomeMarca(),
+            marca.getCarros()
                 .stream()
-                .map(t -> CarroDTO.valueOf(t)).toList()
+                .map(t -> CarroResponseDTO.valueOf(t)).toList()
         );
     }
 }

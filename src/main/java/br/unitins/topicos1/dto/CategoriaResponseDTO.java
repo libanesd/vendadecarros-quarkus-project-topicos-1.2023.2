@@ -7,7 +7,7 @@ import br.unitins.topicos1.model.Categoria;
 public record CategoriaResponseDTO(
     Long id,
     String nome,
-    List<CarroDTO> carros
+    List<CarroResponseDTO> carros
 ) {
     public static CategoriaResponseDTO valueOf(Categoria categoria){
         return new CategoriaResponseDTO(
@@ -15,7 +15,7 @@ public record CategoriaResponseDTO(
             categoria.getNome(),
             categoria.getCarros()
                 .stream()
-                .map(t -> CarroDTO.valueOf(t)).toList()
+                .map(t -> CarroResponseDTO.valueOf(t)).toList()
         );
     }
 }
