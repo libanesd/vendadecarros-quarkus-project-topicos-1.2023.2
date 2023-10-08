@@ -1,12 +1,11 @@
 package br.unitins.topicos1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroResponseDTO;
-import br.unitins.topicos1.dto.CategoriaResponseDTO;
-import br.unitins.topicos1.dto.ClienteResponseDTO;
 import br.unitins.topicos1.dto.OfertaClienteDTO;
 import br.unitins.topicos1.dto.OfertaDTO;
+import br.unitins.topicos1.dto.OfertaIdDTO;
 import br.unitins.topicos1.dto.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import jakarta.persistence.Column;
@@ -30,6 +29,13 @@ public class Oferta extends DefaultEntity{
     @ManyToMany(mappedBy = "ofertas")
     private List<Categoria> categorias;
     //variavel de desconto 
+
+    public void copiarCampos(Oferta outraOferta) {
+        this.nome = outraOferta.getNome();
+        this.carros = new ArrayList<>(outraOferta.getCarros());
+        this.clientes = new ArrayList<>(outraOferta.getClientes());
+        this.categorias = new ArrayList<>(outraOferta.getCategorias());
+    }
 
     public static Oferta valueOfOfertaDTO(OfertaDTO oferta){
         Oferta ofertaCast = new Oferta();
@@ -90,6 +96,11 @@ public class Oferta extends DefaultEntity{
         return ofertaCast;
     }
 
+    public static Oferta valueOfOfertaIdDTO(OfertaIdDTO oferta){
+        Oferta ofertaCast = new Oferta();
+        ofertaCast.setId(oferta.id());
+        return ofertaCast;
+    }
     
     public List<Cliente> getClientes() {
         return clientes;

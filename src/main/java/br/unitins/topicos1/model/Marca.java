@@ -2,7 +2,6 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.dto.MarcaCarroDTO;
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaInsertDTO;

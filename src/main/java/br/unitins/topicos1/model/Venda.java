@@ -4,6 +4,7 @@ import java.util.Date;
 
 import br.unitins.topicos1.dto.VendaClienteDTO;
 import br.unitins.topicos1.dto.VendaDTO;
+import br.unitins.topicos1.dto.VendaIdDTO;
 import br.unitins.topicos1.dto.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaResponseDTO;
 import jakarta.persistence.CascadeType;
@@ -89,6 +90,12 @@ public class Venda extends DefaultEntity{
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
+        return vendaCast;
+    }
+
+    public static Venda valueOfVendaIdDTO(VendaIdDTO venda){
+        Venda vendaCast = new Venda();
+        vendaCast.setId(venda.id());
         return vendaCast;
     }
 

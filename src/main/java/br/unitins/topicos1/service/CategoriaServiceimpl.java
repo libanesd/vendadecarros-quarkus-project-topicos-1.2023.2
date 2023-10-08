@@ -48,22 +48,22 @@ public class CategoriaServiceimpl implements CategoriaService{
     @Transactional
     public CategoriaResponseDTO update(CategoriaInsertDTO dto, Long id) {
         Categoria categoria = repository.findById(id);
+        
         if(dto.nome() != null){
              categoria.setNome(dto.nome());
         }
         if (dto.carros() != null && !dto.carros().isEmpty()){
-
-            categoria.setCarros(new ArrayList<Carro>());
-
-            for (Carro carr : categoria.getCarros()) {
-                for (CarroIdDTO car : dto.carros()) {
-                    if(carr.getId() != car.id()){
-                        Carro carroDb = carroRepository.findById(car.id());
-                        carroDb.getCategoria().add(categoria);
-                        carroRepository.persist(carroDb);
-                        categoria.getCarros().add(carroDb);
-                    }
+            if(categoria.getCarros() == null || categoria.getCarros().isEmpty()){
+                categoria.setCarros(new ArrayList<Carro>());
+            }
+            for (CarroIdDTO car : dto.carros()) {
+                Carro carroDb = carroRepository.findById(car.id());
+                if(carroDb.getCategoria() == null || carroDb.getCategoria().isEmpty()){
+                    carroDb.setCategoria(new ArrayList<Categoria>());
                 }
+                carroDb.getCategoria().add(categoria);
+                carroRepository.persist(carroDb);
+                categoria.getCarros().add(carroDb);
             }
         }
         repository.persist(categoria);

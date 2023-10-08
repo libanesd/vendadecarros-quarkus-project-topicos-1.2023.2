@@ -3,6 +3,7 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unitins.topicos1.dto.CarroIdDTO;
 import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.dto.OfertaDTO;
 import br.unitins.topicos1.dto.OfertaInsertDTO;
@@ -36,49 +37,141 @@ public class OfertaServiceImpl implements  OfertaService{
     public OfertaResponseDTO insert(OfertaInsertDTO dto) {
         Oferta novaOferta = Oferta.valueOfOfertaInsertDTO(dto);
 
-        List<Carro> carroList = new ArrayList<Carro>();
-        for (Carro car : novaOferta.getCarros()) {
-            Carro carroDb = carroRepository.findById(car.getId());
-            carroList.add(carroDb);
-        }
-        List<Categoria> categoriaList = new ArrayList<Categoria>();
-        for (Categoria cat : novaOferta.getCategorias()) {
-            Categoria categoriaDb = categoriaRepository.findById(cat.getId());
-            categoriaList.add(categoriaDb);
+        if(dto.nome() != null){
+             novaOferta.setNome(dto.nome());
         }
 
-        List<Cliente> clients = new ArrayList<Cliente>();
-        for (Cliente cli : novaOferta.getClientes()) {
-            Cliente clienteDb = clienteRepository.findById(cli.getId());
-            clients.add(clienteDb);
+        if(novaOferta.getCarros()!= null && !novaOferta.getCarros().isEmpty()){
+            List<Carro> carroList = new ArrayList<Carro>();
+            for (Carro car : novaOferta.getCarros()) {
+                Carro carroDb = carroRepository.findById(car.getId());
+                if(carroDb.getOfertas() == null || carroDb.getOfertas().isEmpty()){
+                    carroDb.setOfertas(new ArrayList<Oferta>());
+                }
+                carroDb.getOfertas().add(novaOferta);
+                carroRepository.persist(carroDb);
+                carroList.add(carroDb);
+            }
+            novaOferta.setCarros(carroList);
+        }else{
+            List<Carro> carroList = new ArrayList<Carro>();
+            novaOferta.setCarros(carroList);
         }
 
-        novaOferta.getClientes().clear();
-        novaOferta.setClientes(clients);
+        if(novaOferta.getCategorias()!= null && !novaOferta.getCategorias().isEmpty()){
+            List<Categoria> categoriaList = new ArrayList<Categoria>();
+            for (Categoria cat : novaOferta.getCategorias()) {
+                Categoria categoriaDb = categoriaRepository.findById(cat.getId());
+                if(categoriaDb.getOfertas() == null || categoriaDb.getOfertas().isEmpty()){
+                    categoriaDb.setOfertas(new ArrayList<Oferta>());
+                }
+                categoriaDb.getOfertas().add(novaOferta);
+                categoriaRepository.persist(categoriaDb);
+                categoriaList.add(categoriaDb);
+            }
+            novaOferta.setCategorias(categoriaList);
+        }else{
+            List<Categoria> categoriaList = new ArrayList<Categoria>();
+            novaOferta.setCategorias(categoriaList);
+        }
 
-        novaOferta.getCategorias().clear();
-        novaOferta.setCategorias(categoriaList);
+        if(novaOferta.getCategorias()!= null && !novaOferta.getCategorias().isEmpty()){
+            List<Cliente> clients = new ArrayList<Cliente>();
+            for (Cliente cli : novaOferta.getClientes()) {
+                Cliente clienteDb = clienteRepository.findById(cli.getId());
+                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
+                    clienteDb.setOfertas(new ArrayList<Oferta>());
+                }
+                clienteDb.getOfertas().add(novaOferta);
+                clienteRepository.persist(clienteDb);
+                clients.add(clienteDb);
+            }
+            novaOferta.setClientes(clients);
+        }else{
+            List<Cliente> clients = new ArrayList<Cliente>();
+            novaOferta.setClientes(clients);
+        }
 
-        novaOferta.getCarros().clear();
-        novaOferta.setCarros(carroList);
-        
         repository.persist(novaOferta);
         return OfertaResponseDTO.valueOf(novaOferta);
     }
 
     @Override
     @Transactional
-    public OfertaResponseDTO update(OfertaDTO dto, Long id) {
+    public OfertaResponseDTO update(OfertaInsertDTO dto, Long id) {
         Oferta oferta = repository.findById(id);
         if(dto.nome() != null){
              oferta.setNome(dto.nome());
         }
-        if (dto.carros() != null && 
-                    !dto.carros().isEmpty()){
-            oferta.setCarros(new ArrayList<Carro>());
-            for (CarroResponseDTO car : dto.carros()) {
-                Carro carro = Carro.valueOfCarroResponseDTO(car);
-                oferta.getCarros().add(carro);
+        if(oferta.getCarros()!= null && !oferta.getCarros().isEmpty()){
+            List<Carro> carroList = new ArrayList<Carro>();
+            for (Carro car : oferta.getCarros()) {
+                Carro carroDb = carroRepository.findById(car.getId());
+                if(carroDb.getOfertas() == null || carroDb.getOfertas().isEmpty()){
+                    carroDb.setOfertas(new ArrayList<Oferta>());
+                }
+                carroDb.getOfertas().add(oferta);
+                carroRepository.persist(carroDb);
+                carroList.add(carroDb);
+            }
+            oferta.setCarros(carroList);
+        }else{
+            for (Carro car : oferta.getCarros()) {
+                Carro carroDb = carroRepository.findById(car.getId());
+                if(carroDb.getOfertas() == null || carroDb.getOfertas().isEmpty()){
+                    carroDb.setOfertas(new ArrayList<Oferta>());
+                }
+                carroDb.getOfertas().add(oferta);
+                oferta.getCarros().add(carroDb);
+                carroRepository.persist(carroDb);
+            }
+        }
+
+        if(oferta.getCategorias()!= null && !oferta.getCategorias().isEmpty()){
+            List<Categoria> categoriaList = new ArrayList<Categoria>();
+            for (Categoria cat : oferta.getCategorias()) {
+                Categoria categoriaDb = categoriaRepository.findById(cat.getId());
+                if(categoriaDb.getOfertas() == null || categoriaDb.getOfertas().isEmpty()){
+                    categoriaDb.setOfertas(new ArrayList<Oferta>());
+                }
+                categoriaDb.getOfertas().add(oferta);
+                categoriaRepository.persist(categoriaDb);
+                categoriaList.add(categoriaDb);
+            }
+            oferta.setCategorias(categoriaList);
+        }else{
+            for (Categoria cat : oferta.getCategorias()) {
+                Categoria categoriaDb = categoriaRepository.findById(cat.getId());
+                if(categoriaDb.getOfertas() == null || categoriaDb.getOfertas().isEmpty()){
+                    categoriaDb.setOfertas(new ArrayList<Oferta>());
+                }
+                categoriaDb.getOfertas().add(oferta);
+                oferta.getCategorias().add(categoriaDb);
+                categoriaRepository.persist(categoriaDb);
+            }
+        }
+
+        if(oferta.getCategorias()!= null && !oferta.getCategorias().isEmpty()){
+            List<Cliente> clients = new ArrayList<Cliente>();
+            for (Cliente cli : oferta.getClientes()) {
+                Cliente clienteDb = clienteRepository.findById(cli.getId());
+                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
+                    clienteDb.setOfertas(new ArrayList<Oferta>());
+                }
+                clienteDb.getOfertas().add(oferta);
+                clienteRepository.persist(clienteDb);
+                clients.add(clienteDb);
+            }
+            oferta.setClientes(clients);
+        }else{
+            for (Cliente cli : oferta.getClientes()) {
+                Cliente clienteDb = clienteRepository.findById(cli.getId());
+                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
+                    clienteDb.setOfertas(new ArrayList<Oferta>());
+                }
+                clienteDb.getOfertas().add(oferta);
+                oferta.getClientes().add(clienteDb);
+                clienteRepository.persist(clienteDb);
             }
         }
         repository.persist(oferta);

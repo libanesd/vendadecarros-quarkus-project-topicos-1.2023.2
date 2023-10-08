@@ -1,7 +1,7 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.ClienteInsertDTO;
+import br.unitins.topicos1.dto.ClienteUpdateDTO;
 import br.unitins.topicos1.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -34,7 +34,7 @@ public class ClienteResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(ClienteDTO dto, @PathParam("id") Long id) {
+    public Response update(ClienteUpdateDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
         return Response.noContent().build();
     }

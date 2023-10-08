@@ -1,7 +1,6 @@
 package br.unitins.topicos1.resource;
 import java.util.List;
 
-import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaInsertDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
 import br.unitins.topicos1.service.MarcaService;

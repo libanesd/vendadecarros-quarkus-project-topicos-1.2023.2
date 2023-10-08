@@ -10,7 +10,7 @@ public interface OfertaService {
 
     public OfertaResponseDTO insert(OfertaInsertDTO dto);
 
-    public OfertaResponseDTO update(OfertaDTO dto, Long id);
+    public OfertaResponseDTO update(OfertaInsertDTO dto, Long id);
 
     public void delete(Long id);
 

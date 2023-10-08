@@ -35,7 +35,7 @@ public class OfertaResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public OfertaResponseDTO update(OfertaDTO dto, @PathParam("id") Long id) {
+    public OfertaResponseDTO update(OfertaInsertDTO dto, @PathParam("id") Long id) {
         return service.update(dto, id);
     }
 
