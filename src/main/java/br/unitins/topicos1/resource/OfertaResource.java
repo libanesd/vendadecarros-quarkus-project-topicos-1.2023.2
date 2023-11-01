@@ -2,7 +2,6 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.OfertaDTO;
 import br.unitins.topicos1.dto.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import br.unitins.topicos1.service.OfertaService;
@@ -27,6 +26,7 @@ public class OfertaResource {
     OfertaService service;
 
      @POST
+     @Transactional
     public OfertaResponseDTO insert(OfertaInsertDTO dto) {
         return service.insert(dto);
     }

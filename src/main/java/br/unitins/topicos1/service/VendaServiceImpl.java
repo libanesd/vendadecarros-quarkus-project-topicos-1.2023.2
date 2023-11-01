@@ -1,13 +1,16 @@
 package br.unitins.topicos1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.VendaDTO;
 import br.unitins.topicos1.dto.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaResponseDTO;
+import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.ClienteRepository;
+import br.unitins.topicos1.repository.OfertaRepository;
 import br.unitins.topicos1.repository.VendaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,13 +23,19 @@ public class VendaServiceImpl implements VendaService {
     VendaRepository repository;
     @Inject
     ClienteRepository clienteRepository;
+    @Inject
+    CarroRepository carroRepository;
+    @Inject
+    OfertaRepository ofertaRepository;
 
     @Override
     @Transactional
     public VendaResponseDTO insert(VendaInsertDTO dto) {
         // TODO Auto-generated method stub
         Venda novaVenda = Venda.valueOfVendaInsertDTO(dto);
-        Cliente cliente = clienteRepository.findById(novaVenda.getCliente().getId());
+        Carro carro = carroRepository.findById(dto.carro().id());
+        Cliente cliente = clienteRepository.findById(dto.cliente().id());
+        novaVenda.setCarro(carro);
         novaVenda.setCliente(cliente);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
@@ -34,9 +43,9 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     @Transactional
-    public VendaResponseDTO update(VendaDTO dto, Long id) {
+    public VendaResponseDTO update(VendaInsertDTO dto, Long id) {
         Venda novaVenda = repository.findById(id);
-        novaVenda = Venda.valueOfVendaDTO(dto);
+        novaVenda = Venda.valueOfVendaInsertDTO(dto);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
     }
@@ -49,21 +58,18 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @Override
-    @Transactional
     public VendaResponseDTO findById(Long id) {
        Venda novaVenda = repository.findById(id);
         return VendaResponseDTO.valueOf(novaVenda);
     }
 
     @Override
-    @Transactional
     public List<VendaResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> VendaResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    @Transactional
     public List<VendaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> VendaResponseDTO.valueOf(e)).toList();

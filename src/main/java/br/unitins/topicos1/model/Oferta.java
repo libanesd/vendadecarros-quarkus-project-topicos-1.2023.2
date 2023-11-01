@@ -61,7 +61,7 @@ public class Oferta extends DefaultEntity{
                 .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
         ofertaCast.setClientes(oferta.clientes()
                 .stream()
-                .map(t -> Cliente.valueOfClienteResponseDTO(t)).toList());
+                .map(t -> Cliente.valueOfClienteInsertDTO(t)).toList());
         ofertaCast.setCategorias(oferta.categorias()
                 .stream()
                 .map(t -> Categoria.valueOfCategoriaResponseDTO(t)).toList());
@@ -74,10 +74,10 @@ public class Oferta extends DefaultEntity{
         ofertaCast.setNome(oferta.nome());
         ofertaCast.setCarros(oferta.carros()
                 .stream()
-                .map(t -> Carro.valueOfCarroResponseDTO(t)).toList());
+                .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
         ofertaCast.setCategorias(oferta.categorias()
                 .stream()
-                .map(t -> Categoria.valueOfCategoriaResponseDTO(t)).toList());
+                .map(t -> Categoria.valueOfCategoriaIdDTO(t)).toList());
         return ofertaCast;
     }
 

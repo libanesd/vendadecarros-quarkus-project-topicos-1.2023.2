@@ -9,7 +9,7 @@ public record OfertaResponseDTO(
     String nome,
     List<CarroResponseDTO> carros,
     List<CategoriaResponseDTO> categorias,
-    List<ClienteResponseDTO> clientes
+    List<ClienteInsertDTO> clientes
 ) {
     public static OfertaResponseDTO valueOf(Oferta oferta){
         return new OfertaResponseDTO(
@@ -23,7 +23,7 @@ public record OfertaResponseDTO(
                 .map(t -> CategoriaResponseDTO.valueOf(t)).toList(),
             oferta.getClientes()
                 .stream()   
-                .map(t -> ClienteResponseDTO.valueOf(t)).toList()
+                .map(t -> ClienteInsertDTO.valueOf(t)).toList()
         );
     }
 }

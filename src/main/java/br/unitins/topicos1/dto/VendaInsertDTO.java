@@ -10,7 +10,7 @@ public record VendaInsertDTO(
     Date dataDeCompra,
     float precoDaCompra,
     String descricao,
-    CarroDTO carro,
+    CarroIdDTO carro,
     TipoDePagamento tipoDePagamento,
     StatusVenda statusVenda,
     ClienteIdDTO cliente
@@ -20,7 +20,7 @@ public record VendaInsertDTO(
             venda.getDataDeCompra(),
             venda.getPrecoDaCompra(),
             venda.getDescricao(),
-            CarroDTO.valueOf(venda.getCarro()),
+            CarroIdDTO.valueOf(venda.getCarro()),
             venda.getTipoDePagamento(),
             venda.getStatusVenda(),
             ClienteIdDTO.valueOf(venda.getCliente())

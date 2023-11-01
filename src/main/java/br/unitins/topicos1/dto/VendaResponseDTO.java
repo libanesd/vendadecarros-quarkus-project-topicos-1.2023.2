@@ -15,7 +15,7 @@ public record VendaResponseDTO(
     CarroDTO carro,
     TipoDePagamento tipoDePagamento,
     StatusVenda statusVenda,
-    Cliente cliente
+    ClienteIdDTO cliente
 ) {
     public static VendaResponseDTO valueOf(Venda venda){
         return new VendaResponseDTO(
@@ -26,7 +26,7 @@ public record VendaResponseDTO(
             CarroDTO.valueOf(venda.getCarro()),
             venda.getTipoDePagamento(),
             venda.getStatusVenda(),
-            venda.getCliente()
+            ClienteIdDTO.valueOf(venda.getCliente())
         );
     }
 }

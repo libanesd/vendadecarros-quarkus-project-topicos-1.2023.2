@@ -1,6 +1,5 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.VendaDTO;
 import br.unitins.topicos1.dto.VendaInsertDTO;
 import br.unitins.topicos1.service.VendaService;
 import jakarta.inject.Inject;
@@ -26,6 +25,7 @@ public class VendaResource {
     VendaService service;
     
     @POST
+    @Transactional
     public Response insert(VendaInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
@@ -34,7 +34,7 @@ public class VendaResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(VendaDTO dto, @PathParam("id") Long id) {
+    public Response update(VendaInsertDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -48,18 +48,21 @@ public class VendaResource {
     }
 
     @GET
+    @Transactional
     public Response findAll() {
         return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
+    @Transactional
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(service.findById(id)).build();
     }
     
     @GET
     @Path("/search/nome/{nome}")
+    @Transactional
     public Response findByNome(@PathParam("nome") String nome) {
         return Response.ok(service.findByNome(nome)).build();
     }

@@ -48,6 +48,7 @@ public class ClienteResource {
     }
 
     @GET
+    @Transactional
     public Response findAll() {
         return Response.ok(service.findByAll()).build();
     }

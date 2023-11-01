@@ -68,27 +68,23 @@ public class MarcaServiceImpl implements  MarcaService{
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    @Transactional
     public MarcaResponseDTO findById(Long id) {
         Marca marca = repository.findById(id);
         return MarcaResponseDTO.valueOf(marca);
     }
 
     @Override
-    @Transactional
     public List<MarcaResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> MarcaResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    @Transactional
     public List<MarcaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> MarcaResponseDTO.valueOf(e)).toList();

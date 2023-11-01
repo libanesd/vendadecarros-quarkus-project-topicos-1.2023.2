@@ -87,21 +87,18 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    @Transactional
     public ClienteResponseDTO findById(Long id) {
         Cliente novoCliente = repository.findById(id);
         return ClienteResponseDTO.valueOf(novoCliente);
     }
 
     @Override
-    @Transactional
     public List<ClienteResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> ClienteResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    @Transactional
     public List<ClienteResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> ClienteResponseDTO.valueOf(e)).toList();

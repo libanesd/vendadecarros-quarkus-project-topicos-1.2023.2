@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.util.Date;
 
+import br.unitins.topicos1.dto.ClienteIdDTO;
 import br.unitins.topicos1.dto.VendaClienteDTO;
 import br.unitins.topicos1.dto.VendaDTO;
 import br.unitins.topicos1.dto.VendaIdDTO;
@@ -65,7 +66,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
-        vendaCast.setCliente(venda.cliente());
+        vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
         return vendaCast;
     }
 
@@ -75,7 +76,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
+        vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         return vendaCast;
@@ -86,7 +87,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
+        vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));

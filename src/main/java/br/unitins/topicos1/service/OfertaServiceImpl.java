@@ -3,9 +3,6 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroIdDTO;
-import br.unitins.topicos1.dto.CarroResponseDTO;
-import br.unitins.topicos1.dto.OfertaDTO;
 import br.unitins.topicos1.dto.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaResponseDTO;
 import br.unitins.topicos1.model.Carro;
@@ -179,27 +176,23 @@ public class OfertaServiceImpl implements  OfertaService{
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    @Transactional
     public OfertaResponseDTO findById(Long id) {
         Oferta oferta = repository.findById(id);
         return OfertaResponseDTO.valueOf(oferta);
     }
 
     @Override
-    @Transactional
     public List<OfertaResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> OfertaResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    @Transactional
     public List<OfertaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> OfertaResponseDTO.valueOf(e)).toList();

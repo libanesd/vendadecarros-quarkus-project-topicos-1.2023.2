@@ -7,8 +7,8 @@ import br.unitins.topicos1.model.Oferta;
 public record OfertaClienteDTO(
     Long id,
     String nome,
-    List<CarroResponseDTO> carros,
-    List<CategoriaResponseDTO> categorias
+    List<CarroIdDTO> carros,
+    List<CategoriaIdDTO> categorias
 ) {
     public static OfertaClienteDTO valueOf(Oferta oferta){
         return new OfertaClienteDTO(
@@ -16,10 +16,10 @@ public record OfertaClienteDTO(
             oferta.getNome(),
             oferta.getCarros()
                 .stream()
-                .map(t -> CarroResponseDTO.valueOf(t)).toList(),
+                .map(t -> CarroIdDTO.valueOf(t)).toList(),
             oferta.getCategorias()
                 .stream()
-                .map(t -> CategoriaResponseDTO.valueOf(t)).toList()
+                .map(t -> CategoriaIdDTO.valueOf(t)).toList()
         );
     }
 }

@@ -11,7 +11,7 @@ public record VendaClienteDTO(
     Date dataDeCompra,
     float precoDaCompra,
     String descricao,
-    CarroDTO carro,
+    CarroIdDTO carro,
     TipoDePagamento tipoDePagamento,
     StatusVenda statusVenda
 ) {
@@ -21,7 +21,7 @@ public record VendaClienteDTO(
             venda.getDataDeCompra(),
             venda.getPrecoDaCompra(),
             venda.getDescricao(),
-            CarroDTO.valueOf(venda.getCarro()),
+            CarroIdDTO.valueOf(venda.getCarro()),
             venda.getTipoDePagamento(),
             venda.getStatusVenda()
         );

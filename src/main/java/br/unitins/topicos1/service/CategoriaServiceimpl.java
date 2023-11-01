@@ -71,27 +71,23 @@ public class CategoriaServiceimpl implements CategoriaService{
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    @Transactional
     public CategoriaResponseDTO findById(Long id) {
         Categoria categoria = repository.findById(id);
         return CategoriaResponseDTO.valueOf(categoria);
     }
 
     @Override
-    @Transactional
     public List<CategoriaResponseDTO> findByNome(String nome) {
         return repository.findByNome(nome).stream()
             .map(e -> CategoriaResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    @Transactional
     public List<CategoriaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> CategoriaResponseDTO.valueOf(e)).toList();
