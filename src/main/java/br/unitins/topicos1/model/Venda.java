@@ -2,13 +2,11 @@ package br.unitins.topicos1.model;
 
 import java.util.Date;
 
-import br.unitins.topicos1.dto.ClienteIdDTO;
 import br.unitins.topicos1.dto.VendaClienteDTO;
 import br.unitins.topicos1.dto.VendaDTO;
 import br.unitins.topicos1.dto.VendaIdDTO;
 import br.unitins.topicos1.dto.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaResponseDTO;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,7 +31,8 @@ public class Venda extends DefaultEntity{
     @Column(length = 200, nullable = true)
     private String descricao;
 
-    @OneToOne(mappedBy = "venda", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "carroId", referencedColumnName = "id")
     private Carro carro;
 
     @Enumerated(EnumType.STRING)
@@ -63,7 +62,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
+        vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
@@ -87,10 +86,8 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
-        vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
-        vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
         return vendaCast;
     }
 

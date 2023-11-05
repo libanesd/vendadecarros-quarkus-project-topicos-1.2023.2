@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     public UsuarioResponseDTO update(UsuarioDTO dto, Long id);
 
+    public UsuarioResponseDTO findByLoginAndSenha(String login, String senha);
+
     public void delete(Long id);
 
     public UsuarioResponseDTO findById(Long id);

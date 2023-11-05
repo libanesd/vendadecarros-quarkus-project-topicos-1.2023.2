@@ -57,8 +57,7 @@ public class Carro extends DefaultEntity{
                inverseJoinColumns = @JoinColumn(name = "oferta_id"))
     private  List<Oferta> ofertas;
     
-    @OneToOne
-    @JoinColumn(name = "vendaId")
+    @OneToOne(mappedBy = "carro")
     private Venda venda;
     
    

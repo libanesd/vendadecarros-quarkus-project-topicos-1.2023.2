@@ -14,6 +14,7 @@ import br.unitins.topicos1.model.Venda;
 import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
 import br.unitins.topicos1.repository.VendaRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,14 @@ public class ClienteServiceImpl implements ClienteService{
     @Override
     @Transactional
     public ClienteResponseDTO insert(ClienteInsertDTO dto) {
-        Cliente novoCliente = Cliente.valueOfClienteInsertDTO(dto);
+
+        if (repository.findByLogin(dto.login()) != null) {
+            throw new ValidationException("login", "Login já existe.");
+        }
+
+        Cliente novoCliente = Cliente.valueOfClienteInsertDTO(dto); 
+        HashService service = new HashServiceImpl();
+        novoCliente.setSenha(service.getHashSenha(dto.senha()));
         List<Oferta> oferta = new ArrayList<Oferta>();
         List<Venda> vendas = new ArrayList<Venda>();
         novoCliente.setOfertas(oferta);
@@ -102,6 +110,16 @@ public class ClienteServiceImpl implements ClienteService{
     public List<ClienteResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> ClienteResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    public ClienteResponseDTO findByLoginAndSenha(String login, String senha) {
+        // TODO Auto-generated method stub
+        Cliente cliente = repository.findByLoginAndSenha(login, senha);
+        if (cliente == null) 
+            throw new ValidationException("login", "Login ou senha inválido");
+
+        return ClienteResponseDTO.valueOf(cliente);
     }
     
 }

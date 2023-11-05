@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -42,6 +43,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         
         return UsuarioResponseDTO.valueOf(usuario);
 
+    }
+
+    @Override
+    public UsuarioResponseDTO findByLoginAndSenha(String login, String senha) {
+        Usuario usuario = repository.findByLoginAndSenha(login, senha);
+        if (usuario == null) 
+            throw new ValidationException("login", "Login ou senha inválido");
+
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override

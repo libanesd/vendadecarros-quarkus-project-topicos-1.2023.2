@@ -12,7 +12,7 @@ public class Usuario extends DefaultEntity {
     private String nome;
     @Column(length = 200, nullable = true)
     private String login;
-    @Column(length = 200, nullable = true)
+    @Column(length = 700, nullable = true)
     private String senha;
 
 

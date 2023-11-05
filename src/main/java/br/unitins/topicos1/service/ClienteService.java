@@ -12,6 +12,8 @@ public interface ClienteService {
 
     public ClienteResponseDTO update(ClienteUpdateDTO dto, Long id);
 
+    public ClienteResponseDTO findByLoginAndSenha(String login, String senha);
+
     public void delete(Long id);
 
     public ClienteResponseDTO findById(Long id);
