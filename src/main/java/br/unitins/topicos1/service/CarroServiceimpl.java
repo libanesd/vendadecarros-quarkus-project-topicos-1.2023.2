@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.CarroDTO;
 import br.unitins.topicos1.dto.CarroResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.repository.CarroRepository;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -39,6 +40,7 @@ public class CarroServiceimpl implements CarroService{
     }
 
     @Override
+    @RolesAllowed({"Cliente", "Administrador"})
     public CarroResponseDTO findById(Long id) {
         Carro carro = repository.findById(id);
         return CarroResponseDTO.valueOf(carro);

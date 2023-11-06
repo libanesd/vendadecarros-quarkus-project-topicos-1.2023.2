@@ -2,6 +2,8 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
 import br.unitins.topicos1.dto.LoginDTO;
 import br.unitins.topicos1.service.ClienteService;
+import br.unitins.topicos1.service.HashService;
+import br.unitins.topicos1.service.JwtService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -21,12 +23,23 @@ public class AuthResource {
     @Inject
     ClienteService service;
 
+    @Inject
+    HashService hashService;
+
+    @Inject
+    JwtService jwtService;
+
+
     @POST
     public Response login(@Valid LoginDTO dto) {
 
-        ClienteResponseDTO result = service.findByLoginAndSenha(dto.login(), dto.senha());
+        
+        String hashSenha = hashService.getHashSenha(dto.senha());
 
-        return Response.ok().entity(result).build();
+        ClienteResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
+
+        String token = jwtService.generateJwt(result);
+        return Response.ok().header("Authorization", token).build();
     }
 
 

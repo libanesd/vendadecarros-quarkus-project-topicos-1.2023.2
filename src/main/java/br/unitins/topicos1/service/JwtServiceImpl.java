@@ -1,6 +1,6 @@
 package br.unitins.topicos1.service;
 
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.ClienteResponseDTO;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
@@ -15,14 +15,14 @@ public class JwtServiceImpl implements JwtService{
     private static final Duration EXPIRATION_TIME = Duration.ofHours(24);
 
     @Override
-    public String generateJwt(UsuarioResponseDTO dto) {
+    public String generateJwt(ClienteResponseDTO dto) {
         // TODO Auto-generated method stub
         Instant now = Instant.now();
         Instant expiryDate = now.plus(EXPIRATION_TIME);
 
         // exemplo para teste
         Set<String> roles = new HashSet<String>();
-        roles.add("User");
+        roles.add(dto.tipodeusuario().getLabel());
 
         return Jwt.issuer("unitins-jwt")
             .subject(dto.login())

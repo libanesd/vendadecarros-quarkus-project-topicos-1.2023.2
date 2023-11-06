@@ -31,6 +31,10 @@ public class ClienteServiceImpl implements ClienteService{
     @Inject
     VendaRepository vendaRepository;
 
+    @Inject
+    HashService hashService;
+
+
     @Override
     @Transactional
     public ClienteResponseDTO insert(ClienteInsertDTO dto) {
@@ -40,8 +44,7 @@ public class ClienteServiceImpl implements ClienteService{
         }
 
         Cliente novoCliente = Cliente.valueOfClienteInsertDTO(dto); 
-        HashService service = new HashServiceImpl();
-        novoCliente.setSenha(service.getHashSenha(dto.senha()));
+        novoCliente.setSenha(hashService.getHashSenha(dto.senha()));
         List<Oferta> oferta = new ArrayList<Oferta>();
         List<Venda> vendas = new ArrayList<Venda>();
         novoCliente.setOfertas(oferta);
@@ -118,6 +121,16 @@ public class ClienteServiceImpl implements ClienteService{
         Cliente cliente = repository.findByLoginAndSenha(login, senha);
         if (cliente == null) 
             throw new ValidationException("login", "Login ou senha inválido");
+
+        return ClienteResponseDTO.valueOf(cliente);
+    }
+
+    @Override
+    public ClienteResponseDTO findByLogin(String login) {
+        // TODO Auto-generated method stub
+        Cliente cliente = repository.findByLogin(login);
+        if (cliente == null) 
+            throw new ValidationException("login", "Login inválido");
 
         return ClienteResponseDTO.valueOf(cliente);
     }
