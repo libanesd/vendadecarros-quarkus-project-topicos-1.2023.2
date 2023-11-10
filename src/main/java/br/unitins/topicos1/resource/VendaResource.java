@@ -1,6 +1,6 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.VendaInsertDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.service.VendaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

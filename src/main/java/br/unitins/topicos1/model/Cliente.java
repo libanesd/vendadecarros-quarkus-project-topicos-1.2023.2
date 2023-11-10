@@ -2,10 +2,11 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.ClienteDTO;
-import br.unitins.topicos1.dto.ClienteIdDTO;
-import br.unitins.topicos1.dto.ClienteInsertDTO;
-import br.unitins.topicos1.dto.ClienteResponseDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteIdDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteResponseDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -67,6 +68,18 @@ public class Cliente extends Usuario{
         clienteCast.setOfertas(cliente.ofertas()
                 .stream()
                 .map(t -> Oferta.valueOfOfertaClienteDTO(t)).toList());
+        return clienteCast;
+    }
+
+    public static Cliente valueOfClienteJwtDTO(ClienteJwtDTO cliente){
+        Cliente clienteCast = new Cliente();
+        clienteCast.setId(cliente.id());
+        clienteCast.setNome(cliente.nome());
+        clienteCast.setLogin(cliente.login());
+        clienteCast.setTipodeusuario(cliente.tipodeusuario());
+        clienteCast.setOfertas(cliente.ofertas()
+                .stream()
+                .map(t -> Oferta.valueOfOfertaIdDTO(t)).toList());
         return clienteCast;
     }
 

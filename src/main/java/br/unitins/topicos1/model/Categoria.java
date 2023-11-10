@@ -2,10 +2,10 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.CategoriaDTO;
-import br.unitins.topicos1.dto.CategoriaIdDTO;
-import br.unitins.topicos1.dto.CategoriaInsertDTO;
-import br.unitins.topicos1.dto.CategoriaResponseDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaIdDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

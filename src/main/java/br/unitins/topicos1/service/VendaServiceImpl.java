@@ -2,8 +2,8 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.VendaInsertDTO;
-import br.unitins.topicos1.dto.VendaResponseDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Venda;

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TipoDeUsuario {
-    CLIENTE(1, "Cliente"), 
-    ADMINISTRADOR(2, "Administrador");
+    USER(1, "User"), 
+    ADMIN(2, "Admin");
 
     private final Integer id;
     private final String label;

@@ -2,10 +2,10 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.MarcaCarroDTO;
-import br.unitins.topicos1.dto.MarcaDTO;
-import br.unitins.topicos1.dto.MarcaInsertDTO;
-import br.unitins.topicos1.dto.MarcaResponseDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaCarroDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaResponseDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

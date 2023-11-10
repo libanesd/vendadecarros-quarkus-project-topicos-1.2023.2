@@ -2,8 +2,9 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTO;
-import br.unitins.topicos1.dto.CarroResponseDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.repository.CarroRepository;
 import jakarta.annotation.security.RolesAllowed;
@@ -40,7 +41,7 @@ public class CarroServiceimpl implements CarroService{
     }
 
     @Override
-    @RolesAllowed({"Cliente", "Administrador"})
+    @RolesAllowed({"User","Admin"})
     public CarroResponseDTO findById(Long id) {
         Carro carro = repository.findById(id);
         return CarroResponseDTO.valueOf(carro);
@@ -56,6 +57,13 @@ public class CarroServiceimpl implements CarroService{
     public List<CarroResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> CarroResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    public List<CarroEstoqueDTO> findByAllEstoque() {
+        // TODO Auto-generated method stub
+        return repository.listAll().stream()
+            .map(e -> CarroEstoqueDTO.valueOf(e)).toList();
     }
     
 }

@@ -2,8 +2,8 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioResponseDTO;
 
 public interface UsuarioService {
 

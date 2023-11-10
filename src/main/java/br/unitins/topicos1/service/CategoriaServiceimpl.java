@@ -3,9 +3,9 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroIdDTO;
-import br.unitins.topicos1.dto.CategoriaInsertDTO;
-import br.unitins.topicos1.dto.CategoriaResponseDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
+import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.repository.CarroRepository;

@@ -3,11 +3,12 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.ClienteInsertDTO;
-import br.unitins.topicos1.dto.ClienteResponseDTO;
-import br.unitins.topicos1.dto.ClienteUpdateDTO;
-import br.unitins.topicos1.dto.OfertaIdDTO;
-import br.unitins.topicos1.dto.VendaIdDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteResponseDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteUpdateDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaIdDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaIdDTO;
 import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Oferta;
 import br.unitins.topicos1.model.Venda;
@@ -116,23 +117,27 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
-    public ClienteResponseDTO findByLoginAndSenha(String login, String senha) {
-        // TODO Auto-generated method stub
+    public ClienteJwtDTO findByLoginAndSenha(String login, String senha) {
         Cliente cliente = repository.findByLoginAndSenha(login, senha);
         if (cliente == null) 
             throw new ValidationException("login", "Login ou senha inválido");
 
-        return ClienteResponseDTO.valueOf(cliente);
+        return ClienteJwtDTO.valueOf(cliente);
     }
 
     @Override
-    public ClienteResponseDTO findByLogin(String login) {
-        // TODO Auto-generated method stub
+    public ClienteJwtDTO findByLogin(String login) {
         Cliente cliente = repository.findByLogin(login);
+        
+        System.out.println(cliente);
+        System.out.println(cliente + "djklçfngçalkdfnçlkadjsn");
+        System.out.println(cliente);
+        System.out.println(cliente + "djklçfngçalkdfnçlkadjsn");
+        System.out.println(cliente);
         if (cliente == null) 
             throw new ValidationException("login", "Login inválido");
 
-        return ClienteResponseDTO.valueOf(cliente);
+        return ClienteJwtDTO.valueOf(cliente);
     }
     
 }

@@ -2,11 +2,11 @@ package br.unitins.topicos1.model;
 
 import java.util.Date;
 
-import br.unitins.topicos1.dto.VendaClienteDTO;
-import br.unitins.topicos1.dto.VendaDTO;
-import br.unitins.topicos1.dto.VendaIdDTO;
-import br.unitins.topicos1.dto.VendaInsertDTO;
-import br.unitins.topicos1.dto.VendaResponseDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaClienteDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaIdDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

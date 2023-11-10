@@ -3,8 +3,8 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.OfertaInsertDTO;
-import br.unitins.topicos1.dto.OfertaResponseDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Cliente;

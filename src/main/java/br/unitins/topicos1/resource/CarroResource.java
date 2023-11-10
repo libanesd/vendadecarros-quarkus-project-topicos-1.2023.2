@@ -1,6 +1,6 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.CarroDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.service.CarroService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -49,6 +49,12 @@ public class CarroResource {
     @GET
     public Response findAll() {
         return Response.ok(service.findByAll()).build();
+    }
+
+    @GET
+    @Path("/estoque")
+    public Response findAllEstoque() {
+        return Response.ok(service.findByAllEstoque()).build();
     }
 
     @GET

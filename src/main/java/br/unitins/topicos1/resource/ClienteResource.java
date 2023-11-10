@@ -1,7 +1,7 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.ClienteInsertDTO;
-import br.unitins.topicos1.dto.ClienteUpdateDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteUpdateDTO;
 import br.unitins.topicos1.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

@@ -1,6 +1,7 @@
 package br.unitins.topicos1.resource;
-import br.unitins.topicos1.dto.ClienteResponseDTO;
-import br.unitins.topicos1.dto.LoginDTO;
+import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
+import br.unitins.topicos1.dto.ClienteDTORepository.ClienteResponseDTO;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
@@ -12,7 +13,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import jakarta.ws.rs.core.Response.Status;
 
 
 @Path("/auth")
@@ -36,10 +37,15 @@ public class AuthResource {
         
         String hashSenha = hashService.getHashSenha(dto.senha());
 
-        ClienteResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
-
-        String token = jwtService.generateJwt(result);
-        return Response.ok().header("Authorization", token).build();
+        ClienteJwtDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
+        
+        if (result == null) {
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        } 
+        return Response.ok()
+            .header("Authorization", jwtService.generateJwt(result))
+            .build();
     }
 
 

@@ -2,8 +2,8 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.MarcaInsertDTO;
-import br.unitins.topicos1.dto.MarcaResponseDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
+import br.unitins.topicos1.dto.MarcaDTORepository.MarcaResponseDTO;
 
 public interface MarcaService {
     

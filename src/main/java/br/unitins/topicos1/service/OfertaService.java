@@ -2,8 +2,8 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.OfertaInsertDTO;
-import br.unitins.topicos1.dto.OfertaResponseDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 
 public interface OfertaService {
 

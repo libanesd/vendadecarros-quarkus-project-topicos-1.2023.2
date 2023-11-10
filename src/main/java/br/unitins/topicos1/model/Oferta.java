@@ -3,11 +3,11 @@ package br.unitins.topicos1.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.OfertaClienteDTO;
-import br.unitins.topicos1.dto.OfertaDTO;
-import br.unitins.topicos1.dto.OfertaIdDTO;
-import br.unitins.topicos1.dto.OfertaInsertDTO;
-import br.unitins.topicos1.dto.OfertaResponseDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaClienteDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaIdDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
+import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;

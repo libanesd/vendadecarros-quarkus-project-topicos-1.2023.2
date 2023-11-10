@@ -2,8 +2,9 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTO;
-import br.unitins.topicos1.dto.CarroResponseDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 
 public interface CarroService {
 
@@ -18,4 +19,6 @@ public interface CarroService {
     public List<CarroResponseDTO> findByNome(String nome);
 
     public List<CarroResponseDTO> findByAll(); 
+
+    public List<CarroEstoqueDTO> findByAllEstoque(); 
 }

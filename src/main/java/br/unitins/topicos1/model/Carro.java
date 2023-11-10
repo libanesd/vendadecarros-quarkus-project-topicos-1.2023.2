@@ -2,9 +2,9 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTO;
-import br.unitins.topicos1.dto.CarroIdDTO;
-import br.unitins.topicos1.dto.CarroResponseDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -59,6 +59,9 @@ public class Carro extends DefaultEntity{
     
     @OneToOne(mappedBy = "carro")
     private Venda venda;
+
+    @Column(columnDefinition = "INT CHECK (estoque >= 0)")
+    private Integer estoque;
     
    
     @Enumerated(EnumType.STRING)
@@ -229,5 +232,13 @@ public class Carro extends DefaultEntity{
     }
     public void setOfertas(List<Oferta> ofertas) {
         this.ofertas = ofertas;
+    }
+
+    public Integer getEstoqueado() {
+        return estoque;
+    }
+
+    public void setEstoque(Integer estoque) {
+        this.estoque = estoque;
     }
 }
