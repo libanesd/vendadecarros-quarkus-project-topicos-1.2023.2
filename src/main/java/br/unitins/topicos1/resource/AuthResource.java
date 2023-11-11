@@ -1,7 +1,6 @@
 package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteResponseDTO;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;

@@ -128,12 +128,6 @@ public class ClienteServiceImpl implements ClienteService{
     @Override
     public ClienteJwtDTO findByLogin(String login) {
         Cliente cliente = repository.findByLogin(login);
-        
-        System.out.println(cliente);
-        System.out.println(cliente + "djklçfngçalkdfnçlkadjsn");
-        System.out.println(cliente);
-        System.out.println(cliente + "djklçfngçalkdfnçlkadjsn");
-        System.out.println(cliente);
         if (cliente == null) 
             throw new ValidationException("login", "Login inválido");
 
