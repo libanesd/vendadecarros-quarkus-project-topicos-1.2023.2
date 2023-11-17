@@ -12,6 +12,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "oferta")
@@ -20,13 +21,13 @@ public class Oferta extends DefaultEntity{
     @Column(length = 60)
     private String nome;
 
-    @ManyToMany(mappedBy = "ofertas")
+    @ManyToMany(mappedBy = "ofertas",cascade = CascadeType.ALL)
     private List<Carro> carros;
 
-    @ManyToMany(mappedBy = "ofertas")
+    @ManyToMany(mappedBy = "ofertas",cascade = CascadeType.ALL)
     private List<Cliente> clientes;
 
-    @ManyToMany(mappedBy = "ofertas")
+    @ManyToMany(mappedBy = "ofertas",cascade = CascadeType.ALL)
     private List<Categoria> categorias;
     //variavel de desconto 
 

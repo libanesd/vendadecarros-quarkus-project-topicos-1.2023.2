@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
 import br.unitins.topicos1.service.CategoriaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -25,6 +26,7 @@ public class CategoriaResource {
     CategoriaService service;
 
     @POST
+    @RolesAllowed({"Admin"})
     public Response insert(CategoriaInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
@@ -33,6 +35,7 @@ public class CategoriaResource {
     @PUT
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response update(CategoriaInsertDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
         return Response.noContent().build();
@@ -41,24 +44,28 @@ public class CategoriaResource {
     @DELETE
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
 
     @GET
+    //@RolesAllowed({"User","Admin"})
     public Response findAll() {
         return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(service.findById(id)).build();
     }
     
     @GET
     @Path("/search/nome/{nome}")
+    @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
         return Response.ok(service.findByNome(nome)).build();
     }

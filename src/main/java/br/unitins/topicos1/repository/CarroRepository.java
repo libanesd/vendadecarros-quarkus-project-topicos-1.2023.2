@@ -12,4 +12,8 @@ public class CarroRepository implements PanacheRepository<Carro>{
     public List<Carro> findByNome(String nome) {
         return find("UPPER(nomeCarro) LIKE UPPER(?1) ", "%"+nome+"%").list();
     }
+
+    public List<Carro> findByIdCarros(Long id){
+        return find("id = (?1)", id).list();
+    }
 }

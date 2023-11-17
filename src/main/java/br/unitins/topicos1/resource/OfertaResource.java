@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import br.unitins.topicos1.service.OfertaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -25,8 +26,9 @@ public class OfertaResource {
     @Inject
     OfertaService service;
 
-     @POST
-     @Transactional
+    @POST
+    @Transactional
+    @RolesAllowed({"Admin"})
     public OfertaResponseDTO insert(OfertaInsertDTO dto) {
         return service.insert(dto);
     }
@@ -35,6 +37,7 @@ public class OfertaResource {
     @PUT
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public OfertaResponseDTO update(OfertaInsertDTO dto, @PathParam("id") Long id) {
         return service.update(dto, id);
     }
@@ -42,23 +45,27 @@ public class OfertaResource {
     @DELETE
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public void delete(@PathParam("id") Long id) {
         service.delete(id);
     }
 
     @GET
+    //@RolesAllowed({"User","Admin"})
     public List<OfertaResponseDTO> findAll() {
         return service.findByAll();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"User","Admin"})
     public OfertaResponseDTO findById(@PathParam("id") Long id) {
         return service.findById(id);
     }
     
     @GET
     @Path("/search/nome/{nome}")
+    @RolesAllowed({"User","Admin"})
     public List<OfertaResponseDTO> findByNome(@PathParam("nome") String nome) {
         return service.findByNome(nome);
     }

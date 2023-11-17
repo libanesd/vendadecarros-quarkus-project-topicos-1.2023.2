@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaIdDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaResponseDTO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,7 +20,7 @@ public class Categoria extends DefaultEntity {
     @Column(length = 60)
     private String nome;
 
-    @ManyToMany(mappedBy = "categorias")
+    @ManyToMany(mappedBy = "categorias",cascade = CascadeType.ALL)
     private List<Carro> carros;
 
     @ManyToMany

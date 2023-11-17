@@ -4,6 +4,7 @@ import java.util.List;
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaResponseDTO;
 import br.unitins.topicos1.service.MarcaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -25,6 +26,7 @@ public class MarcaResource {
     MarcaService service;
     
     @POST
+    @RolesAllowed("Admin")
     public MarcaResponseDTO insert(MarcaInsertDTO dto) {
         return service.insert(dto);
     }
@@ -33,6 +35,7 @@ public class MarcaResource {
     @PUT
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public MarcaResponseDTO update(MarcaInsertDTO dto, @PathParam("id") Long id) {
         return service.update(dto, id);
     }
@@ -40,23 +43,27 @@ public class MarcaResource {
     @DELETE
     @Transactional
     @Path("/{id}")
+    @RolesAllowed({"Admin"})
     public void delete(@PathParam("id") Long id) {
         service.delete(id);
     }
 
     @GET
+    //@RolesAllowed({"User","Admin"})
     public List<MarcaResponseDTO> findAll() {
         return service.findByAll();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"User","Admin"})
     public MarcaResponseDTO findById(@PathParam("id") Long id) {
         return service.findById(id);
     }
     
     @GET
     @Path("/search/nome/{nome}")
+    @RolesAllowed({"User","Admin"})
     public List<MarcaResponseDTO> findByNome(@PathParam("nome") String nome) {
         return service.findByNome(nome);
     }

@@ -112,16 +112,6 @@ public class OfertaServiceImpl implements  OfertaService{
                 carroList.add(carroDb);
             }
             oferta.setCarros(carroList);
-        }else{
-            for (Carro car : oferta.getCarros()) {
-                Carro carroDb = carroRepository.findById(car.getId());
-                if(carroDb.getOfertas() == null || carroDb.getOfertas().isEmpty()){
-                    carroDb.setOfertas(new ArrayList<Oferta>());
-                }
-                carroDb.getOfertas().add(oferta);
-                oferta.getCarros().add(carroDb);
-                carroRepository.persist(carroDb);
-            }
         }
 
         if(oferta.getCategorias()!= null && !oferta.getCategorias().isEmpty()){
@@ -136,16 +126,6 @@ public class OfertaServiceImpl implements  OfertaService{
                 categoriaList.add(categoriaDb);
             }
             oferta.setCategorias(categoriaList);
-        }else{
-            for (Categoria cat : oferta.getCategorias()) {
-                Categoria categoriaDb = categoriaRepository.findById(cat.getId());
-                if(categoriaDb.getOfertas() == null || categoriaDb.getOfertas().isEmpty()){
-                    categoriaDb.setOfertas(new ArrayList<Oferta>());
-                }
-                categoriaDb.getOfertas().add(oferta);
-                oferta.getCategorias().add(categoriaDb);
-                categoriaRepository.persist(categoriaDb);
-            }
         }
 
         if(oferta.getCategorias()!= null && !oferta.getCategorias().isEmpty()){
@@ -160,24 +140,16 @@ public class OfertaServiceImpl implements  OfertaService{
                 clients.add(clienteDb);
             }
             oferta.setClientes(clients);
-        }else{
-            for (Cliente cli : oferta.getClientes()) {
-                Cliente clienteDb = clienteRepository.findById(cli.getId());
-                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
-                    clienteDb.setOfertas(new ArrayList<Oferta>());
-                }
-                clienteDb.getOfertas().add(oferta);
-                oferta.getClientes().add(clienteDb);
-                clienteRepository.persist(clienteDb);
-            }
         }
         repository.persist(oferta);
         return OfertaResponseDTO.valueOf(oferta);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        repository.deleteById(id);
+        Oferta oferta = repository.findById(id);
+        repository.delete(oferta);
     }
 
     @Override
