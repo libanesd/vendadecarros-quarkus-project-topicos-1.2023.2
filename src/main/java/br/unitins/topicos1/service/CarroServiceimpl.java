@@ -10,6 +10,7 @@ import br.unitins.topicos1.repository.CarroRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class CarroServiceimpl implements CarroService{
@@ -19,7 +20,7 @@ public class CarroServiceimpl implements CarroService{
 
     @Override    
     @Transactional
-    public CarroResponseDTO insert(CarroDTO dto) {
+    public CarroResponseDTO insert(@Valid CarroDTO dto) {
         Carro novoCarro = Carro.valueOfCarroDTO(dto);
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);

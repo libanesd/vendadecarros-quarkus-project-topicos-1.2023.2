@@ -3,9 +3,9 @@ package br.unitins.topicos1.dto.AuthDTORepository;
 import jakarta.validation.constraints.NotEmpty;
 
 public record LoginDTO (
-    @NotEmpty(message = "O campo nome não pode ser nulo.")
+    @NotEmpty(message = "Por favor preencha o login")
     String login,
-    @NotEmpty(message = "O campo nome não pode ser nulo.")
+    @NotEmpty(message = "Senha incompativel")
     String senha
 ) {
 

@@ -6,8 +6,10 @@ import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaIdDTO;
 import br.unitins.topicos1.dto.ClienteDTORepository.ClienteIdDTO;
 import br.unitins.topicos1.model.Oferta;
+import jakarta.validation.constraints.NotEmpty;
 
 public record OfertaInsertDTO(
+    @NotEmpty(message = "O campo nome não pode ser nulo!")
     String nome,
     List<CarroIdDTO> carros,
     List<CategoriaIdDTO> categorias,

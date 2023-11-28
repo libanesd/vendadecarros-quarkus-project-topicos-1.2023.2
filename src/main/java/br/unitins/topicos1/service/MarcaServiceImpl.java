@@ -13,6 +13,7 @@ import br.unitins.topicos1.repository.MarcaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class MarcaServiceImpl implements  MarcaService{
@@ -24,7 +25,7 @@ public class MarcaServiceImpl implements  MarcaService{
 
     @Override
     @Transactional
-    public MarcaResponseDTO insert(MarcaInsertDTO dto) {
+    public MarcaResponseDTO insert(@Valid MarcaInsertDTO dto) {
         Marca novaOMarca = Marca.valueOfMarcaInsertDTO(dto);
         if(novaOMarca.getCarros()!= null && !novaOMarca.getCarros().isEmpty()){
             List<Carro> carroList = new ArrayList<Carro>();

@@ -6,10 +6,11 @@ import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
 import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
 import br.unitins.topicos1.dto.ClienteDTORepository.ClienteResponseDTO;
 import br.unitins.topicos1.dto.ClienteDTORepository.ClienteUpdateDTO;
+import jakarta.validation.Valid;
 
 public interface ClienteService {
 
-    public ClienteResponseDTO insert(ClienteInsertDTO dto);
+    public ClienteResponseDTO insert(@Valid ClienteInsertDTO dto);
 
     public ClienteResponseDTO update(ClienteUpdateDTO dto, Long id);
 

@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
+import jakarta.validation.Valid;
 
 public interface VendaService {
  
-    public VendaResponseDTO insert(VendaInsertDTO dto);
+    public VendaResponseDTO insert(@Valid VendaInsertDTO dto);
 
     public VendaResponseDTO update(VendaInsertDTO dto, Long id);
 

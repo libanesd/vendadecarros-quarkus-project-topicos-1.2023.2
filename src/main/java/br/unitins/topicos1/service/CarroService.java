@@ -5,10 +5,11 @@ import java.util.List;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
+import jakarta.validation.Valid;
 
 public interface CarroService {
 
-    public CarroResponseDTO insert(CarroDTO dto);
+    public CarroResponseDTO insert(@Valid CarroDTO dto);
 
     public CarroResponseDTO update(CarroDTO dto, Long id);
 

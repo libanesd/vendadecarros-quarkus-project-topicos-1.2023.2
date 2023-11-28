@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
+import jakarta.validation.Valid;
 
 public interface OfertaService {
 
-    public OfertaResponseDTO insert(OfertaInsertDTO dto);
+    public OfertaResponseDTO insert(@Valid OfertaInsertDTO dto);
 
     public OfertaResponseDTO update(OfertaInsertDTO dto, Long id);
 

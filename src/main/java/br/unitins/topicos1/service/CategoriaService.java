@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaResponseDTO;
+import jakarta.validation.Valid;
 
 public interface CategoriaService {
     
-    public CategoriaResponseDTO insert(CategoriaInsertDTO dto);
+    public CategoriaResponseDTO insert(@Valid CategoriaInsertDTO dto);
 
     public CategoriaResponseDTO update(CategoriaInsertDTO dto, Long id);
 

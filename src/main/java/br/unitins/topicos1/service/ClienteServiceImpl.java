@@ -19,6 +19,7 @@ import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class ClienteServiceImpl implements ClienteService{
@@ -38,7 +39,7 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Override
     @Transactional
-    public ClienteResponseDTO insert(ClienteInsertDTO dto) {
+    public ClienteResponseDTO insert(@Valid ClienteInsertDTO dto) {
 
         if (repository.findByLogin(dto.login()) != null) {
             throw new ValidationException("login", "Login já existe.");

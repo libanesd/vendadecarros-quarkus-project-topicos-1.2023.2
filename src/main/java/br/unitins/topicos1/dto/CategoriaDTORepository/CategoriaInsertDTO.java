@@ -4,8 +4,10 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.model.Categoria;
+import jakarta.validation.constraints.NotBlank;
 
 public record CategoriaInsertDTO(
+    @NotBlank(message = "O campo Nome não pode ser nulo.")
     String nome,
     List<CarroIdDTO> carros
 ) {

@@ -13,6 +13,7 @@ import br.unitins.topicos1.repository.CategoriaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class CategoriaServiceimpl implements CategoriaService{
@@ -24,7 +25,7 @@ public class CategoriaServiceimpl implements CategoriaService{
 
     @Override
     @Transactional
-    public CategoriaResponseDTO insert(CategoriaInsertDTO dto) {
+    public CategoriaResponseDTO insert(@Valid CategoriaInsertDTO dto) {
         Categoria novaCategoria = Categoria.valueOfCategoriaInsertDTO(dto);
         if(novaCategoria.getCarros()!= null && !novaCategoria.getCarros().isEmpty()){
             List<Carro> carroList = new ArrayList<Carro>();

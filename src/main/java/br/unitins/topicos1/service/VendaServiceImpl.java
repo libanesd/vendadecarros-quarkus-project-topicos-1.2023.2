@@ -14,6 +14,7 @@ import br.unitins.topicos1.repository.VendaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class VendaServiceImpl implements VendaService {
@@ -29,7 +30,7 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     @Transactional
-    public VendaResponseDTO insert(VendaInsertDTO dto) {
+    public VendaResponseDTO insert(@Valid VendaInsertDTO dto) {
         // TODO Auto-generated method stub
         Venda novaVenda = Venda.valueOfVendaInsertDTO(dto);
         Carro carro = carroRepository.findById(dto.carro().id());

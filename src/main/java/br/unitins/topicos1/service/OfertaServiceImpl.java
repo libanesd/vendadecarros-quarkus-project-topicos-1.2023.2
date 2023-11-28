@@ -16,6 +16,7 @@ import br.unitins.topicos1.repository.OfertaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class OfertaServiceImpl implements  OfertaService{
@@ -31,7 +32,7 @@ public class OfertaServiceImpl implements  OfertaService{
 
     @Override
     @Transactional
-    public OfertaResponseDTO insert(OfertaInsertDTO dto) {
+    public OfertaResponseDTO insert(@Valid OfertaInsertDTO dto) {
         Oferta novaOferta = Oferta.valueOfOfertaInsertDTO(dto);
 
         if(dto.nome() != null){
