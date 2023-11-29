@@ -1,7 +1,6 @@
 package br.unitins.topicos1;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
@@ -9,18 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
-import br.unitins.topicos1.dto.CarroDTORepository.CarroTestDTO;
-import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioResponseDTO;
-import br.unitins.topicos1.model.Marca;
-import br.unitins.topicos1.model.TipoCambio;
-import br.unitins.topicos1.model.TipoCarroceria;
-import br.unitins.topicos1.model.TipoCombustivel;
-import br.unitins.topicos1.model.TipoDeUsuario;
 import br.unitins.topicos1.service.ClienteService;
 
 @QuarkusTest

@@ -28,6 +28,7 @@ public class CarroResource {
 
     @POST
     @RolesAllowed({"Admin"})
+    @Path("/carro-add")
     public Response insert(@Valid CarroDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
@@ -44,7 +45,7 @@ public class CarroResource {
 
     @DELETE
     @Transactional
-    @Path("/{id}")
+    @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);

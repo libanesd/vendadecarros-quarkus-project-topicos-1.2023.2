@@ -27,6 +27,7 @@ public class CategoriaResource {
 
     @POST
     @RolesAllowed({"Admin"})
+    @Path("/categoria-add")
     public Response insert(CategoriaInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
@@ -43,7 +44,7 @@ public class CategoriaResource {
 
     @DELETE
     @Transactional
-    @Path("/{id}")
+    @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);

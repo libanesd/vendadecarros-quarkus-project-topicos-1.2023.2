@@ -2,7 +2,6 @@ package br.unitins.topicos1.dto.CarroDTORepository;
 
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaCarroDTO;
 import br.unitins.topicos1.model.Carro;
-import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.model.TipoCambio;
 import br.unitins.topicos1.model.TipoCarroceria;
 import br.unitins.topicos1.model.TipoCombustivel;
