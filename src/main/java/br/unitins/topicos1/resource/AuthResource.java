@@ -1,7 +1,7 @@
 package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
-import br.unitins.topicos1.service.ClienteService;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
+import br.unitins.topicos1.service.UsuarioService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
 import jakarta.inject.Inject;
@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response.Status;
 public class AuthResource {
 
     @Inject
-    ClienteService service;
+    UsuarioService service;
 
     @Inject
     HashService hashService;
@@ -36,7 +36,7 @@ public class AuthResource {
         
         String hashSenha = hashService.getHashSenha(dto.senha());
 
-        ClienteJwtDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
+        UsuarioJwtDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
         
         if (result == null) {
             return Response.status(Status.NOT_FOUND)

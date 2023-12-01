@@ -2,7 +2,7 @@ package br.unitins.topicos1.resource;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import br.unitins.topicos1.service.ClienteService;
+import br.unitins.topicos1.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -21,7 +21,7 @@ public class UsuarioLogadoResources {
     JsonWebToken jwt;
 
     @Inject
-    ClienteService clienteService;
+    UsuarioService usuarioService;
 
     @GET
     @RolesAllowed({"User","Admin"})
@@ -30,7 +30,7 @@ public class UsuarioLogadoResources {
         // obtendo o login pelo token jwt
         String login = jwt.getSubject();
 
-        return Response.ok(clienteService.findByLogin(login)).build();
+        return Response.ok(usuarioService.findByLogin(login)).build();
 
     }
 

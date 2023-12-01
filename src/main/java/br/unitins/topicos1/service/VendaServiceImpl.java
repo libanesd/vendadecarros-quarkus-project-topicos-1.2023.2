@@ -5,10 +5,10 @@ import java.util.List;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import br.unitins.topicos1.model.Carro;
-import br.unitins.topicos1.model.Cliente;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Venda;
 import br.unitins.topicos1.repository.CarroRepository;
-import br.unitins.topicos1.repository.ClienteRepository;
+import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
 import br.unitins.topicos1.repository.VendaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,7 +22,7 @@ public class VendaServiceImpl implements VendaService {
     @Inject
     VendaRepository repository;
     @Inject
-    ClienteRepository clienteRepository;
+    UsuarioRepository usuarioRepository;
     @Inject
     CarroRepository carroRepository;
     @Inject
@@ -34,9 +34,9 @@ public class VendaServiceImpl implements VendaService {
         // TODO Auto-generated method stub
         Venda novaVenda = Venda.valueOfVendaInsertDTO(dto);
         Carro carro = carroRepository.findById(dto.carro().id());
-        Cliente cliente = clienteRepository.findById(dto.cliente().id());
+        Usuario usuario = usuarioRepository.findById(dto.usuario().id());
         novaVenda.setCarro(carro);
-        novaVenda.setCliente(cliente);
+        novaVenda.setUsuario(usuario);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
     }

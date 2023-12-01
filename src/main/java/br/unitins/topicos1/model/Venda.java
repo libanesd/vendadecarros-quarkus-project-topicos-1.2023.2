@@ -2,7 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.util.Date;
 
-import br.unitins.topicos1.dto.VendaDTORepository.VendaClienteDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.VendaUsuarioDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaIdDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
@@ -42,8 +42,8 @@ public class Venda extends DefaultEntity{
     private StatusVenda statusVenda;
 
     @ManyToOne
-    @JoinColumn(name = "clienteId")
-    private Cliente cliente;
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuario;
 
     public static Venda valueOfVendaDTO(VendaDTO venda){
         Venda vendaCast = new Venda();
@@ -53,7 +53,7 @@ public class Venda extends DefaultEntity{
         vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
-        vendaCast.setCliente(venda.cliente());
+        vendaCast.setUsuario(venda.usuario());
         return vendaCast;
     }
     public static Venda valueOfVendaResponseDTO(VendaResponseDTO venda){
@@ -65,11 +65,11 @@ public class Venda extends DefaultEntity{
         vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
-        vendaCast.setCliente(Cliente.valueOfClienteIdDTO(venda.cliente()));
+        vendaCast.setUsuario(Usuario.valueOfUsuarioIdDTO(venda.usuario()));
         return vendaCast;
     }
 
-    public static Venda valueOfVendaClienteDTO(VendaClienteDTO venda){
+    public static Venda valueOfVendaUsuarioDTO(VendaUsuarioDTO venda){
         Venda vendaCast = new Venda();
         vendaCast.setId(venda.id());
         vendaCast.setDataDeCompra(venda.dataDeCompra());
@@ -97,12 +97,12 @@ public class Venda extends DefaultEntity{
         return vendaCast;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Date getDataDeCompra() {

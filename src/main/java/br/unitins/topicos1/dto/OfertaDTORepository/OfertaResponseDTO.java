@@ -4,15 +4,18 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaResponseDTO;
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
 import br.unitins.topicos1.model.Oferta;
+import br.unitins.topicos1.model.StatusOferta;
 
 public record OfertaResponseDTO(
     Long id,
     String nome,
     List<CarroResponseDTO> carros,
     List<CategoriaResponseDTO> categorias,
-    List<ClienteInsertDTO> clientes
+    List<UsuarioInsertDTO> usuarios,
+    StatusOferta statusOferta,
+    Float porcentagemDeDesconto
 ) {
     public static OfertaResponseDTO valueOf(Oferta oferta){
         return new OfertaResponseDTO(
@@ -24,9 +27,11 @@ public record OfertaResponseDTO(
             oferta.getCategorias()
                 .stream()
                 .map(t -> CategoriaResponseDTO.valueOf(t)).toList(),
-            oferta.getClientes()
+            oferta.getUsuarios()
                 .stream()   
-                .map(t -> ClienteInsertDTO.valueOf(t)).toList()
+                .map(t -> UsuarioInsertDTO.valueOf(t)).toList(),
+            oferta.getStatusOferta(),
+            oferta.getPorcentagemDeDesconto()
         );
     }
 }

@@ -4,8 +4,9 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaIdDTO;
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteIdDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.model.Oferta;
+import br.unitins.topicos1.model.StatusOferta;
 import jakarta.validation.constraints.NotEmpty;
 
 public record OfertaInsertDTO(
@@ -13,7 +14,9 @@ public record OfertaInsertDTO(
     String nome,
     List<CarroIdDTO> carros,
     List<CategoriaIdDTO> categorias,
-    List<ClienteIdDTO> clientes
+    List<UsuarioIdDTO> usuarios,
+    StatusOferta statusOferta,
+    Float porcentagemDeDesconto
 ) {
     public static OfertaInsertDTO valueOf(Oferta oferta){
         return new OfertaInsertDTO(
@@ -24,9 +27,11 @@ public record OfertaInsertDTO(
             oferta.getCategorias()
                 .stream()
                 .map(t -> CategoriaIdDTO.valueOf(t)).toList(),
-            oferta.getClientes()
+            oferta.getUsuarios()
                 .stream()   
-                .map(t -> ClienteIdDTO.valueOf(t)).toList()
+                .map(t -> UsuarioIdDTO.valueOf(t)).toList(),
+            oferta.getStatusOferta(),
+            oferta.getPorcentagemDeDesconto()
         );
     }
 }

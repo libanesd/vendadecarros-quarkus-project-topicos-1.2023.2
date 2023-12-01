@@ -1,11 +1,11 @@
-package br.unitins.topicos1.dto.ClienteDTORepository;
+package br.unitins.topicos1.dto.UsuarioDTORepository;
 
-import br.unitins.topicos1.model.Cliente;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.TipoDeUsuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 
-public record ClienteInsertDTO(
+public record UsuarioInsertDTO(
     @NotBlank(message = "O campo cpf não pode ser nulo.")
     String cpf,
     @NotBlank(message = "O campo nome não pode ser nulo.")
@@ -23,16 +23,16 @@ public record ClienteInsertDTO(
     String senha,
     TipoDeUsuario tipodeusuario
 ) {
-        public static ClienteInsertDTO valueOf(Cliente cliente){
-        return new ClienteInsertDTO(
-            cliente.getCpf(),
-            cliente.getNome(),
-            cliente.getLogin(),
-            cliente.getEndereco(),
-            cliente.getTelefone(),
-            cliente.getEmail(),
-            cliente.getSenha(),
-            cliente.getTipodeusuario()
+        public static UsuarioInsertDTO valueOf(Usuario usuario){
+        return new UsuarioInsertDTO(
+            usuario.getCpf(),
+            usuario.getNome(),
+            usuario.getLogin(),
+            usuario.getEndereco(),
+            usuario.getTelefone(),
+            usuario.getEmail(),
+            usuario.getSenha(),
+            usuario.getTipodeusuario()
         );
     }
 }

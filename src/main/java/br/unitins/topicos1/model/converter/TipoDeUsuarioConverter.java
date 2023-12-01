@@ -9,13 +9,11 @@ public class TipoDeUsuarioConverter implements AttributeConverter<TipoDeUsuario,
 
     @Override
     public Integer convertToDatabaseColumn(TipoDeUsuario attribute) {
-        // TODO Auto-generated method stub
         return ( attribute == null ? null : attribute.getId());
     }
 
     @Override
     public TipoDeUsuario convertToEntityAttribute(Integer dbData) {
-        // TODO Auto-generated method stub
         return TipoDeUsuario.valueOf(dbData);
     }
     

@@ -48,7 +48,7 @@ public class CarroResourceTest {
         3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
 
@@ -67,7 +67,7 @@ public class CarroResourceTest {
         List<Carro> carroResult = repository.findByNome("LAMBORGHINI HURACÁN");
         System.out.println(carroResult.size());
         System.out.println(carroResult.get(0).getNomeCarro());
-        System.out.println(carroResult.get(1).getAno());
+        System.out.println(carroResult.get(0).getAno());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class CarroResourceTest {
         3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -138,7 +138,7 @@ public class CarroResourceTest {
         3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -203,7 +203,7 @@ public class CarroResourceTest {
         3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -250,7 +250,7 @@ public class CarroResourceTest {
         3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);

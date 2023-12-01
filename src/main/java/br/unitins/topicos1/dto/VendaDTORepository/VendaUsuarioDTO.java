@@ -7,7 +7,7 @@ import br.unitins.topicos1.model.StatusVenda;
 import br.unitins.topicos1.model.TipoDePagamento;
 import br.unitins.topicos1.model.Venda;
 
-public record VendaClienteDTO(
+public record VendaUsuarioDTO(
     Long id,
     Date dataDeCompra,
     float precoDaCompra,
@@ -16,8 +16,8 @@ public record VendaClienteDTO(
     TipoDePagamento tipoDePagamento,
     StatusVenda statusVenda
 ) {
-    public static VendaClienteDTO valueOf(Venda venda){
-        return new VendaClienteDTO(
+    public static VendaUsuarioDTO valueOf(Venda venda){
+        return new VendaUsuarioDTO(
             venda.getId(),
             venda.getDataDeCompra(),
             venda.getPrecoDaCompra(),

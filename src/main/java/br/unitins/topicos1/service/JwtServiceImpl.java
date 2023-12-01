@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteJwtDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -15,7 +15,7 @@ public class JwtServiceImpl implements JwtService{
     private static final Duration EXPIRATION_TIME = Duration.ofHours(24);
 
     @Override
-    public String generateJwt(ClienteJwtDTO dto) {
+    public String generateJwt(UsuarioJwtDTO dto) {
         // TODO Auto-generated method stub
         Instant now = Instant.now();
         Instant expiryDate = now.plus(EXPIRATION_TIME);

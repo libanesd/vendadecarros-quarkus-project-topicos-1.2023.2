@@ -7,11 +7,11 @@ import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Categoria;
-import br.unitins.topicos1.model.Cliente;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Oferta;
 import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.CategoriaRepository;
-import br.unitins.topicos1.repository.ClienteRepository;
+import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,7 +28,7 @@ public class OfertaServiceImpl implements  OfertaService{
     @Inject
     CategoriaRepository categoriaRepository;
     @Inject
-    ClienteRepository clienteRepository;
+    UsuarioRepository usuarioRepository;
 
     @Override
     @Transactional
@@ -74,20 +74,20 @@ public class OfertaServiceImpl implements  OfertaService{
         }
 
         if(novaOferta.getCategorias()!= null && !novaOferta.getCategorias().isEmpty()){
-            List<Cliente> clients = new ArrayList<Cliente>();
-            for (Cliente cli : novaOferta.getClientes()) {
-                Cliente clienteDb = clienteRepository.findById(cli.getId());
-                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
-                    clienteDb.setOfertas(new ArrayList<Oferta>());
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            for (Usuario user : novaOferta.getUsuarios()) {
+                Usuario usuarioDb = usuarioRepository.findById(user.getId());
+                if(usuarioDb.getOfertas() == null || usuarioDb.getOfertas().isEmpty()){
+                    usuarioDb.setOfertas(new ArrayList<Oferta>());
                 }
-                clienteDb.getOfertas().add(novaOferta);
-                clienteRepository.persist(clienteDb);
-                clients.add(clienteDb);
+                usuarioDb.getOfertas().add(novaOferta);
+                usuarioRepository.persist(usuarioDb);
+                usuarios.add(usuarioDb);
             }
-            novaOferta.setClientes(clients);
+            novaOferta.setUsuarios(usuarios);
         }else{
-            List<Cliente> clients = new ArrayList<Cliente>();
-            novaOferta.setClientes(clients);
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            novaOferta.setUsuarios(usuarios);
         }
 
         repository.persist(novaOferta);
@@ -130,17 +130,17 @@ public class OfertaServiceImpl implements  OfertaService{
         }
 
         if(oferta.getCategorias()!= null && !oferta.getCategorias().isEmpty()){
-            List<Cliente> clients = new ArrayList<Cliente>();
-            for (Cliente cli : oferta.getClientes()) {
-                Cliente clienteDb = clienteRepository.findById(cli.getId());
-                if(clienteDb.getOfertas() == null || clienteDb.getOfertas().isEmpty()){
-                    clienteDb.setOfertas(new ArrayList<Oferta>());
+            List<Usuario> usuarios = new ArrayList<Usuario>();
+            for (Usuario user : oferta.getUsuarios()) {
+                Usuario usuarioDb = usuarioRepository.findById(user.getId());
+                if(usuarioDb.getOfertas() == null || usuarioDb.getOfertas().isEmpty()){
+                    usuarioDb.setOfertas(new ArrayList<Oferta>());
                 }
-                clienteDb.getOfertas().add(oferta);
-                clienteRepository.persist(clienteDb);
-                clients.add(clienteDb);
+                usuarioDb.getOfertas().add(oferta);
+                usuarioRepository.persist(usuarioDb);
+                usuarios.add(usuarioDb);
             }
-            oferta.setClientes(clients);
+            oferta.setUsuarios(usuarios);
         }
         repository.persist(oferta);
         return OfertaResponseDTO.valueOf(oferta);

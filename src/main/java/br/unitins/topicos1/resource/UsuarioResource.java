@@ -1,8 +1,8 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteInsertDTO;
-import br.unitins.topicos1.dto.ClienteDTORepository.ClienteUpdateDTO;
-import br.unitins.topicos1.service.ClienteService;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioUpdateDTO;
+import br.unitins.topicos1.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -18,17 +18,18 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/clientes")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ClienteResource {
+public class UsuarioResource {
 
     @Inject
-    ClienteService service;
+    UsuarioService service;
     
     @POST
-    //@RolesAllowed({"Admin"})
-    public Response insert(ClienteInsertDTO dto) {
+    @Transactional
+    @Path("/usuario-add")
+    public Response insert(UsuarioInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -37,14 +38,14 @@ public class ClienteResource {
     @Transactional
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
-    public Response update(ClienteUpdateDTO dto, @PathParam("id") Long id) {
+    public Response update(UsuarioUpdateDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
         return Response.noContent().build();
     }
 
     @DELETE
     @Transactional
-    @Path("/{id}")
+    @Path("/usuario/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);

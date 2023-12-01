@@ -17,15 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
-import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
-import br.unitins.topicos1.dto.MarcaDTORepository.MarcaCarroDTO;
-import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Categoria;
-import br.unitins.topicos1.model.TipoCambio;
-import br.unitins.topicos1.model.TipoCarroceria;
-import br.unitins.topicos1.model.TipoCombustivel;
 import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.CategoriaRepository;
 import br.unitins.topicos1.resource.AuthResource;
@@ -56,7 +50,7 @@ public class CategoriaResourceTest {
         CategoriaInsertDTO categoria = new CategoriaInsertDTO("Carros Populares", carros);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
 
@@ -87,7 +81,7 @@ public class CategoriaResourceTest {
         CategoriaInsertDTO categoriaUpdate = new CategoriaInsertDTO("Carros para viagem e esportivos", carrosUpdate);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -135,7 +129,7 @@ public class CategoriaResourceTest {
         CategoriaInsertDTO categoria = new CategoriaInsertDTO("Carros usados por jogadores de futbol", carros);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -194,7 +188,7 @@ public class CategoriaResourceTest {
         CategoriaInsertDTO categoria = new CategoriaInsertDTO("Carros de praia", carros);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
@@ -240,7 +234,7 @@ public class CategoriaResourceTest {
         CategoriaInsertDTO categoria = new CategoriaInsertDTO("Carros de corrida", carros);
 
         LoginDTO dto = new LoginDTO(
-            "leandroartunes@gmail.com",
+            "yasminartunes@gmail.com",
             "123456"
         );
         Response response = authResource.login(dto);
