@@ -1,13 +1,10 @@
 package br.unitins.topicos1.resource;
 
-import java.util.List;
-
 import org.jboss.logging.Logger;
 
 import jakarta.ws.rs.core.Response.Status;
 
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
-import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import br.unitins.topicos1.service.OfertaService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;

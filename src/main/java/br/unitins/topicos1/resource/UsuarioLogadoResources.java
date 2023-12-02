@@ -6,7 +6,6 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
-import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioResponseDTO;
 import br.unitins.topicos1.form.CarroImagemForm;
 import br.unitins.topicos1.service.CarroFileServiceImpl;
 import br.unitins.topicos1.service.CarroService;
