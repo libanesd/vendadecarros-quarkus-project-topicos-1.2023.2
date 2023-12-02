@@ -19,7 +19,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "carro")
 public class Carro extends DefaultEntity{
-    
+
+    @Column(length = 400, nullable = true)
+    private String nomeImagem;
+
     @Column(length = 200, nullable = true)
     private String nomeCarro;
     @Column(length = 200, nullable = true)
@@ -131,6 +134,13 @@ public class Carro extends DefaultEntity{
         Carro carroCast = new Carro();
         carroCast.setId(carro.id());
         return carroCast;
+    }
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
     }
 
      public Venda getVenda() {

@@ -27,6 +27,7 @@ public class VendaResource {
     
     @POST
     @Transactional
+    @Path("/venda-add")
     @RolesAllowed({"User","Admin"})
     public Response insert(VendaInsertDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
@@ -39,15 +40,6 @@ public class VendaResource {
     @RolesAllowed({"User","Admin"})
     public Response update(VendaInsertDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
-        return Response.noContent().build();
-    }
-
-    @DELETE
-    @Transactional
-    @Path("/{id}")
-    @RolesAllowed({"Admin"})
-    public Response delete(@PathParam("id") Long id) {
-        service.delete(id);
         return Response.noContent().build();
     }
 

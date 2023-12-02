@@ -86,8 +86,10 @@ public class Venda extends DefaultEntity{
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
+        vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
+        vendaCast.setUsuario(Usuario.valueOfUsuarioIdDTO(venda.usuario()));
         return vendaCast;
     }
 

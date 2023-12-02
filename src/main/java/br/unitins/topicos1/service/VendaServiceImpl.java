@@ -46,15 +46,9 @@ public class VendaServiceImpl implements VendaService {
     public VendaResponseDTO update(VendaInsertDTO dto, Long id) {
         Venda novaVenda = repository.findById(id);
         novaVenda = Venda.valueOfVendaInsertDTO(dto);
+        novaVenda.setId(id);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Long id) {
-        repository.deleteById(id);
-
     }
 
     @Override

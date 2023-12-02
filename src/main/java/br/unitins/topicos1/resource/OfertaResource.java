@@ -2,6 +2,8 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
+import jakarta.ws.rs.core.Response.Status;
+
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaResponseDTO;
 import br.unitins.topicos1.service.OfertaService;
@@ -17,6 +19,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/ofertas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,9 +31,10 @@ public class OfertaResource {
 
     @POST
     @Transactional
+    @Path("/oferta-add")
     @RolesAllowed({"Admin"})
-    public OfertaResponseDTO insert(OfertaInsertDTO dto) {
-        return service.insert(dto);
+    public Response insert(OfertaInsertDTO dto) {
+        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
 
@@ -38,36 +42,38 @@ public class OfertaResource {
     @Transactional
     @Path("/{id}")
     @RolesAllowed({"Admin"})
-    public OfertaResponseDTO update(OfertaInsertDTO dto, @PathParam("id") Long id) {
-        return service.update(dto, id);
+    public Response update(OfertaInsertDTO dto, @PathParam("id") Long id) {
+        service.update(dto, id);
+        return Response.noContent().build();
     }
 
     @DELETE
     @Transactional
-    @Path("/{id}")
+    @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         service.delete(id);
+        return Response.noContent().build();
     }
 
     @GET
     //@RolesAllowed({"User","Admin"})
-    public List<OfertaResponseDTO> findAll() {
-        return service.findByAll();
+    public Response findAll() {
+        return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
-    public OfertaResponseDTO findById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
     
     @GET
     @Path("/search/nome/{nome}")
     @RolesAllowed({"User","Admin"})
-    public List<OfertaResponseDTO> findByNome(@PathParam("nome") String nome) {
-        return service.findByNome(nome);
+    public Response findByNome(@PathParam("nome") String nome) {
+        return Response.ok(service.findByNome(nome)).build();
     }
     
 }

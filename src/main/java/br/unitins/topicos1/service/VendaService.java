@@ -12,8 +12,6 @@ public interface VendaService {
 
     public VendaResponseDTO update(VendaInsertDTO dto, Long id);
 
-    public void delete(Long id);
-
     public VendaResponseDTO findById(Long id);
 
     public List<VendaResponseDTO> findByNome(String nome);

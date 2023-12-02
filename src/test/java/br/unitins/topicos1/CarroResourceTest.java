@@ -42,10 +42,10 @@ public class CarroResourceTest {
     
     @Test
     public void testInsert() {
-        MarcaCarroDTO marca = new MarcaCarroDTO(1L);
-        CarroDTO carro = new CarroDTO("LAMBORGHINI HURACÁN", "5.2 V10 GASOLINA LP 640-4 PERFORMANTE LDF", 
-        "5.2 V10", "2018/2019", "Cinza", "#Ducarai", "Sorocaba - SP", 
-        3890000F, 5861F, marca, TipoCombustivel.GASOLINA, TipoCambio.AUTOMATICA, TipoCarroceria.CUPE);
+        MarcaCarroDTO marca = new MarcaCarroDTO(2L);
+        CarroDTO carro = new CarroDTO("CHEVROLET ONIX", "1.0 FLEX MANUAL", 
+        "1.0 FLEX", "2021/2021", "Cinza", "#Ducarai", "Contagem - MG", 
+        61990F, 72700F, marca, TipoCombustivel.GASOLINA, TipoCambio.MANUAL, TipoCarroceria.HATCHBACK);
 
         LoginDTO dto = new LoginDTO(
             "yasminartunes@gmail.com",

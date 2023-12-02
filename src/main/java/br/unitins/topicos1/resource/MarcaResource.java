@@ -1,8 +1,6 @@
 package br.unitins.topicos1.resource;
-import java.util.List;
 
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
-import br.unitins.topicos1.dto.MarcaDTORepository.MarcaResponseDTO;
 import br.unitins.topicos1.service.MarcaService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;

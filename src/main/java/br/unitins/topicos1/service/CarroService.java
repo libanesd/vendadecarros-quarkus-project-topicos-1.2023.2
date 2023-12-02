@@ -13,6 +13,8 @@ public interface CarroService {
 
     public CarroResponseDTO update(CarroDTO dto, Long id);
 
+    public CarroResponseDTO updateNomeImagem(Long id, String nomeImagem);
+
     public void delete(Long id);
 
     public CarroResponseDTO findById(Long id);

@@ -64,5 +64,13 @@ public class CarroServiceimpl implements CarroService{
         return repository.listAll().stream()
             .map(e -> CarroEstoqueDTO.valueOf(e)).toList();
     }
+
+    @Override
+    @Transactional
+    public CarroResponseDTO updateNomeImagem(Long id, String nomeImagem) {
+        Carro carro = repository.findById(id);
+        carro.setNomeImagem(nomeImagem);
+        return CarroResponseDTO.valueOf(carro);
+    }
     
 }
