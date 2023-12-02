@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
 import br.unitins.topicos1.service.CategoriaService;
 import jakarta.annotation.security.RolesAllowed;
@@ -25,10 +27,13 @@ public class CategoriaResource {
     @Inject
     CategoriaService service;
 
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
+
     @POST
     @RolesAllowed({"Admin"})
     @Path("/categoria-add")
     public Response insert(CategoriaInsertDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao de categoria", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -38,6 +43,7 @@ public class CategoriaResource {
     @Path("/{id}")
     @RolesAllowed({"Admin"})
     public Response update(CategoriaInsertDTO dto, @PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de update de categoria", dto.nome());
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -47,6 +53,7 @@ public class CategoriaResource {
     @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de delete de categoria");
         service.delete(id);
         return Response.noContent().build();
     }
@@ -54,6 +61,7 @@ public class CategoriaResource {
     @GET
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
+        LOG.infof("buscando todas as categorias");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -61,6 +69,7 @@ public class CategoriaResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("buscando por id de categoria");
         return Response.ok(service.findById(id)).build();
     }
     
@@ -68,6 +77,7 @@ public class CategoriaResource {
     @Path("/search/nome/{nome}")
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
+        LOG.infof("buscando por nome de categoria");
         return Response.ok(service.findByNome(nome)).build();
     }
 }

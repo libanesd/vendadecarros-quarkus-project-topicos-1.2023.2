@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.service.CarroService;
 import jakarta.annotation.security.RolesAllowed;
@@ -26,10 +28,13 @@ public class CarroResource {
     @Inject
     CarroService service;
 
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
+
     @POST
     @RolesAllowed({"Admin"})
     @Path("/carro-add")
     public Response insert(@Valid CarroDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao do carro %s", dto.nomeCarro());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -39,6 +44,7 @@ public class CarroResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response update(CarroDTO dto, @PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de update do carro %s", dto.nomeCarro());
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -48,6 +54,7 @@ public class CarroResource {
     @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de delete do carro");
         service.delete(id);
         return Response.noContent().build();
     }
@@ -55,6 +62,7 @@ public class CarroResource {
     @GET
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
+        LOG.infof("buscando todos os carros");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -62,6 +70,7 @@ public class CarroResource {
     @Path("/estoque")
     @RolesAllowed({"Admin"})
     public Response findAllEstoque() {
+        LOG.infof("buscando todos os carros com estoque");
         return Response.ok(service.findByAllEstoque()).build();
     }
 
@@ -69,6 +78,7 @@ public class CarroResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("procurando o carro pelo id");
         return Response.ok(service.findById(id)).build();
     }
     
@@ -76,6 +86,7 @@ public class CarroResource {
     @Path("/search/nome/{nome}")
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
+        LOG.infof("procurando o carro pelo nome");
         return Response.ok(service.findByNome(nome)).build();
     }
     

@@ -1,12 +1,13 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.service.VendaService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -24,12 +25,15 @@ public class VendaResource {
 
     @Inject
     VendaService service;
+
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
     
     @POST
     @Transactional
     @Path("/venda-add")
     @RolesAllowed({"User","Admin"})
     public Response insert(VendaInsertDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao da venda %s", dto.descricao());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -39,6 +43,7 @@ public class VendaResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response update(VendaInsertDTO dto, @PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de update da venda %s", dto.descricao());
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -47,6 +52,7 @@ public class VendaResource {
     @Transactional
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
+        LOG.infof("Iniciando o processo de delete da venda");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -55,6 +61,7 @@ public class VendaResource {
     @Transactional
     @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("buscando por id venda");
         return Response.ok(service.findById(id)).build();
     }
     
@@ -63,6 +70,7 @@ public class VendaResource {
     @Transactional
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
+        LOG.infof("buscando por nome venda");
         return Response.ok(service.findByNome(nome)).build();
     }
 }

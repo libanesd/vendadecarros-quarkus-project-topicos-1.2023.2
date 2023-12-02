@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
 import br.unitins.topicos1.service.MarcaService;
 import jakarta.annotation.security.RolesAllowed;
@@ -24,11 +26,14 @@ public class MarcaResource {
     
     @Inject
     MarcaService service;
+
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
     
     @POST
     @RolesAllowed("Admin")
     @Path("/marca-add")
     public Response insert(MarcaInsertDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao da marca %s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -38,6 +43,7 @@ public class MarcaResource {
     @Path("/{id}")
     @RolesAllowed({"Admin"})
     public Response update(MarcaInsertDTO dto, @PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de update da marca %s", dto.nome());
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -47,6 +53,7 @@ public class MarcaResource {
     @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de delete da marca");
         service.delete(id);
         return Response.noContent().build();
     }
@@ -54,6 +61,7 @@ public class MarcaResource {
     @GET
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
+        LOG.infof("Buscando todas as marcas");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -61,6 +69,7 @@ public class MarcaResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("Buscando por id marca");
         return Response.ok(service.findById(id)).build();
     }
     
@@ -68,6 +77,7 @@ public class MarcaResource {
     @Path("/search/nome/{nome}")
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
+        LOG.infof("Buscando por nome marca");
         return Response.ok(service.findByNome(nome)).build();
     }
 }
