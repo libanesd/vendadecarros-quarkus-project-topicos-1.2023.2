@@ -3,6 +3,7 @@ package br.unitins.topicos1.model;
 import java.util.List;
 
 import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 import jakarta.persistence.Column;
@@ -127,6 +128,26 @@ public class Carro extends DefaultEntity{
         carroCast.setTipoCambio(carro.tipoCambio());
         carroCast.setTipoCarroceria(carro.tipoCarroceria());
         carroCast.setTipoCombustivel(carro.tipoCombustivel());
+        carroCast.setEstoque(carro.estoque());
+        return carroCast;
+    }
+
+    public static Carro valueOfCarroEstoqueDTO(CarroEstoqueDTO carro){
+        Carro carroCast = new Carro();
+        carroCast.setNomeCarro(carro.nomeCarro());
+        carroCast.setCarroSpec(carro.carroSpec());
+        carroCast.setVersao(carro.versao());
+        carroCast.setAno(carro.ano());
+        carroCast.setCor(carro.cor());
+        carroCast.setCaracteristicas(carro.caracteristicas());
+        carroCast.setCidade(carro.cidade());
+        carroCast.setPreco(carro.preco());
+        carroCast.setKilometragem(carro.kilometragem());
+        carroCast.setMarca(Marca.valueOfMarcaCarroDTO(carro.marca()));
+        carroCast.setTipoCambio(carro.tipoCambio());
+        carroCast.setTipoCarroceria(carro.tipoCarroceria());
+        carroCast.setTipoCombustivel(carro.tipoCombustivel());
+        carroCast.setEstoque(carro.estoque());
         return carroCast;
     }
 

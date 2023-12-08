@@ -18,9 +18,7 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
-import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
-import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.resource.AuthResource;

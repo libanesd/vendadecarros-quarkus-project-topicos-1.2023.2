@@ -30,7 +30,8 @@ public record CarroDTO (
     MarcaCarroDTO marca,
     TipoCombustivel tipoCombustivel,
     TipoCambio tipoCambio,
-    TipoCarroceria tipoCarroceria
+    TipoCarroceria tipoCarroceria,
+    Integer estoque
 ) { 
 
     public static CarroDTO valueOf(Carro carro){
@@ -47,7 +48,8 @@ public record CarroDTO (
             MarcaCarroDTO.valueOf(carro.getMarca()),
             carro.getTipoCombustivel(),
             carro.getTipoCambio(),
-            carro.getTipoCarroceria()
+            carro.getTipoCarroceria(),
+            carro.getEstoqueado()
         );
     }
 }

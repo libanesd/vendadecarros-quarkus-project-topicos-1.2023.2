@@ -13,18 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static io.restassured.RestAssured.given;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
-import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaIdDTO;
-import br.unitins.topicos1.dto.OfertaDTORepository.OfertaInsertDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
-import br.unitins.topicos1.model.Oferta;
-import br.unitins.topicos1.model.StatusOferta;
 import br.unitins.topicos1.model.StatusVenda;
 import br.unitins.topicos1.model.TipoDePagamento;
 import br.unitins.topicos1.model.Venda;
@@ -76,7 +70,7 @@ public class VendaResourceTest {
             .statusCode(201);
     }
 
-    //Produzir mais carros para testes
+    //Produzir mais carros para
     @Test
     public void testUpdate() {
         CarroIdDTO carro  = new CarroIdDTO(7L);
