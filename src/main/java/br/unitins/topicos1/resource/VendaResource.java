@@ -52,7 +52,7 @@ public class VendaResource {
     @Transactional
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
-        LOG.infof("Iniciando o processo de delete da venda");
+        LOG.infof("Iniciando o processo de acesso de todas as vendas");
         return Response.ok(service.findByAll()).build();
     }
 

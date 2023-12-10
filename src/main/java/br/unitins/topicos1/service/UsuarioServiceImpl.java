@@ -3,18 +3,25 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
+import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.OfertaDTORepository.OfertaIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertUserDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioSemSenhaDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioUpdateDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaIdDTO;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Oferta;
+import br.unitins.topicos1.model.TipoDeUsuario;
 import br.unitins.topicos1.model.Venda;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
 import br.unitins.topicos1.repository.VendaRepository;
+import br.unitins.topicos1.resource.AuthResource;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -35,6 +42,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Inject
     HashService hashService;
+
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
 
 
     @Override
@@ -138,6 +147,84 @@ public class UsuarioServiceImpl implements UsuarioService{
             throw new ValidationException("login", "Login inválido");
 
         return UsuarioJwtDTO.valueOf(usuario);
+    }
+
+    @Override
+    public UsuarioResponseDTO insertUser(@Valid UsuarioInsertUserDTO dto) {
+        // TODO Auto-generated method stub
+        if (repository.findByLogin(dto.login()) != null) {
+            throw new ValidationException("login", "Login já existe.");
+        }
+        
+        Usuario novoUsuario = Usuario.valueOfUsuarioInsertUserDTO(dto); 
+        novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
+        List<Oferta> oferta = new ArrayList<Oferta>();
+        List<Venda> vendas = new ArrayList<Venda>();
+        novoUsuario.setOfertas(oferta);
+        novoUsuario.setVendas(vendas);
+
+        TipoDeUsuario tipoUsuario = TipoDeUsuario.USER;
+
+        novoUsuario.setTipodeusuario(tipoUsuario);
+
+        repository.persist(novoUsuario);
+        return UsuarioResponseDTO.valueOf(novoUsuario);
+    }
+
+    @Override
+    @Transactional
+    public LoginDTO updateSenhaUsuarioLogado(String login,String senha) {
+        // TODO Auto-generated method stub
+
+        LOG.infof("Iniciando a autenticacao do %s", login);
+        Usuario novoUsuario = repository.findByLogin(login);
+
+        LOG.infof("Iniciando a autenticacao do usuario com as credenciais: %s", novoUsuario.getLogin());
+        LOG.infof("Iniciando a autenticacao do usuario com as credenciais: %s", novoUsuario.getSenha());
+
+        novoUsuario.setSenha(hashService.getHashSenha(senha));
+
+        LOG.infof("update de Hash da senha gerado.",novoUsuario.getSenha());
+
+        repository.persist(novoUsuario);
+
+        LoginDTO updatelogin = new LoginDTO(novoUsuario.getLogin(), novoUsuario.getSenha());
+        return updatelogin;
+    }
+
+    @Override
+    @Transactional
+    public UsuarioSemSenhaDTO updateUsuario(String login,UsuarioSemSenhaDTO dto) {
+        // TODO Auto-generated method stub
+        LOG.infof("Iniciando a update do %s", login);
+        Usuario novoUsuario = repository.findByLogin(login);
+
+        LOG.infof("Iniciando a autenticacao do usuario com as credenciais: %s", novoUsuario.getLogin());
+        if(dto.cpf() != null && !dto.cpf().isEmpty()){
+            novoUsuario.setCpf(dto.cpf());
+        }
+        if(dto.nome() != null && !dto.nome().isEmpty()){
+            novoUsuario.setNome(dto.nome());
+        }
+        if(dto.login() != null && !dto.login().isEmpty()){
+            novoUsuario.setLogin(dto.login());
+        }
+        if(dto.telefone() != null && !dto.telefone().isEmpty()){
+            novoUsuario.setTelefone(dto.telefone());
+        }
+        if(dto.email() != null && !dto.email().isEmpty()){
+            novoUsuario.setEmail(dto.email());
+        }
+        if(dto.endereco() != null && !dto.endereco().isEmpty()){
+            novoUsuario.setEndereco(dto.endereco());
+        }
+
+        repository.persist(novoUsuario);
+        dto = UsuarioSemSenhaDTO.valueOf(novoUsuario);
+        LOG.info("processo de update do usuario concluido");
+
+        return dto;
+
     }
     
 }

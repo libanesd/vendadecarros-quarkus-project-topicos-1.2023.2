@@ -5,8 +5,10 @@ import java.util.List;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertUserDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioSemSenhaDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -98,6 +100,29 @@ public class Usuario extends DefaultEntity{
     public static Usuario valueOfUsuarioInsertDTO(UsuarioInsertDTO usuario){
         Usuario usuarioCast = new Usuario();
         usuarioCast.setTipodeusuario(usuario.tipodeusuario());
+        usuarioCast.setEndereco(usuario.endereco());
+        usuarioCast.setNome(usuario.nome());
+        usuarioCast.setCpf(usuario.cpf());
+        usuarioCast.setTelefone(usuario.telefone());
+        usuarioCast.setEmail(usuario.email());
+        usuarioCast.setSenha(usuario.senha());
+        usuarioCast.setLogin(usuario.login());
+        return usuarioCast;
+    }
+
+    public static Usuario valueOfUsuarioSemSenhaDTO(UsuarioSemSenhaDTO usuario){
+        Usuario usuarioCast = new Usuario();
+        usuarioCast.setCpf(usuario.cpf());
+        usuarioCast.setNome(usuario.nome());
+        usuarioCast.setLogin(usuario.login());
+        usuarioCast.setEndereco(usuario.endereco());
+        usuarioCast.setTelefone(usuario.telefone());
+        usuarioCast.setEmail(usuario.email());
+        return usuarioCast;
+    }
+
+    public static Usuario valueOfUsuarioInsertUserDTO(UsuarioInsertUserDTO usuario){
+        Usuario usuarioCast = new Usuario();
         usuarioCast.setEndereco(usuario.endereco());
         usuarioCast.setNome(usuario.nome());
         usuarioCast.setCpf(usuario.cpf());

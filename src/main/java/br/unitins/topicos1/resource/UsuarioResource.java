@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertUserDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioUpdateDTO;
 import br.unitins.topicos1.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
@@ -33,9 +34,18 @@ public class UsuarioResource {
     @POST
     @Transactional
     @Path("/usuario-add")
+    @RolesAllowed({"Admin"})
     public Response insert(UsuarioInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do usuario %s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
+    }
+
+    @POST
+    @Transactional
+    @Path("/cadastro")
+    public Response insertUser(UsuarioInsertUserDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao do usuario do tipo usuario%s", dto.nome());
+        return Response.status(Status.CREATED).entity(service.insertUser(dto)).build();
     }
 
 
