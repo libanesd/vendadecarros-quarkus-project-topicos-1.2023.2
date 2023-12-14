@@ -1,10 +1,15 @@
 package br.unitins.topicos1.service;
 
+import java.util.Date;
 import java.util.List;
 
+import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.CompraUserDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import br.unitins.topicos1.model.Carro;
+import br.unitins.topicos1.model.StatusVenda;
+import br.unitins.topicos1.model.TipoDePagamento;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Venda;
 import br.unitins.topicos1.repository.CarroRepository;
@@ -67,6 +72,26 @@ public class VendaServiceImpl implements VendaService {
     public List<VendaResponseDTO> findByAll() {
         return repository.listAll().stream()
             .map(e -> VendaResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    public VendaResponseDTO insertCompraUser(CompraUserDTO dto,String login) {
+        // TODO Auto-generated method stub
+
+        Usuario usuario = usuarioRepository.findByLogin(login);
+        Venda novaVenda = new Venda();
+        Carro carro = carroRepository.findById(dto.carro());
+        
+        novaVenda.setDataDeCompra(new Date());
+        novaVenda.setCarro(carro);
+        novaVenda.setPrecoDaCompra(carro.getPreco());
+        novaVenda.setDescricao("compra do carro" + carro.getNomeCarro());
+        novaVenda.setTipoDePagamento(dto.tipoDePagamento());
+        novaVenda.setStatusVenda(StatusVenda.AGUARDANDOPAGAMENTO);
+        novaVenda.setUsuario(usuario);
+
+        repository.persist(novaVenda);
+        return VendaResponseDTO.valueOf(novaVenda);
     }
     
 }

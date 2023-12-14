@@ -9,6 +9,7 @@ import br.unitins.topicos1.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -43,7 +44,7 @@ public class UsuarioResource {
     @POST
     @Transactional
     @Path("/cadastro")
-    public Response insertUser(UsuarioInsertUserDTO dto) {
+    public Response insertUser(@Valid UsuarioInsertUserDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do usuario do tipo usuario%s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insertUser(dto)).build();
     }
@@ -71,7 +72,7 @@ public class UsuarioResource {
 
     @GET
     @Transactional
-    //@RolesAllowed({"User","Admin"})
+    @RolesAllowed({"Admin"})
     public Response findAll() {
         LOG.infof("buscando todos os usuarios");
         return Response.ok(service.findByAll()).build();

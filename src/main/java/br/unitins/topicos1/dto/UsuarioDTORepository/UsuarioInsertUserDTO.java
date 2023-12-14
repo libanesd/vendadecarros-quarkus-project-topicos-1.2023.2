@@ -1,10 +1,13 @@
 package br.unitins.topicos1.dto.UsuarioDTORepository;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.unitins.topicos1.model.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 
 public record UsuarioInsertUserDTO(
+    @CPF
     @NotBlank(message = "O campo cpf não pode ser nulo.")
     String cpf,
     @NotBlank(message = "O campo nome não pode ser nulo.")

@@ -1,7 +1,10 @@
 package br.unitins.topicos1.resource;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
+import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
+import br.unitins.topicos1.dto.VendaDTORepository.CompraUserDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.service.VendaService;
 import jakarta.annotation.security.RolesAllowed;
@@ -26,6 +29,9 @@ public class VendaResource {
     @Inject
     VendaService service;
 
+    @Inject
+    JsonWebToken jwt;
+
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
     
     @POST
@@ -35,6 +41,18 @@ public class VendaResource {
     public Response insert(VendaInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da venda %s", dto.descricao());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
+    }
+
+    @POST
+    @Transactional
+    @Path("/compra-user")
+    @RolesAllowed({"User","Admin"})
+    public Response insertCompraUser(CompraUserDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao da venda %s");
+
+        String login = jwt.getSubject();
+
+        return Response.status(Status.CREATED).entity(service.insertCompraUser(dto,login)).build();
     }
 
 
