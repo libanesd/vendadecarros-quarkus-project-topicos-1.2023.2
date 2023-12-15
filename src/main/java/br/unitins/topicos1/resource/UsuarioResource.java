@@ -35,7 +35,7 @@ public class UsuarioResource {
     @POST
     @Transactional
     @Path("/usuario-add")
-    @RolesAllowed({"Admin"})
+    //@RolesAllowed({"Admin"})
     public Response insert(UsuarioInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do usuario %s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();

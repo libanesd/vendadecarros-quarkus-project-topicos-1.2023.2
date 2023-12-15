@@ -3,7 +3,7 @@ package br.unitins.topicos1.resource;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
-import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
+import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;  
 import br.unitins.topicos1.dto.VendaDTORepository.CompraUserDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.service.VendaService;

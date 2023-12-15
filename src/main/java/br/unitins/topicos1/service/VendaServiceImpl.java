@@ -1,15 +1,14 @@
 package br.unitins.topicos1.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.CompraUserDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.StatusVenda;
-import br.unitins.topicos1.model.TipoDePagamento;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Venda;
 import br.unitins.topicos1.repository.CarroRepository;
@@ -64,8 +63,16 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     public List<VendaResponseDTO> findByNome(String nome) {
-        return repository.findByNome(nome).stream()
-            .map(e -> VendaResponseDTO.valueOf(e)).toList();
+        List<Usuario> usuarios = usuarioRepository.findByNome(nome);
+        List<VendaResponseDTO> listaDeVendas = new ArrayList<VendaResponseDTO>();
+
+        for (Venda venda: usuarios.get(0).getVendas()) {
+            Venda vendaAux = new Venda();
+            vendaAux = repository.findById(venda.getId());
+            listaDeVendas.add(VendaResponseDTO.valueOf(vendaAux));
+        }
+
+        return listaDeVendas;
     }
 
     @Override
