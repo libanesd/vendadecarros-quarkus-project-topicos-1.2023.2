@@ -42,7 +42,7 @@ public class CarroResourceTest {
     
     @Test
     public void testInsert() {
-        MarcaCarroDTO marca = new MarcaCarroDTO(2L);
+        MarcaCarroDTO marca = new MarcaCarroDTO(1L);
         CarroDTO carro = new CarroDTO("CHEVROLET ONIX", "1.0 FLEX MANUAL", 
         "1.0 FLEX", "2021/2021", "Cinza", "#Ducarai", "Contagem - MG", 
         61990F, 72700F, marca, TipoCombustivel.GASOLINA, TipoCambio.MANUAL, TipoCarroceria.HATCHBACK,3);
@@ -64,7 +64,7 @@ public class CarroResourceTest {
             .then()
             .statusCode(201);
 
-        List<Carro> carroResult = repository.findByNome("LAMBORGHINI HURACÁN");
+        List<Carro> carroResult = repository.findByNome("CHEVROLET ONIX");
         System.out.println(carroResult.size());
         System.out.println(carroResult.get(0).getNomeCarro());
         System.out.println(carroResult.get(0).getAno());
