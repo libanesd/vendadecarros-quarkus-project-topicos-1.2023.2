@@ -9,8 +9,9 @@ import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.StatusVenda;
+import br.unitins.topicos1.model.TipoDeMovimentacaoFinanceira;
 import br.unitins.topicos1.model.Usuario;
-import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.model.MovimentacaoFinanceira;
 import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
@@ -36,7 +37,7 @@ public class VendaServiceImpl implements VendaService {
     @Transactional
     public VendaResponseDTO insert(@Valid VendaInsertDTO dto) {
         // TODO Auto-generated method stub
-        Venda novaVenda = Venda.valueOfVendaInsertDTO(dto);
+        MovimentacaoFinanceira novaVenda = MovimentacaoFinanceira.valueOfVendaInsertDTO(dto);
         Carro carro = carroRepository.findById(dto.carro().id());
         Usuario usuario = usuarioRepository.findById(dto.usuario().id());
         novaVenda.setCarro(carro);
@@ -48,8 +49,8 @@ public class VendaServiceImpl implements VendaService {
     @Override
     @Transactional
     public VendaResponseDTO update(VendaInsertDTO dto, Long id) {
-        Venda novaVenda = repository.findById(id);
-        novaVenda = Venda.valueOfVendaInsertDTO(dto);
+        MovimentacaoFinanceira novaVenda = repository.findById(id);
+        novaVenda = MovimentacaoFinanceira.valueOfVendaInsertDTO(dto);
         novaVenda.setId(id);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
@@ -57,7 +58,7 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     public VendaResponseDTO findById(Long id) {
-       Venda novaVenda = repository.findById(id);
+       MovimentacaoFinanceira novaVenda = repository.findById(id);
         return VendaResponseDTO.valueOf(novaVenda);
     }
 
@@ -66,8 +67,8 @@ public class VendaServiceImpl implements VendaService {
         List<Usuario> usuarios = usuarioRepository.findByNome(nome);
         List<VendaResponseDTO> listaDeVendas = new ArrayList<VendaResponseDTO>();
 
-        for (Venda venda: usuarios.get(0).getVendas()) {
-            Venda vendaAux = new Venda();
+        for (MovimentacaoFinanceira venda: usuarios.get(0).getVendas()) {
+            MovimentacaoFinanceira vendaAux = new MovimentacaoFinanceira();
             vendaAux = repository.findById(venda.getId());
             listaDeVendas.add(VendaResponseDTO.valueOf(vendaAux));
         }
@@ -86,7 +87,7 @@ public class VendaServiceImpl implements VendaService {
         // TODO Auto-generated method stub
 
         Usuario usuario = usuarioRepository.findByLogin(login);
-        Venda novaVenda = new Venda();
+        MovimentacaoFinanceira novaVenda = new MovimentacaoFinanceira();
         Carro carro = carroRepository.findById(dto.carro());
         
         novaVenda.setDataDeCompra(new Date());
@@ -95,6 +96,7 @@ public class VendaServiceImpl implements VendaService {
         novaVenda.setDescricao("compra do carro" + carro.getNomeCarro());
         novaVenda.setTipoDePagamento(dto.tipoDePagamento());
         novaVenda.setStatusVenda(StatusVenda.AGUARDANDOPAGAMENTO);
+        novaVenda.setTipoDeMovimentacaoFinanceira(TipoDeMovimentacaoFinanceira.VENDA);
         novaVenda.setUsuario(usuario);
 
         repository.persist(novaVenda);

@@ -5,8 +5,9 @@ import java.util.Date;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.model.StatusVenda;
+import br.unitins.topicos1.model.TipoDeMovimentacaoFinanceira;
 import br.unitins.topicos1.model.TipoDePagamento;
-import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.model.MovimentacaoFinanceira;
 
 public record VendaResponseDTO(
     Long id,
@@ -16,9 +17,10 @@ public record VendaResponseDTO(
     CarroIdDTO carro,
     TipoDePagamento tipoDePagamento,
     StatusVenda statusVenda,
-    UsuarioIdDTO usuario
+    UsuarioIdDTO usuario,
+    TipoDeMovimentacaoFinanceira tipoMovimentacaoFinanceira
 ) {
-    public static VendaResponseDTO valueOf(Venda venda){
+    public static VendaResponseDTO valueOf(MovimentacaoFinanceira venda){
         return new VendaResponseDTO(
             venda.getId(),
             venda.getDataDeCompra(),
@@ -27,7 +29,8 @@ public record VendaResponseDTO(
             CarroIdDTO.valueOf(venda.getCarro()),
             venda.getTipoDePagamento(),
             venda.getStatusVenda(),
-            UsuarioIdDTO.valueOf(venda.getUsuario())
+            UsuarioIdDTO.valueOf(venda.getUsuario()),
+            venda.getTipoDeMovimentacaoFinanceira()
         );
     }
 }

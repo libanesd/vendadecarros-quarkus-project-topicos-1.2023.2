@@ -20,8 +20,9 @@ import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.dto.VendaDTORepository.VendaInsertDTO;
 import br.unitins.topicos1.model.StatusVenda;
+import br.unitins.topicos1.model.TipoDeMovimentacaoFinanceira;
 import br.unitins.topicos1.model.TipoDePagamento;
-import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.model.MovimentacaoFinanceira;
 import br.unitins.topicos1.repository.VendaRepository;
 import br.unitins.topicos1.resource.AuthResource;
 import br.unitins.topicos1.resource.VendaResource;
@@ -50,7 +51,7 @@ public class VendaResourceTest {
     public void testInsert() {
         CarroIdDTO carro  = new CarroIdDTO(1L);
         UsuarioIdDTO usuario = new UsuarioIdDTO(1L);
-        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70000, "Compra da Lamborguine", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario);
+        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70000, "Compra da Lamborguine", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario,TipoDeMovimentacaoFinanceira.VENDA);
 
         LoginDTO dto = new LoginDTO(
             "yasminartunes@gmail.com",
@@ -75,11 +76,11 @@ public class VendaResourceTest {
     public void testUpdate() {
         CarroIdDTO carro  = new CarroIdDTO(7L);
         UsuarioIdDTO usuario = new UsuarioIdDTO(2L);
-        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70300, "Compra da niva", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario);
+        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70300, "Compra da niva", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario,TipoDeMovimentacaoFinanceira.VENDA);
 
         CarroIdDTO carroUpdate  = new CarroIdDTO(10L);
         UsuarioIdDTO usuarioUpdate = new UsuarioIdDTO(2L);
-        VendaInsertDTO vendaUpdate = new VendaInsertDTO(new Date(), 70000, "Compra da IX35", carroUpdate, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuarioUpdate);
+        VendaInsertDTO vendaUpdate = new VendaInsertDTO(new Date(), 70000, "Compra da IX35", carroUpdate, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuarioUpdate,TipoDeMovimentacaoFinanceira.VENDA);
 
         LoginDTO dto = new LoginDTO(
             "yasminartunes@gmail.com",
@@ -97,7 +98,7 @@ public class VendaResourceTest {
             .when().post("/vendas/venda-add")
             .getBody();
         
-        Venda vendadojson = new Venda();
+        MovimentacaoFinanceira vendadojson = new MovimentacaoFinanceira();
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -121,7 +122,7 @@ public class VendaResourceTest {
             .then()
             .statusCode(204);
 
-        Venda vendaResult = repository.findById(vendadojson.getId());
+        MovimentacaoFinanceira vendaResult = repository.findById(vendadojson.getId());
         System.out.println("Result:" + vendaResult.getDescricao());
     }
 
@@ -129,7 +130,7 @@ public class VendaResourceTest {
     public void testFindById() {
         CarroIdDTO carro  = new CarroIdDTO(4L);
         UsuarioIdDTO usuario = new UsuarioIdDTO(5L);
-        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70000, "Compra da FX35", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario);
+        VendaInsertDTO venda = new VendaInsertDTO(new Date(), 70000, "Compra da FX35", carro, TipoDePagamento.DEBITO, StatusVenda.APROVADA, usuario,TipoDeMovimentacaoFinanceira.VENDA);
 
         LoginDTO dto = new LoginDTO(
             "yasminartunes@gmail.com",
@@ -146,7 +147,7 @@ public class VendaResourceTest {
             .when().post("/vendas/venda-add")
             .getBody();
         
-        Venda vendadojson = new Venda();
+        MovimentacaoFinanceira vendadojson = new MovimentacaoFinanceira();
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {

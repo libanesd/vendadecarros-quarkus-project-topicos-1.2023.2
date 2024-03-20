@@ -6,12 +6,13 @@ import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.model.StatusVenda;
 import br.unitins.topicos1.model.TipoDePagamento;
-import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.model.MovimentacaoFinanceira;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import br.unitins.topicos1.model.TipoDeMovimentacaoFinanceira;
 
 public record VendaInsertDTO(
     @PastOrPresent(message = "A data de compra deve ser no passado ou no presente")
@@ -35,9 +36,11 @@ public record VendaInsertDTO(
 
     @NotNull(message = "O DTO do cliente não pode ser nulo")
     @Valid
-    UsuarioIdDTO usuario
+    UsuarioIdDTO usuario,
+
+    TipoDeMovimentacaoFinanceira tipoMovimentacaoFinanceira
 ) {
-    public static VendaInsertDTO valueOf(Venda venda){
+    public static VendaInsertDTO valueOf(MovimentacaoFinanceira venda){
         return new VendaInsertDTO(
             venda.getDataDeCompra(),
             venda.getPrecoDaCompra(),
@@ -45,7 +48,8 @@ public record VendaInsertDTO(
             CarroIdDTO.valueOf(venda.getCarro()),
             venda.getTipoDePagamento(),
             venda.getStatusVenda(),
-            UsuarioIdDTO.valueOf(venda.getUsuario())
+            UsuarioIdDTO.valueOf(venda.getUsuario()),
+            venda.getTipoDeMovimentacaoFinanceira()
         );
     }
 }

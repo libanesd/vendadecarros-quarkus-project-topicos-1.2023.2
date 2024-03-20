@@ -19,8 +19,8 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "venda")
-public class Venda extends DefaultEntity{
+@Table(name = "movimentacao_financeira")
+public class MovimentacaoFinanceira extends DefaultEntity{
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDeCompra;
@@ -39,25 +39,29 @@ public class Venda extends DefaultEntity{
     private TipoDePagamento tipoDePagamento;
 
     @Enumerated(EnumType.STRING)
+    private TipoDeMovimentacaoFinanceira tipoDeMovimentacaoFinanceira;
+
+    @Enumerated(EnumType.STRING)
     private StatusVenda statusVenda;
 
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
 
-    public static Venda valueOfVendaDTO(VendaDTO venda){
-        Venda vendaCast = new Venda();
+    public static MovimentacaoFinanceira valueOfVendaDTO(VendaDTO venda){
+        MovimentacaoFinanceira vendaCast = new MovimentacaoFinanceira();
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
         vendaCast.setCarro(Carro.valueOfCarroDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
+        vendaCast.setTipoDeMovimentacaoFinanceira(venda.tipoMovimentacaoFinanceira());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setUsuario(venda.usuario());
         return vendaCast;
     }
-    public static Venda valueOfVendaResponseDTO(VendaResponseDTO venda){
-        Venda vendaCast = new Venda();
+    public static MovimentacaoFinanceira valueOfVendaResponseDTO(VendaResponseDTO venda){
+        MovimentacaoFinanceira vendaCast = new MovimentacaoFinanceira();
         vendaCast.setId(venda.id());
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
@@ -66,11 +70,12 @@ public class Venda extends DefaultEntity{
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setUsuario(Usuario.valueOfUsuarioIdDTO(venda.usuario()));
+        vendaCast.setTipoDeMovimentacaoFinanceira(venda.tipoMovimentacaoFinanceira());
         return vendaCast;
     }
 
-    public static Venda valueOfVendaUsuarioDTO(VendaUsuarioDTO venda){
-        Venda vendaCast = new Venda();
+    public static MovimentacaoFinanceira valueOfVendaUsuarioDTO(VendaUsuarioDTO venda){
+        MovimentacaoFinanceira vendaCast = new MovimentacaoFinanceira();
         vendaCast.setId(venda.id());
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
@@ -78,11 +83,12 @@ public class Venda extends DefaultEntity{
         vendaCast.setCarro(Carro.valueOfCarroIdDTO(venda.carro()));
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
+        vendaCast.setTipoDeMovimentacaoFinanceira(venda.tipoMovimentacaoFinanceira());
         return vendaCast;
     }
 
-    public static Venda valueOfVendaInsertDTO(VendaInsertDTO venda){
-        Venda vendaCast = new Venda();
+    public static MovimentacaoFinanceira valueOfVendaInsertDTO(VendaInsertDTO venda){
+        MovimentacaoFinanceira vendaCast = new MovimentacaoFinanceira();
         vendaCast.setDataDeCompra(venda.dataDeCompra());
         vendaCast.setPrecoDaCompra(venda.precoDaCompra());
         vendaCast.setDescricao(venda.descricao());
@@ -90,11 +96,12 @@ public class Venda extends DefaultEntity{
         vendaCast.setTipoDePagamento(venda.tipoDePagamento());
         vendaCast.setStatusVenda(venda.statusVenda());
         vendaCast.setUsuario(Usuario.valueOfUsuarioIdDTO(venda.usuario()));
+        vendaCast.setTipoDeMovimentacaoFinanceira(venda.tipoMovimentacaoFinanceira());
         return vendaCast;
     }
 
-    public static Venda valueOfVendaIdDTO(VendaIdDTO venda){
-        Venda vendaCast = new Venda();
+    public static MovimentacaoFinanceira valueOfVendaIdDTO(VendaIdDTO venda){
+        MovimentacaoFinanceira vendaCast = new MovimentacaoFinanceira();
         vendaCast.setId(venda.id());
         return vendaCast;
     }
@@ -153,6 +160,12 @@ public class Venda extends DefaultEntity{
 
     public void setStatusVenda(StatusVenda statusVenda) {
         this.statusVenda = statusVenda;
+    }
+    public TipoDeMovimentacaoFinanceira getTipoDeMovimentacaoFinanceira() {
+        return tipoDeMovimentacaoFinanceira;
+    }
+    public void setTipoDeMovimentacaoFinanceira(TipoDeMovimentacaoFinanceira tipoDeMovimentacaoFinanceira) {
+        this.tipoDeMovimentacaoFinanceira = tipoDeMovimentacaoFinanceira;
     }
 
 }

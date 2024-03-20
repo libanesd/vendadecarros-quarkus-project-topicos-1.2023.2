@@ -17,7 +17,7 @@ import br.unitins.topicos1.dto.VendaDTORepository.VendaIdDTO;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.model.Oferta;
 import br.unitins.topicos1.model.TipoDeUsuario;
-import br.unitins.topicos1.model.Venda;
+import br.unitins.topicos1.model.MovimentacaoFinanceira;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.repository.OfertaRepository;
 import br.unitins.topicos1.repository.VendaRepository;
@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario novoUsuario = Usuario.valueOfUsuarioInsertDTO(dto); 
         novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
         List<Oferta> oferta = new ArrayList<Oferta>();
-        List<Venda> vendas = new ArrayList<Venda>();
+        List<MovimentacaoFinanceira> vendas = new ArrayList<MovimentacaoFinanceira>();
         novoUsuario.setOfertas(oferta);
         novoUsuario.setVendas(vendas);
         repository.persist(novoUsuario);
@@ -88,10 +88,10 @@ public class UsuarioServiceImpl implements UsuarioService{
             }
             if (dto.vendas() != null && !dto.vendas().isEmpty()){
                 if(novoUsuario.getVendas() == null || novoUsuario.getVendas().isEmpty()){
-                    novoUsuario.setVendas(new ArrayList<Venda>());
+                    novoUsuario.setVendas(new ArrayList<MovimentacaoFinanceira>());
                 }
                 for (VendaIdDTO ven : dto.vendas()) {
-                    Venda venda = vendaRepository.findById(ven.id());
+                    MovimentacaoFinanceira venda = vendaRepository.findById(ven.id());
                     if(venda.getUsuario() == null){
                         venda.setUsuario(novoUsuario);
                     }
@@ -159,7 +159,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario novoUsuario = Usuario.valueOfUsuarioInsertUserDTO(dto); 
         novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
         List<Oferta> oferta = new ArrayList<Oferta>();
-        List<Venda> vendas = new ArrayList<Venda>();
+        List<MovimentacaoFinanceira> vendas = new ArrayList<MovimentacaoFinanceira>();
         novoUsuario.setOfertas(oferta);
         novoUsuario.setVendas(vendas);
 

@@ -50,7 +50,7 @@ public class Usuario extends DefaultEntity{
     private  List<Oferta> ofertas;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Venda> vendas;
+    private List<MovimentacaoFinanceira> vendas;
 
     public static Usuario valueOfUsuarioDTO(UsuarioDTO usuario){
         Usuario usuarioCast = new Usuario();
@@ -61,7 +61,7 @@ public class Usuario extends DefaultEntity{
         usuarioCast.setEmail(usuario.email());
         usuarioCast.setVendas(usuario.vendas()
                 .stream()
-                .map(t -> Venda.valueOfVendaUsuarioDTO(t)).toList());
+                .map(t -> MovimentacaoFinanceira.valueOfVendaUsuarioDTO(t)).toList());
         usuarioCast.setOfertas(usuario.ofertas()
                 .stream()
                 .map(t -> Oferta.valueOfOfertaUsuarioDTO(t)).toList());
@@ -78,7 +78,7 @@ public class Usuario extends DefaultEntity{
         usuarioCast.setEmail(usuario.email());
         usuarioCast.setVendas(usuario.vendas()
                 .stream()
-                .map(t -> Venda.valueOfVendaUsuarioDTO(t)).toList());
+                .map(t -> MovimentacaoFinanceira.valueOfVendaUsuarioDTO(t)).toList());
         usuarioCast.setOfertas(usuario.ofertas()
                 .stream()
                 .map(t -> Oferta.valueOfOfertaUsuarioDTO(t)).toList());
@@ -173,10 +173,10 @@ public class Usuario extends DefaultEntity{
         this.senha = senha;
     }
     
-    public List<Venda> getVendas() {
+    public List<MovimentacaoFinanceira> getVendas() {
         return vendas;
     }
-    public void setVendas(List<Venda> vendas) {
+    public void setVendas(List<MovimentacaoFinanceira> vendas) {
         this.vendas = vendas;
     }
     public List<Oferta> getOfertas() {

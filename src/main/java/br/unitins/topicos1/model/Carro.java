@@ -62,7 +62,7 @@ public class Carro extends DefaultEntity{
     private  List<Oferta> ofertas;
     
     @OneToOne(mappedBy = "carro")
-    private Venda venda;
+    private MovimentacaoFinanceira venda;
 
     @Column(columnDefinition = "INT CHECK (estoque >= 0)")
     private Integer estoque;
@@ -164,10 +164,10 @@ public class Carro extends DefaultEntity{
         this.nomeImagem = nomeImagem;
     }
 
-     public Venda getVenda() {
+     public MovimentacaoFinanceira getVenda() {
         return venda;
     }
-    public void setVenda(Venda venda) {
+    public void setVenda(MovimentacaoFinanceira venda) {
         this.venda = venda;
     }
     public String getNomeCarro() {
