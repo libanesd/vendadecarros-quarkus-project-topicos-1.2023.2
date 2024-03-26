@@ -30,8 +30,8 @@ public class MarcaResource {
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
     
     @POST
-    @RolesAllowed("Admin")
-    @Path("/marca-add")
+    //@RolesAllowed("Admin")
+    @Path("/insert")
     public Response insert(MarcaInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da marca %s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
