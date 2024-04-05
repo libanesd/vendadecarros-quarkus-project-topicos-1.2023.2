@@ -2,8 +2,8 @@ package br.unitins.topicos1.resource;
 
 import org.jboss.logging.Logger;
 
-import br.unitins.topicos1.dto.CategoriaDTORepository.CategoriaInsertDTO;
-import br.unitins.topicos1.service.CategoriaService;
+import br.unitins.topicos1.dto.ModeloDTORepository.ModeloInsertDTO;
+import br.unitins.topicos1.service.ModeloService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,20 +19,22 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/categorias")
+@Path("/modelos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CategoriaResource {
+public class ModeloResource {
     
     @Inject
-    CategoriaService service;
+    ModeloService service;
 
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
 
     @POST
+    //@RolesAllowed("Admin")
     @Path("/insert")
-    public Response insert(CategoriaInsertDTO dto) {
-        LOG.infof("Iniciando o processo de inserçao de categoria", dto.nome());
+    public Response insert(ModeloInsertDTO dto) {
+        LOG.infof("Iniciando o processo de inserçao da modelo %s", dto.nomeModelo());
+        LOG.infof("com a lista de carros: %s", dto.carro());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -41,8 +43,8 @@ public class CategoriaResource {
     @Transactional
     @Path("/{id}")
     @RolesAllowed({"Admin"})
-    public Response update(CategoriaInsertDTO dto, @PathParam("id") Long id) {
-        LOG.infof("Iniciando o processo de update de categoria", dto.nome());
+    public Response update(ModeloInsertDTO dto, @PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de update da modelo %s", dto.nomeModelo());
         service.update(dto, id);
         return Response.noContent().build();
     }
@@ -52,7 +54,7 @@ public class CategoriaResource {
     @Path("/delete/{id}")
     @RolesAllowed({"Admin"})
     public Response delete(@PathParam("id") Long id) {
-        LOG.infof("Iniciando o processo de delete de categoria");
+        LOG.infof("Iniciando o processo de delete da modelo");
         service.delete(id);
         return Response.noContent().build();
     }
@@ -60,7 +62,7 @@ public class CategoriaResource {
     @GET
     //@RolesAllowed({"User","Admin"})
     public Response findAll() {
-        LOG.infof("buscando todas as categorias");
+        LOG.infof("Buscando todas as modelos");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -68,7 +70,7 @@ public class CategoriaResource {
     @Path("/{id}")
     @RolesAllowed({"User","Admin"})
     public Response findById(@PathParam("id") Long id) {
-        LOG.infof("buscando por id de categoria");
+        LOG.infof("Buscando por id modelo");
         return Response.ok(service.findById(id)).build();
     }
     
@@ -76,7 +78,7 @@ public class CategoriaResource {
     @Path("/search/nome/{nome}")
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
-        LOG.infof("buscando por nome de categoria");
+        LOG.infof("Buscando por nome modelo");
         return Response.ok(service.findByNome(nome)).build();
     }
 }

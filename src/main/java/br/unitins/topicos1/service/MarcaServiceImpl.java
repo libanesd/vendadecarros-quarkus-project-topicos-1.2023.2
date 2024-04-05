@@ -3,6 +3,8 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaInsertDTO;
 import br.unitins.topicos1.dto.MarcaDTORepository.MarcaResponseDTO;
@@ -10,6 +12,7 @@ import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.repository.CarroRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
+import br.unitins.topicos1.resource.AuthResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,11 +26,14 @@ public class MarcaServiceImpl implements  MarcaService{
     @Inject
     CarroRepository carroRepository;
 
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
+
     @Override
     @Transactional
     public MarcaResponseDTO insert(@Valid MarcaInsertDTO dto) {
         Marca novaOMarca = Marca.valueOfMarcaInsertDTO(dto);
-        if(novaOMarca.getCarros()!= null && !novaOMarca.getCarros().isEmpty()){
+        LOG.infof("com a lista de carros: %s", novaOMarca.getCarros());
+        if(novaOMarca.getCarros()!= null &&  novaOMarca.getCarros().get(0)!= null && !novaOMarca.getCarros().isEmpty()){
             List<Carro> carroList = new ArrayList<Carro>();
             for (Carro car : novaOMarca.getCarros()) {
                 Carro carroDb = carroRepository.findById(car.getId());

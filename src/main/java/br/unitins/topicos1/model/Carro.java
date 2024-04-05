@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroIdDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,6 +39,8 @@ public class Carro extends DefaultEntity{
     private String caracteristicas;
     @Column(length = 200, nullable = true)
     private String cidade;
+    @OneToOne(mappedBy = "carro", cascade = CascadeType.ALL)
+    private Modelo modelo;
 
     @Column(nullable = true)
     private Float preco;
@@ -152,8 +155,11 @@ public class Carro extends DefaultEntity{
     }
 
     public static Carro valueOfCarroIdDTO(CarroIdDTO carro){
-        Carro carroCast = new Carro();
-        carroCast.setId(carro.id());
+        Carro carroCast = null;
+        if(carro != null){
+            carroCast = new Carro();
+            carroCast.setId(carro.id());
+        }
         return carroCast;
     }
     public String getNomeImagem() {
@@ -271,5 +277,25 @@ public class Carro extends DefaultEntity{
 
     public void setEstoque(Integer estoque) {
         this.estoque = estoque;
+    }
+
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public Integer getEstoque() {
+        return estoque;
     }
 }

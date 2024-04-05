@@ -34,6 +34,7 @@ public class MarcaResource {
     @Path("/insert")
     public Response insert(MarcaInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da marca %s", dto.nome());
+        LOG.infof("com a lista de carros: %s", dto.carros());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 

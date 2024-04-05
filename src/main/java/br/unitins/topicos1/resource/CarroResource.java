@@ -31,8 +31,7 @@ public class CarroResource {
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
 
     @POST
-    @RolesAllowed({"Admin"})
-    @Path("/carro-add")
+    @Path("/insert")
     public Response insert(@Valid CarroDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do carro %s", dto.nomeCarro());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();

@@ -32,8 +32,8 @@ public class OfertaResource {
 
     @POST
     @Transactional
-    @Path("/oferta-add")
-    @RolesAllowed({"Admin"})
+    @Path("/insert")
+    //@RolesAllowed({"Admin"})
     public Response insert(OfertaInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da oferta %s", dto.nome());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();

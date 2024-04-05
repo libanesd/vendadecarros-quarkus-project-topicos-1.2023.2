@@ -100,15 +100,22 @@ public class Oferta extends DefaultEntity{
     public static Oferta valueOfOfertaInsertDTO(OfertaInsertDTO oferta){
         Oferta ofertaCast = new Oferta();
         ofertaCast.setNome(oferta.nome());
-        ofertaCast.setCarros(oferta.carros()
-                .stream()
-                .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
-        ofertaCast.setCategorias(oferta.categorias()
+        if(oferta.carros() != null){
+            ofertaCast.setCarros(oferta.carros()
+            .stream()
+            .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
+        }
+        if(oferta.categorias() != null){
+            ofertaCast.setCategorias(oferta.categorias()
                 .stream()
                 .map(t -> Categoria.valueOfCategoriaIdDTO(t)).toList());
-        ofertaCast.setUsuarios(oferta.usuarios()
-                .stream()
-                .map(t -> Usuario.valueOfUsuarioIdDTO(t)).toList());
+        }
+        if(oferta.usuarios() != null){
+            ofertaCast.setUsuarios(oferta.usuarios()
+            .stream()
+            .map(t -> Usuario.valueOfUsuarioIdDTO(t)).toList());
+        }
+        
         ofertaCast.setStatusOferta(oferta.statusOferta());
         ofertaCast.setPorcentagemDeDesconto(oferta.porcentagemDeDesconto());
         return ofertaCast;

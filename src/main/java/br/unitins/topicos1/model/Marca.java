@@ -10,6 +10,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,7 +18,10 @@ import jakarta.persistence.Table;
 public class Marca extends DefaultEntity{
     @Column(length = 60)
     private String nomeMarca;
+    @OneToOne(mappedBy = "marca", cascade = CascadeType.ALL)
+    private Modelo modelo;
 
+    
     @OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
     private List<Carro> carros;
 
@@ -50,9 +54,11 @@ public class Marca extends DefaultEntity{
     public static Marca valueOfMarcaInsertDTO(MarcaInsertDTO marca){
         Marca marcaCast = new Marca();
         marcaCast.setNomeMarca(marca.nome());
-        marcaCast.setCarros(marca.carros()
-                .stream()
-                .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
+        if(marca.carros() != null && !marca.carros().isEmpty()){
+            marcaCast.setCarros(marca.carros()
+            .stream()
+            .map(t -> Carro.valueOfCarroIdDTO(t)).toList());
+        }
         return marcaCast;
     }
 
@@ -68,5 +74,11 @@ public class Marca extends DefaultEntity{
     public void setCarros(List<Carro> carros) {
         this.carros = carros;
     }
-    
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
 }

@@ -72,7 +72,7 @@ public class UsuarioResource {
 
     @GET
     @Transactional
-    @RolesAllowed({"Admin"})
+    //@RolesAllowed({"Admin"})
     public Response findAll() {
         LOG.infof("buscando todos os usuarios");
         return Response.ok(service.findByAll()).build();
