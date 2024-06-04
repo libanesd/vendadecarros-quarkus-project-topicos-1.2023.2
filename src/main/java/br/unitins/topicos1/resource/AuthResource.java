@@ -1,19 +1,31 @@
 package br.unitins.topicos1.resource;
+import br.unitins.topicos1.application.Email;
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
+import br.unitins.topicos1.model.EsqueceuSenha;
+import br.unitins.topicos1.model.Usuario;
+import br.unitins.topicos1.repository.EsqueceuSenhaRepository;
+import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.service.UsuarioService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.Random;
+
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
 @Path("/auth")
@@ -22,7 +34,16 @@ import org.jboss.logging.Logger;
 public class AuthResource {
 
     @Inject
+    JsonWebToken jwt;
+
+    @Inject
     UsuarioService service;
+
+    @Inject
+    UsuarioRepository usuarioRepository;
+    
+    @Inject
+    EsqueceuSenhaRepository esqueceuSenhaRepository;
 
     @Inject
     HashService hashService;
@@ -57,5 +78,87 @@ public class AuthResource {
             .build();
     }
 
+    public Response loginInterno(@Valid LoginDTO dto) {
+
+        UsuarioJwtDTO result = service.findByLoginAndSenha(dto.login(), dto.senha());
+        
+        if (result == null) {
+            LOG.info("Login e senha incorretos.");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        }
+        LOG.info("Login e senha corretos.");
+        LOG.info("Finalizando o processo de login.");
+        return Response.ok()
+            .header("Authorization", jwtService.generateJwt(result))
+            .build();
+    }
+
+    @PUT
+    @Path("/update-senha")
+    @RolesAllowed({"User","Admin"})
+    public Response getUpdateUserAdminSenha(String senha) {
+
+        // obtendo o login pelo token jwt
+        String login = jwt.getSubject();
+
+        LOG.infof("Alteração para a seha a autenticacao do %s", senha);
+
+        LoginDTO updatelogin = service.updateSenhaUsuarioLogado(login, senha);
+
+        return Response.ok(updatelogin).build();
+
+    }
+
+    @POST
+    @Path("/validar-codigo")
+    @RolesAllowed({"User","Admin"})
+    public Response validarCodigo(String codigo) {
+        EsqueceuSenha esqueceuSenha = esqueceuSenhaRepository.findCodigo(codigo);
+        if(esqueceuSenha == null){
+            LOG.infof("Não foi encontrado Codigo %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Codigo não encontrado").build();
+        }
+        LoginDTO login = new LoginDTO(esqueceuSenha.getUsuario().getLogin(), esqueceuSenha.getUsuario().getSenha());
+        return loginInterno(login);
+    }
+
+    @POST
+    @Path("/gerar-codigo")
+    @RolesAllowed({"User","Admin"})
+    public Response gerarCodigo(String emailDigitado) {
+
+        Usuario recuperarUsuario = usuarioRepository.findByLogin(emailDigitado);
+        if(recuperarUsuario == null){
+            LOG.infof("Não foi encontrado usuario com esse e-mail %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        }
+
+        Random random = new Random();
+		random.nextInt(1000000);
+		String codigo = new DecimalFormat("T-000000").format(random.nextInt(100000));
+
+        EsqueceuSenha esqueceu = new EsqueceuSenha();
+		esqueceu.setUsuario(recuperarUsuario);
+		esqueceu.setUtilizado(false);
+		esqueceu.setCodigo(codigo);
+		esqueceu.setDataHoraLimite(LocalDateTime.now().plusDays(1));
+        esqueceuSenhaRepository.persist(esqueceu);
+
+        Email email = new Email(recuperarUsuario.getLogin(), 
+				"Esqueceu a senha", 
+				"Segue o código de recuperar a senha: " +codigo);
+
+		if (!email.enviar()) {
+			LOG.infof("problema ao enviar email %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("problema ao enviar email").build();
+		} else{
+            LOG.infof("Código enviado para seu email. %s");
+            return Response.ok().build();
+        }
+    }
 
 }
