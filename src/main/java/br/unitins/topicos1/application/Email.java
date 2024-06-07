@@ -21,7 +21,7 @@ public class Email {
 	
 	public static void main(String[] args) {
 		Email email = new Email("janiojunior@gmail.com", "Teste 2", "Novo teste");
-		System.out.println(email.enviar());
+		//System.out.println(email.enviar());
 	}
 	
 	public Email(String emailDestino, String assunto, String mensagem) {
@@ -42,13 +42,15 @@ public class Email {
 	}
 	
 	
-	public boolean enviar() {
+	public boolean enviar(String email, String codigo) {
 		
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
 		prop.put("mail.smtp.port", "587");
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.starttls.enable", "true"); // TLS
+		System.out.println(getUsuario());
+		System.out.println(getSenha());
 
 		Session session = Session.getInstance(prop, 
 				new jakarta.mail.Authenticator() {
@@ -59,11 +61,11 @@ public class Email {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(getUsuario()+"@gmail.com"));
+			message.setFrom(new InternetAddress("leonardozeaim@unitins.br"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(getEmailDestino()));
-			message.setSubject(getAssunto());
-			message.setText(getMensagem());
+					InternetAddress.parse(email));
+			message.setSubject("Recuperar senha:");
+			message.setText("Seu codigo para recuperar senha é: " + codigo);
 
 			// enviando o email
 			Transport.send(message);

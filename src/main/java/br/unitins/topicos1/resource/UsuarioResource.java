@@ -43,7 +43,6 @@ public class UsuarioResource {
 
     @POST
     @Transactional
-    @RolesAllowed({"Admin"})
     @Path("/cadastro")
     public Response insertUser(@Valid UsuarioInsertUserDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do usuario do tipo usuario%s", dto.nome());

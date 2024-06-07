@@ -7,10 +7,12 @@ import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.EsqueceuSenhaRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.service.EmailService;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -50,6 +52,9 @@ public class AuthResource {
 
     @Inject
     JwtService jwtService;
+
+    @Inject
+    EmailService emailService;
 
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
 
@@ -126,7 +131,7 @@ public class AuthResource {
 
     @POST
     @Path("/gerar-codigo")
-    @RolesAllowed({"User","Admin"})
+    @Transactional
     public Response gerarCodigo(String emailDigitado) {
 
         Usuario recuperarUsuario = usuarioRepository.findByLogin(emailDigitado);
@@ -151,7 +156,7 @@ public class AuthResource {
 				"Esqueceu a senha", 
 				"Segue o código de recuperar a senha: " +codigo);
 
-		if (!email.enviar()) {
+		if (!email.enviar(emailDigitado,codigo)) {
 			LOG.infof("problema ao enviar email %s");
             return Response.status(Status.NOT_FOUND)
                 .entity("problema ao enviar email").build();

@@ -2,9 +2,13 @@ package br.unitins.topicos1.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "esqueceu_senha")
 public class EsqueceuSenha extends DefaultEntity{
     private String codigo;
 	
