@@ -58,10 +58,11 @@ public class Email {
 						return new PasswordAuthentication(getUsuario(), getSenha());
 					}
 				});
+				System.out.println(session.getDebug());
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("leonardozeaim@unitins.br"));
+			message.setFrom(new InternetAddress("leonardozeaim@gmail.br"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Recuperar senha:");

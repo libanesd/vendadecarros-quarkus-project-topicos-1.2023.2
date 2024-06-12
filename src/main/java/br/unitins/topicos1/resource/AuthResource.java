@@ -1,6 +1,7 @@
 package br.unitins.topicos1.resource;
 import br.unitins.topicos1.application.Email;
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
+import br.unitins.topicos1.dto.AuthDTORepository.ValidarCodigo;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
 import br.unitins.topicos1.model.EsqueceuSenha;
 import br.unitins.topicos1.model.Usuario;
@@ -55,6 +56,7 @@ public class AuthResource {
 
     @Inject
     EmailService emailService;
+    
 
     private static final Logger LOG = Logger.getLogger(AuthResource.class);
 
@@ -117,14 +119,33 @@ public class AuthResource {
 
     @POST
     @Path("/validar-codigo")
-    @RolesAllowed({"User","Admin"})
-    public Response validarCodigo(String codigo) {
-        EsqueceuSenha esqueceuSenha = esqueceuSenhaRepository.findCodigo(codigo);
+    @Transactional
+    public Response validarCodigo(@Valid ValidarCodigo validarCodigo) {
+
+        LOG.infof("inicialização do codigo: "+validarCodigo.codigo());
+        EsqueceuSenha esqueceuSenha = esqueceuSenhaRepository.findCodigo(validarCodigo.codigo());
         if(esqueceuSenha == null){
             LOG.infof("Não foi encontrado Codigo %s");
             return Response.status(Status.NOT_FOUND)
+                .entity("Não foi encontrado Codigo").build();
+        }
+        if(esqueceuSenha.isUtilizado()){
+            LOG.infof("Codigo já utilizado %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Codigo já utilizado").build();
+        }
+        Usuario usuario = usuarioRepository.findById(esqueceuSenha.getUsuario().getId());
+        if(usuario == null){
+            LOG.infof("Usuario não encontrado %s");
+            return Response.status(Status.NOT_FOUND)
                 .entity("Codigo não encontrado").build();
         }
+
+        esqueceuSenha.setUtilizado(true);
+        esqueceuSenhaRepository.persist(esqueceuSenha);
+
+        usuario.setSenha(hashService.getHashSenha(validarCodigo.senha()));
+        usuarioRepository.persist(usuario);
         LoginDTO login = new LoginDTO(esqueceuSenha.getUsuario().getLogin(), esqueceuSenha.getUsuario().getSenha());
         return loginInterno(login);
     }
@@ -134,7 +155,8 @@ public class AuthResource {
     @Transactional
     public Response gerarCodigo(String emailDigitado) {
 
-        Usuario recuperarUsuario = usuarioRepository.findByLogin(emailDigitado);
+        LOG.infof(emailDigitado);
+        Usuario recuperarUsuario = usuarioRepository.findByLogin(emailDigitado.replaceAll("\"", ""));
         if(recuperarUsuario == null){
             LOG.infof("Não foi encontrado usuario com esse e-mail %s");
             return Response.status(Status.NOT_FOUND)

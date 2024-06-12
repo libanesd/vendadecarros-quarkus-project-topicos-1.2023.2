@@ -2,11 +2,14 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.CarroDTORepository.CarroDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroEstoqueDTO;
 import br.unitins.topicos1.dto.CarroDTORepository.CarroResponseDTO;
 import br.unitins.topicos1.model.Carro;
 import br.unitins.topicos1.repository.CarroRepository;
+import br.unitins.topicos1.resource.AuthResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -18,10 +21,13 @@ public class CarroServiceimpl implements CarroService{
     @Inject
     CarroRepository repository;
 
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
+
     @Override    
     @Transactional
     public CarroResponseDTO insert(@Valid CarroDTO dto) {
         Carro novoCarro = Carro.valueOfCarroDTO(dto);
+        LOG.infof("Iniciando o evento de inserir carro %s");
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);
     }

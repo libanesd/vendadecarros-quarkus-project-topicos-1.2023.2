@@ -32,7 +32,6 @@ public class CarroResource {
 
     @POST
     @Path("/insert")
-    @RolesAllowed({"Admin"})
     public Response insert(@Valid CarroDTO dto) {
         LOG.infof("Iniciando o processo de inserçao do carro %s", dto.nomeCarro());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();

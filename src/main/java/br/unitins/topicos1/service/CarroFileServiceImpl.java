@@ -66,7 +66,9 @@ public class CarroFileServiceImpl implements FileService{
     }
 
     private void verificarTipoImagem(String nomeArquivo) throws IOException {
+        System.out.println(nomeArquivo);
         String mimeType = Files.probeContentType(Paths.get(nomeArquivo));
+        System.out.println(mimeType);
         if (!SUPPORTED_MIME_TYPES.contains(mimeType)) 
             throw new IOException("Tipo de imagem não suportada.");
   

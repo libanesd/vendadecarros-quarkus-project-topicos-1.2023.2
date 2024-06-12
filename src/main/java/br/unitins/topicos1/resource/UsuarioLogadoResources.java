@@ -101,7 +101,6 @@ public class UsuarioLogadoResources {
 
     @PATCH
     @Path("/upload/imagem/{id}")
-    @RolesAllowed({"Admin" })
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm CarroImagemForm form, @PathParam("id") Long id){
         String nomeImagem;
