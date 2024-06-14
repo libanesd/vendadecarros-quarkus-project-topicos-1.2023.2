@@ -103,6 +103,7 @@ public class Carro extends DefaultEntity{
         carroCast.setNomeCarro(carro.nomeCarro());
         carroCast.setCarroSpec(carro.carroSpec());
         carroCast.setVersao(carro.versao());
+        carroCast.setNomeImagem(carro.nomeImagem());
         carroCast.setAno(carro.ano());
         carroCast.setCor(carro.cor());
         carroCast.setCaracteristicas(carro.caracteristicas());

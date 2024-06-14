@@ -120,7 +120,6 @@ public class UsuarioLogadoResources {
 
     @GET
     @Path("/download/imagem/{nomeImagem}")
-    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
         ResponseBuilder response = Response.ok(fileService.obter(nomeImagem));
