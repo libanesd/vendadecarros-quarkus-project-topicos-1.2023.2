@@ -37,7 +37,6 @@ public class VendaResource {
     @POST
     @Transactional
     @Path("/venda-add")
-    @RolesAllowed({"User","Admin"})
     public Response insert(VendaInsertDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da venda %s", dto.descricao());
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
