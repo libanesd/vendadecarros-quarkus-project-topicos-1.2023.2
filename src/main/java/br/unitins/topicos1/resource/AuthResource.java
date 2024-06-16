@@ -80,8 +80,14 @@ public class AuthResource {
         }
         LOG.info("Login e senha corretos.");
         LOG.info("Finalizando o processo de login.");
+        Response res = Response.ok()
+        .header("Authorization", jwtService.generateJwt(result))
+        .build();
+
+        LOG.info("Esse é o response"+ res.getHeaders());
         return Response.ok()
             .header("Authorization", jwtService.generateJwt(result))
+            .entity(result)
             .build();
     }
 
