@@ -78,5 +78,12 @@ public class CarroServiceimpl implements CarroService{
         carro.setNomeImagem(nomeImagem);
         return CarroResponseDTO.valueOf(carro);
     }
+
+    @Override
+    public List<CarroResponseDTO> findCarrosAVenda() {
+        // TODO Auto-generated method stub
+        return repository.findCarrosAVenda().stream()
+            .map(e -> CarroResponseDTO.valueOf(e)).toList();
+    }
     
 }

@@ -43,15 +43,12 @@ public class VendaResource {
     }
 
     @POST
-    @Transactional
     @Path("/compra-user")
-    @RolesAllowed({"User","Admin"})
+    @Transactional
     public Response insertCompraUser(CompraUserDTO dto) {
         LOG.infof("Iniciando o processo de inserçao da venda %s");
 
-        String login = jwt.getSubject();
-
-        return Response.status(Status.CREATED).entity(service.insertCompraUser(dto,login)).build();
+        return Response.status(Status.CREATED).entity(service.insertCompraUser(dto)).build();
     }
 
 
@@ -88,6 +85,6 @@ public class VendaResource {
     @RolesAllowed({"User","Admin"})
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.infof("buscando por nome venda");
-        return Response.ok(service.findByNome(nome)).build();
+        return Response.ok().entity(service.findByNome(nome)).build();
     }
 }

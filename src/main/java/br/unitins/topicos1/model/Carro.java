@@ -70,6 +70,8 @@ public class Carro extends DefaultEntity{
     @Column(columnDefinition = "INT CHECK (estoque >= 0)")
     private Integer estoque;
     
+    @Column(name = "vendido")
+    private boolean vendido;
    
     @Enumerated(EnumType.STRING)
     private TipoCombustivel tipoCombustivel;
@@ -298,5 +300,13 @@ public class Carro extends DefaultEntity{
 
     public Integer getEstoque() {
         return estoque;
+    }
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
     }
 }

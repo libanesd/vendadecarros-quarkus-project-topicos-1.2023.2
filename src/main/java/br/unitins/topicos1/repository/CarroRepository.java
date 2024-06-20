@@ -16,4 +16,8 @@ public class CarroRepository implements PanacheRepository<Carro>{
     public List<Carro> findByIdCarros(Long id){
         return find("id = (?1)", id).list();
     }
+
+    public List<Carro> findCarrosAVenda(){
+        return find("vendido = false ").list();
+    }
 }

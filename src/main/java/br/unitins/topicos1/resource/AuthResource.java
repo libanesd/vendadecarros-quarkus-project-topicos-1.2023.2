@@ -2,6 +2,8 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.application.Email;
 import br.unitins.topicos1.dto.AuthDTORepository.LoginDTO;
 import br.unitins.topicos1.dto.AuthDTORepository.ValidarCodigo;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDadosBasicosJwtDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDadosPessoaisJwtDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioJwtDTO;
 import br.unitins.topicos1.model.EsqueceuSenha;
 import br.unitins.topicos1.model.Usuario;
@@ -107,6 +109,22 @@ public class AuthResource {
             .build();
     }
 
+    public Response loginInternoJwtBasico(@Valid LoginDTO dto) {
+
+        UsuarioJwtDTO result = service.findByLoginAndSenha(dto.login(), dto.senha());
+        
+        if (result == null) {
+            LOG.info("Login e senha incorretos.");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        }
+        LOG.info("Login e senha corretos.");
+        LOG.info("Finalizando o processo de login.");
+        return Response.ok()
+            .header("Authorization", jwtService.generateJwt(result))
+            .build();
+    }
+
     @PUT
     @Path("/update-senha")
     @RolesAllowed({"User","Admin"})
@@ -121,6 +139,88 @@ public class AuthResource {
 
         return Response.ok(updatelogin).build();
 
+    }
+    @POST
+    @Path("/update-dados-basicos")
+    @Transactional
+    public Response updateDadosBasicosUsuarioLogado(UsuarioDadosBasicosJwtDTO usuarioDadosBasicos) { 
+        LOG.infof("Iniciando processo de update de usuario %s");
+        Usuario recuperarUsuario = usuarioRepository.findByLogin(usuarioDadosBasicos.login().replaceAll("\"", ""));
+        if(recuperarUsuario == null){
+            LOG.infof("Não foi encontrado usuario com esse e-mail %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        }
+        if(usuarioDadosBasicos.endereco() != null && !usuarioDadosBasicos.endereco().isEmpty()){
+            recuperarUsuario.setEndereco(usuarioDadosBasicos.endereco());
+        }
+        if(usuarioDadosBasicos.nome() != null && !usuarioDadosBasicos.nome().isEmpty()){
+            recuperarUsuario.setNome(usuarioDadosBasicos.nome());
+        }   
+        if(usuarioDadosBasicos.telefone() != null && !usuarioDadosBasicos.telefone().isEmpty()){
+            recuperarUsuario.setTelefone(usuarioDadosBasicos.telefone());
+        }
+        usuarioRepository.persist(recuperarUsuario);
+        UsuarioJwtDTO responseUsuario = UsuarioJwtDTO.valueOf(recuperarUsuario);
+        LOG.infof("finalizando processo de update de usuario %s");
+        return Response.ok()
+        .header("Authorization", jwtService.generateJwt(responseUsuario))
+        .entity(responseUsuario)
+        .build();
+    }
+
+    @POST
+    @Path("/verificar-senha")
+    @Transactional
+    public Response verificarSenha(LoginDTO dto) {     
+        LOG.infof("Iniciando a autenticacao do %s", dto.login());
+        
+        String hashSenha = hashService.getHashSenha(dto.senha().replaceAll("\"", ""));
+
+        LOG.info("Hash da senha gerado.");
+
+        LOG.debug(hashSenha);
+
+        Usuario usuario = usuarioRepository.findByLoginAndSenha(dto.login().replaceAll("\"", ""),hashSenha);
+        if(usuario == null){
+            LOG.infof("Senha incorreta %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Senha incorreta!").build();
+        }
+        UsuarioDadosPessoaisJwtDTO result = UsuarioDadosPessoaisJwtDTO.valueOf(usuario);
+        return Response.ok()
+        .entity(result)
+        .build();
+    }
+
+    @POST
+    @Path("/update-dados-pessoais")
+    @Transactional
+    public Response updateDadosPessoaisUsuarioLogado(UsuarioDadosPessoaisJwtDTO usuarioDadosPessoais) {     
+        LOG.infof("iniciando processo de update pessoal de usuario %s");
+        Usuario recuperarUsuario = usuarioRepository.findByLogin(usuarioDadosPessoais.login().replaceAll("\"", ""));
+        if(recuperarUsuario == null){
+            LOG.infof("Não foi encontrado usuario com esse e-mail %s");
+            return Response.status(Status.NOT_FOUND)
+                .entity("Usuario não encontrado").build();
+        }
+        if(usuarioDadosPessoais.email() != null && !usuarioDadosPessoais.email().isEmpty()){
+            recuperarUsuario.setLogin(usuarioDadosPessoais.email());
+        }
+        if(usuarioDadosPessoais.cpf() != null && !usuarioDadosPessoais.cpf().isEmpty()){
+            recuperarUsuario.setCpf(usuarioDadosPessoais.cpf());
+        }   
+        if(usuarioDadosPessoais.senha() != null && !usuarioDadosPessoais.senha().isEmpty()){
+            String hashSenha = hashService.getHashSenha(usuarioDadosPessoais.senha());
+            recuperarUsuario.setSenha(hashSenha);
+        }
+        usuarioRepository.persist(recuperarUsuario);
+        UsuarioJwtDTO responseUsuario = UsuarioJwtDTO.valueOf(recuperarUsuario);
+        LOG.infof("finalizando processo de update pessoal de usuario %s");
+        return Response.ok()
+        .header("Authorization", jwtService.generateJwt(responseUsuario))
+        .entity(responseUsuario)
+        .build();
     }
 
     @POST

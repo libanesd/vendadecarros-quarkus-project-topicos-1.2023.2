@@ -23,5 +23,7 @@ public interface CarroService {
 
     public List<CarroResponseDTO> findByAll(); 
 
+    public List<CarroResponseDTO> findCarrosAVenda(); 
+
     public List<CarroEstoqueDTO> findByAllEstoque(); 
 }

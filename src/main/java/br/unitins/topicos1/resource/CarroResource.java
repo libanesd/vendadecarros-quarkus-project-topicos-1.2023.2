@@ -66,6 +66,13 @@ public class CarroResource {
     }
 
     @GET
+    @Path("/carros-a-venda")
+    public Response findCarrosAVenda() {
+        LOG.infof("buscando todos os carros a venda");
+        return Response.ok(service.findCarrosAVenda()).build();
+    }
+
+    @GET
     @Path("/estoque")
     @RolesAllowed({"Admin"})
     public Response findAllEstoque() {

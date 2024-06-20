@@ -3,6 +3,7 @@ package br.unitins.topicos1.model;
 import java.util.List;
 
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDTO;
+import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioDadosBasicosJwtDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioIdDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertDTO;
 import br.unitins.topicos1.dto.UsuarioDTORepository.UsuarioInsertUserDTO;
@@ -90,10 +91,22 @@ public class Usuario extends DefaultEntity{
         usuarioCast.setId(usuario.id());
         usuarioCast.setNome(usuario.nome());
         usuarioCast.setLogin(usuario.login());
+        usuarioCast.setEndereco(usuario.endereco());
+        usuarioCast.setTelefone(usuario.telefone());
         usuarioCast.setTipodeusuario(usuario.tipodeusuario());
         usuarioCast.setOfertas(usuario.ofertas()
                 .stream()
                 .map(t -> Oferta.valueOfOfertaIdDTO(t)).toList());
+        return usuarioCast;
+    }
+
+    public static Usuario valueOfUsuarioDadosBasicosJwtDTO(UsuarioDadosBasicosJwtDTO usuario){
+        Usuario usuarioCast = new Usuario();
+        usuarioCast.setId(usuario.id());
+        usuarioCast.setLogin(usuario.login());
+        usuarioCast.setNome(usuario.nome());
+        usuarioCast.setEndereco(usuario.endereco());
+        usuarioCast.setTelefone(usuario.telefone());
         return usuarioCast;
     }
 

@@ -31,10 +31,10 @@ public enum TipoDeMovimentacaoFinanceira {
         return label;
     }
 
-    public static TipoDeUsuario valueOf(Integer id) throws IllegalArgumentException {
+    public static TipoDeMovimentacaoFinanceira valueOf(Integer id) throws IllegalArgumentException {
         if (id == null)
             return null;
-        for (TipoDeUsuario perfil : TipoDeUsuario.values()) {
+        for (TipoDeMovimentacaoFinanceira perfil : TipoDeMovimentacaoFinanceira.values()) {
             if (perfil.getId().equals(id))
                 return perfil;
         }

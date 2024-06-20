@@ -10,6 +10,8 @@ public record UsuarioJwtDTO (
     Long id,
     String nome,
     String login,
+    String endereco,
+    String telefone,
     TipoDeUsuario tipodeusuario,
     List<OfertaIdDTO> ofertas
 )
@@ -19,6 +21,8 @@ public record UsuarioJwtDTO (
             usuario.getId(), 
             usuario.getNome(),
             usuario.getLogin(),
+            usuario.getEndereco(),
+            usuario.getTelefone(),
             usuario.getTipodeusuario(),
             usuario.getOfertas()
                 .stream()

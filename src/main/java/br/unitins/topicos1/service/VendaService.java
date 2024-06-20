@@ -11,7 +11,7 @@ public interface VendaService {
  
     public VendaResponseDTO insert(@Valid VendaInsertDTO dto);
 
-    public VendaResponseDTO insertCompraUser(CompraUserDTO dto,String login);
+    public VendaResponseDTO insertCompraUser(CompraUserDTO dto);
 
     public VendaResponseDTO update(VendaInsertDTO dto, Long id);
 
