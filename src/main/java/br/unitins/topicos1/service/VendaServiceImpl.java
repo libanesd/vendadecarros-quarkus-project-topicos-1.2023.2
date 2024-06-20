@@ -43,6 +43,8 @@ public class VendaServiceImpl implements VendaService {
         Usuario usuario = usuarioRepository.findById(dto.usuario().id());
         novaVenda.setCarro(carro);
         novaVenda.setUsuario(usuario);
+        novaVenda.setDeletado(false);
+        novaVenda.setDesativado(false);
         repository.persist(novaVenda);
         return VendaResponseDTO.valueOf(novaVenda);
     }

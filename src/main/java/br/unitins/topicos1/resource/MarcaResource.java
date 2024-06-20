@@ -81,4 +81,24 @@ public class MarcaResource {
         LOG.infof("Buscando por nome marca");
         return Response.ok(service.findByNome(nome)).build();
     }
+
+    @PUT
+    @Transactional
+    @Path("/deletado/{id}")
+    @RolesAllowed({"User","Admin"})
+    public Response deletadoById(@PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de delete do usuario %s");
+        service.marcarComoDeletado(id);
+        return Response.noContent().build();
+    }
+
+    @PUT
+    @Transactional
+    @Path("/desativado/{id}")
+    @RolesAllowed({"User","Admin"})
+    public Response desativadoById(@PathParam("id") Long id) {
+        LOG.infof("Iniciando o processo de desativação do usuario %s");
+        service.marcarComoDesativado(id);
+        return Response.noContent().build();
+    }
 }

@@ -89,7 +89,8 @@ public class OfertaServiceImpl implements  OfertaService{
             List<Usuario> usuarios = new ArrayList<Usuario>();
             novaOferta.setUsuarios(usuarios);
         }
-
+        novaOferta.setDeletado(false);
+        novaOferta.setDesativado(false);
         repository.persist(novaOferta);
         return OfertaResponseDTO.valueOf(novaOferta);
     }
@@ -167,7 +168,20 @@ public class OfertaServiceImpl implements  OfertaService{
 
     @Override
     public List<OfertaResponseDTO> findByAll() {
-        return repository.listAll().stream()
+        return repository.findAllEnable().stream()
             .map(e -> OfertaResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    public void marcarComoDeletado(Long id){
+        Oferta oferta = repository.findById(id);
+        oferta.setDeletado(true);
+        repository.persist(oferta);
+    }
+    @Override
+    public void marcarComoDesativado(Long id){
+        Oferta oferta = repository.findById(id);
+        oferta.setDesativado(true);
+        repository.persist(oferta);
     }
 }

@@ -13,6 +13,10 @@ public class OfertaRepository implements PanacheRepository<Oferta>{
         return find("UPPER(nome) LIKE UPPER(?1) ", "%"+nome+"%").list();
     }
 
+    public List<Oferta> findAllEnable() {
+        return find("desativado = false AND deletado = false").list();
+    }
+
     public List<Oferta> findByIdCliente(Long id) {
         return find("SELECT * FROM ofertas WHERE id_cliente = :id;", "%"+id+"%").list();
     }

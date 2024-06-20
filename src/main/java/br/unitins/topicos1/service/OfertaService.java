@@ -19,4 +19,8 @@ public interface OfertaService {
     public List<OfertaResponseDTO> findByNome(String nome);
 
     public List<OfertaResponseDTO> findByAll(); 
+
+    public void marcarComoDeletado(Long id);
+
+    public void marcarComoDesativado(Long id);
 }

@@ -40,7 +40,8 @@ public class CategoriaServiceimpl implements CategoriaService{
             List<Carro> carroList = new ArrayList<Carro>();
             novaCategoria.setCarros(carroList);
         }
-        
+        novaCategoria.setDeletado(false);
+        novaCategoria.setDesativado(false);
         repository.persist(novaCategoria);
         return CategoriaResponseDTO.valueOf(novaCategoria);
     }
@@ -90,8 +91,20 @@ public class CategoriaServiceimpl implements CategoriaService{
 
     @Override
     public List<CategoriaResponseDTO> findByAll() {
-        return repository.listAll().stream()
+        return repository.findAllEnable().stream()
             .map(e -> CategoriaResponseDTO.valueOf(e)).toList();
     }
     
+    @Override
+    public void marcarComoDeletado(Long id){
+        Categoria categoria = repository.findById(id);
+        categoria.setDeletado(true);
+        repository.persist(categoria);
+    }
+    @Override
+    public void marcarComoDesativado(Long id){
+        Categoria categoria = repository.findById(id);
+        categoria.setDesativado(true);
+        repository.persist(categoria);
+    }
 }

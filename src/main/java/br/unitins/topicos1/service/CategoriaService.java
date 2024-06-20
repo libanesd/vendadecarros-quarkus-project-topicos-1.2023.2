@@ -19,5 +19,9 @@ public interface CategoriaService {
     public List<CategoriaResponseDTO> findByNome(String nome);
 
     public List<CategoriaResponseDTO> findByAll(); 
+
+    public void marcarComoDeletado(Long id);
+
+    public void marcarComoDesativado(Long id);
     
 }

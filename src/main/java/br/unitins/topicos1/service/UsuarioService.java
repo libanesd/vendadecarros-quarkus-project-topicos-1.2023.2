@@ -34,4 +34,8 @@ public interface UsuarioService {
     public List<UsuarioResponseDTO> findByNome(String nome);
 
     public List<UsuarioResponseDTO> findByAll();
+
+    public void marcarComoDeletado(Long id);
+
+    public void marcarComoDesativado(Long id);
 }

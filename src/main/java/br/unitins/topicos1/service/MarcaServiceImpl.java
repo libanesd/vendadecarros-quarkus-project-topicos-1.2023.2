@@ -45,7 +45,8 @@ public class MarcaServiceImpl implements  MarcaService{
             List<Carro> carros = new ArrayList<Carro>();
             novaOMarca.setCarros(carros);
         }
-        
+        novaOMarca.setDeletado(false);
+        novaOMarca.setDesativado(false);
         repository.persist(novaOMarca);
         return MarcaResponseDTO.valueOf(novaOMarca);
     }
@@ -93,7 +94,20 @@ public class MarcaServiceImpl implements  MarcaService{
 
     @Override
     public List<MarcaResponseDTO> findByAll() {
-        return repository.listAll().stream()
+        return repository.findAllEnable().stream()
             .map(e -> MarcaResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    public void marcarComoDeletado(Long id){
+        Marca marca = repository.findById(id);
+        marca.setDeletado(true);
+        repository.persist(marca);
+    }
+    @Override
+    public void marcarComoDesativado(Long id){
+        Marca marca = repository.findById(id);
+        marca.setDesativado(true);
+        repository.persist(marca);
     }
 }

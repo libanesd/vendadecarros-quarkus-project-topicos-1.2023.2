@@ -25,6 +25,12 @@ public class DefaultEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
     
+    @Column(name = "deletado")
+    private Boolean deletado;
+
+    @Column(name = "desativado")
+    private Boolean desativado;
+
     @PrePersist
     protected void onCreate() {
         dataCriacao = new Date(); // Define a data de criação como a data atual
@@ -53,5 +59,18 @@ public class DefaultEntity {
     public void setDataAtualizacao(Date dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
+    public boolean isDesativado() {
+        return desativado;
+    }
 
+    public void setDesativado(boolean desativado) {
+        this.desativado = desativado;
+    }
+    public boolean isDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(boolean deletado) {
+        this.deletado = deletado;
+    }
 }

@@ -11,6 +11,9 @@ public class CategoriaRepository implements PanacheRepository<Categoria>{
     public List<Categoria> findByNome(String nome) {
         return find("UPPER(nome) LIKE UPPER(?1) ", "%"+nome+"%").list();
     }
+    public List<Categoria> findAllEnable() {
+        return find("desativado = false AND deletado = false").list();
+    }
 }
 
 

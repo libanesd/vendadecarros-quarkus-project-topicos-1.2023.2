@@ -28,6 +28,8 @@ public class CarroServiceimpl implements CarroService{
     public CarroResponseDTO insert(@Valid CarroDTO dto) {
         Carro novoCarro = Carro.valueOfCarroDTO(dto);
         LOG.infof("Iniciando o evento de inserir carro %s");
+        novoCarro.setDeletado(false);
+        novoCarro.setDesativado(false);
         repository.persist(novoCarro);
         return CarroResponseDTO.valueOf(novoCarro);
     }
@@ -60,7 +62,7 @@ public class CarroServiceimpl implements CarroService{
 
     @Override
     public List<CarroResponseDTO> findByAll() {
-        return repository.listAll().stream()
+        return repository.findAllEnable().stream()
             .map(e -> CarroResponseDTO.valueOf(e)).toList();
     }
 
@@ -84,6 +86,18 @@ public class CarroServiceimpl implements CarroService{
         // TODO Auto-generated method stub
         return repository.findCarrosAVenda().stream()
             .map(e -> CarroResponseDTO.valueOf(e)).toList();
+    }
+    @Override
+    public void marcarComoDeletado(Long id){
+        Carro carro = repository.findById(id);
+        carro.setDeletado(true);
+        repository.persist(carro);
+    }
+    @Override
+    public void marcarComoDesativado(Long id){
+        Carro carro = repository.findById(id);
+        carro.setDesativado(true);
+        repository.persist(carro);
     }
     
 }

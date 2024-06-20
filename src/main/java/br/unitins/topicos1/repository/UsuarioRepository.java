@@ -35,4 +35,8 @@ public class UsuarioRepository implements PanacheRepository<Usuario>{
         }
         
     }
+
+    public List<Usuario> findAllEnable() {
+        return find("desativado = false AND deletado = false").list();
+    }
 }

@@ -11,4 +11,7 @@ public class MarcaRepository implements PanacheRepository<Marca>{
     public List<Marca> findByNome(String nomemarca) {
         return find("UPPER(nome) LIKE UPPER(?1) ", "%"+nomemarca+"%").list();
     }
+    public List<Marca> findAllEnable() {
+        return find("desativado = false AND deletado = false").list();
+    }
 }

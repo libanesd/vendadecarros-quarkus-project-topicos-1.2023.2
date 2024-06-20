@@ -60,6 +60,8 @@ public class UsuarioServiceImpl implements UsuarioService{
         List<MovimentacaoFinanceira> vendas = new ArrayList<MovimentacaoFinanceira>();
         novoUsuario.setOfertas(oferta);
         novoUsuario.setVendas(vendas);
+        novoUsuario.setDeletado(false);
+        novoUsuario.setDesativado(false);
         repository.persist(novoUsuario);
         return UsuarioResponseDTO.valueOf(novoUsuario);
     }
@@ -109,7 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) { 
         repository.deleteById(id);
     }
 
@@ -127,7 +129,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public List<UsuarioResponseDTO> findByAll() {
-        return repository.listAll().stream()
+        return repository.findAllEnable().stream()
             .map(e -> UsuarioResponseDTO.valueOf(e)).toList();
     }
 
@@ -162,6 +164,8 @@ public class UsuarioServiceImpl implements UsuarioService{
         List<MovimentacaoFinanceira> vendas = new ArrayList<MovimentacaoFinanceira>();
         novoUsuario.setOfertas(oferta);
         novoUsuario.setVendas(vendas);
+        novoUsuario.setDeletado(false);
+        novoUsuario.setDesativado(false);
 
         TipoDeUsuario tipoUsuario = TipoDeUsuario.USER;
 
@@ -225,6 +229,19 @@ public class UsuarioServiceImpl implements UsuarioService{
 
         return dto;
 
+    }
+
+    @Override
+    public void marcarComoDeletado(Long id){
+        Usuario novoUsuario = repository.findById(id);
+        novoUsuario.setDeletado(true);
+        repository.persist(novoUsuario);
+    }
+    @Override
+    public void marcarComoDesativado(Long id){
+        Usuario novoUsuario = repository.findById(id);
+        novoUsuario.setDesativado(true);
+        repository.persist(novoUsuario);
     }
     
 }

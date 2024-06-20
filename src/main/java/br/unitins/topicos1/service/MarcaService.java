@@ -19,4 +19,8 @@ public interface MarcaService {
     public List<MarcaResponseDTO> findByNome(String nome);
 
     public List<MarcaResponseDTO> findByAll(); 
+
+    public void marcarComoDeletado(Long id);
+
+    public void marcarComoDesativado(Long id);
 }

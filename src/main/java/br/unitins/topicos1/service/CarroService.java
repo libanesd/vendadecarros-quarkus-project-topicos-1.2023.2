@@ -17,6 +17,10 @@ public interface CarroService {
 
     public void delete(Long id);
 
+    public void marcarComoDeletado(Long id);
+
+    public void marcarComoDesativado(Long id);
+
     public CarroResponseDTO findById(Long id);
 
     public List<CarroResponseDTO> findByNome(String nome);
