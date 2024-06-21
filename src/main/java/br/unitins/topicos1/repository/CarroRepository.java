@@ -21,6 +21,6 @@ public class CarroRepository implements PanacheRepository<Carro>{
     }
 
     public List<Carro> findCarrosAVenda(){
-        return find("vendido = false ").list();
+        return find("vendido = false AND deletado = false  AND desativado = false").list();
     }
 }
